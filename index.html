@@ -61,7 +61,7 @@ var width = document.body.clientWidth;//document.getElementById("chart").offsetW
 var height;
 
 if (width>=600)
-  height=width/2;
+  height=2*width/3;
 else if(width>=450 &width>600)
   height=width;
 else
@@ -87,8 +87,8 @@ var color = d3.scaleOrdinal().domain(["Concept","Document","SDG"]).range(["#142f
 
 
 var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(.5))
-    .force("collide",d3.forceCollide( function(d){return d.value/4 + 8  }).iterations(5) )
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(.7))
+    .force("collide",d3.forceCollide( function(d){return d.value/4.5 + 8  }).iterations(5) )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
     .force("y", d3.forceY(0))
