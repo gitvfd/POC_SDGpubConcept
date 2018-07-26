@@ -1,0 +1,775 @@
+<!--look at https://d3plus.org/examples/advanced/9956648/-->
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<link href="style.css" rel="stylesheet">  
+</head>
+
+<div id="search_section" class="control">
+
+</div>
+<div class="banner">
+
+<h1>SDG map</h1>
+</div>
+
+
+
+<div id="toolbar">
+<div class="button " id="concept">Concept </div>
+<div class="button " id="sdg">SDGs </div>
+<!--<div class="button " id="project">Project</div>--><!-- previous class was "button right"-->
+</div>
+<br/>
+<div id="legend"></div>
+<div id="chart"></div>
+<div id="listTitle">
+<input placeholder="Search Me" id="box" type="text" />
+  <div id="list"></div>
+</div>
+<script src="libs/jquery-1.7.2.min.js"></script>
+<script src="libs/d3.v4.min.js"></script>
+<script src="libs/d3.layout.cloud.js"></script>
+<script src="libs/removeStopWords.js"></script>
+<script src="functions.js" >  </script>
+
+<script>
+
+var tooltip = d3.select("#chart")
+        .append("div")
+        .attr("class", "my-tooltip")
+        .style("position", "absolute")
+        .style("z-index", "9")
+        .style("visibility", "hidden");
+    tooltip.append("div")
+        .attr("id", "tt-name")
+        .text("simple")
+
+    tooltip.append("div")
+        .attr("id", "tt-def")
+        .style("font-style","italic")
+        .text("simple");;
+
+    tooltip.append("div")
+        .attr("id", "tt-ref")
+        .style("font-style","italic")
+        .text("simple");;
+
+var width = document.body.clientWidth;//document.getElementById("chart").offsetWidth;
+
+var height;
+
+if (width>=600)
+  height=width/2;
+else if(width>=450 &width>600)
+  height=width;
+else
+  height=4*width/3;
+
+var heightLeg=60;
+
+
+var wrapWidth = width/8;
+
+var svglegend = d3.select("#legend").append("svg")
+          .attr("width", width)
+          .attr("height",heightLeg);
+
+var svg = d3.select("#chart").append("svg")
+          .attr("width", width)
+          .attr("height",height);
+
+
+
+var color = d3.scaleOrdinal().domain(["Concept","Document","SDG"]).range(["#142f4e","#0297C9","#32A674"]);//.range(["#142f4e","#00b1b2","#32A674"]);
+
+
+
+var simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(.5))
+    .force("collide",d3.forceCollide( function(d){return d.value/4 + 8  }).iterations(5) )
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("y", d3.forceY(0))
+    .force("x", d3.forceX(0))
+
+
+var dataLegend=[{name:"SDG"},{name:"Concept"},{name:"Document"}]
+
+var nodeLegend = svglegend
+  .selectAll("g")
+  .data(dataLegend)
+  .enter()
+  .append("g")
+  .attr("class", function(d){
+    return d.name;
+  })
+  .attr("transform",function(d,i){
+        i++;
+        return "translate("+i*width/4 + ","+heightLeg/4 + ")"
+      });
+
+  var radiusLegend=heightLeg/4
+  nodeLegend.append("circle")
+    .attr("r", radiusLegend)
+    .attr("fill", function(d) { return color(d.name); })
+
+      
+  nodeLegend.append("text")
+    .attr("class","usage")
+    .attr("dy", "0.35em")
+    .attr('text-anchor', 'middle')
+    .attr('font-size',"14px")
+    .style("fill","#464646")
+    .style("font-weight","bold")
+    .attr("x",0)
+    .attr("y",radiusLegend+10)
+    .text(function(d){
+      return d.name;
+    })
+    .call(wrap,wrapWidth);
+  
+  nodeLegend.append("image")
+      .attr("xlink:href", function(d){
+        var key=key=d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"); //see how to remove all special characters no bugs / [.,\/#!$%\^&\*;:{}=\-_`~()]/g
+        var url="icons/"+key+".svg";
+          return url;
+      })
+      .attr("x",  function(d){
+        
+          return -radiusLegend/2;
+      })
+      .attr("y",function(d){
+        
+          return -radiusLegend/2;
+      })
+      .attr("width", function(d){
+        
+          return radiusLegend;
+      })
+      .attr("height",  function(d){
+       
+          return radiusLegend;
+      });
+
+
+var fakeBackground=svg
+    .append("rect")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height" , height);
+
+     
+
+var nodes = [];
+var links=[];
+var linkedByIndex = {};
+var radius;
+var node;
+var link;
+var opacityValue;
+
+
+
+
+d3.tsv("data/data.tsv", function(error, graph) {
+  if (error) throw error;
+ 
+ graph.forEach(function(d){
+    var toPush=d.document;
+
+    nodes.forEach(function(k){
+      if(d.document==k.name){
+        toPush="not";
+        k.value=k.value+1;
+       
+      }
+    })
+    if (toPush!="not" && d.document!=""){
+      nodes.push({"name": d.document, "cat": "Document" , "value": 1, })
+      }
+  })
+
+  graph.forEach(function(d){
+    var toPush=d.concept;
+
+    nodes.forEach(function(k){
+      if(d.concept==k.name){
+        toPush="not";
+        k.value=k.value+1;
+      }
+    })
+    if (toPush!="not" && d.concept!="")
+      nodes.push({"name": d.concept, "cat": "Concept", "value": 1})
+  })
+
+  graph.forEach(function(d){
+    var toPush=d.sdg;
+
+    nodes.forEach(function(k){
+      if(d.sdg==k.name){
+        toPush="not";
+        k.value=k.value+1;
+      }
+    })
+    if (toPush!="not" && d.sdg!="")
+      nodes.push({"name": d.sdg, "cat": "SDG", "value": 1})
+  })
+
+
+  var min=d3.min(nodes.map(function(d) {return (parseFloat(d.value));} ));
+  var max=d3.max(nodes.map(function(d) {return (parseFloat(d.value));} ));
+
+  radius = d3.scaleSqrt().domain([min,max]).range([8,50]);
+
+  var linksTemp = [];
+
+  graph.forEach(function(d){
+    if(d.sdg!=""){
+      var sdgDoc={"source": d.document,"target": d.sdg ,"value": "2"};
+      var conceptDoc={"source": d.document,"target": d.concept ,"value": "1" };
+      var pushsdgDoc="yes";
+      var pushConceptDoc="yes";
+
+      linksTemp.forEach(function(k){
+        if(k==sdgDoc)
+          pushsdgDoc="no";
+        if(k==conceptDoc)
+          pushConceptDoc="no";
+      })
+
+      if(pushsdgDoc=="yes")
+        linksTemp.push({"source": d.document,"target": d.sdg ,"value": "2"});
+
+      if(pushConceptDoc=="yes")
+        linksTemp.push({"source": d.document,"target": d.concept ,"value": "1" });  
+
+    };
+  })
+
+
+  links = linksTemp.filter(function(elem, pos) {
+    return linksTemp.indexOf(elem) == pos;
+  });
+
+
+  link = svg.selectAll(".link")
+  .data(links)
+    //.data(links.filter(function(k){return k.value!="1"}))
+    .enter()
+        .append("line")
+        .attr("class", "link")
+    .attr("stroke-width", 1)
+
+
+
+
+  node = svg.selectAll(".node")
+  .attr("class","node")
+  .data(nodes)
+   // .data(nodes.filter(function(k){return k.cat!="Document"}))
+    .enter()
+    .append("g");
+
+     
+  node.append("circle")
+  .attr("class","node")
+    .attr("class", function(d){
+      return d.cat;
+    })
+    .attr("id",function(d){ 
+         return d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_");
+     })
+    .attr("r", function(d){ 
+         return radius(d.value)
+     })
+    .attr("fill", function(d) { return color(d.cat); })
+    .attr("stroke","#939393")
+    .attr("stroke-width","0px")
+      /**.call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));**/
+
+
+  node.append("image")
+      .attr("xlink:href", function(d){
+        var key=key=d.cat.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_");
+        var url;
+        if(key=="concept")
+           url="icons/"+"Concept"+".svg";
+         else 
+           url="icons/"+key+".svg";
+          return url;
+      })
+      .attr("x", function(d){
+          return -radius(d.value)/2;
+      })
+      .attr("y", function(d){
+          return -radius(d.value)/2;
+      })
+      .attr("width", function(d){
+          return radius(d.value);
+      })
+      .attr("height", function(d){
+          return radius(d.value);
+      });
+
+
+
+  simulation
+      .nodes(nodes)
+      .on("tick", ticked);
+
+  simulation
+      .force("link")
+      .links(links);
+
+
+
+  node.on("mouseover", function (d) { 
+
+      //d3.select(this).style("opacity",0.6)
+
+     // opacityValue=d3.select(this).style("fill-opacity");
+      
+     // d3.select(this).style("fill-opacity",1);
+
+      d3.select(this).select("circle").style("fill","#939393");
+
+        tooltip.select("#tt-name").text(d.name);
+        if (d.cat=="Committee"){
+          var def;
+          acronymDef.forEach(function(k){
+            if(k.concept==d.name)
+              def= k.fullName;
+          })
+          tooltip.select("#tt-def").text(def); 
+
+        }
+        else{
+          tooltip.select("#tt-def").text("");
+        }
+
+        tooltip.select("#tt-ref").text(d.refNumber);
+
+        
+        return tooltip.style("visibility", "visible");
+    }).on("mousemove", function (d) {
+        return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
+    })
+  .on("mouseout", function (d) {
+      //d3.select(this).style("opacity",1)
+
+      //d3.select(this).style("fill-opacity",opacityValue);
+      
+      d3.select(this).select("circle").style("fill",function(d) { return color(d.cat); });
+
+        return tooltip.style("visibility", "hidden");
+    })
+    .on("click", 
+      clickOver(0.15)
+    )
+
+  fakeBackground
+        .on("click",  clickOut)
+  
+
+  function ticked() {
+   link
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+    node
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+    
+    /**node
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });**/
+  }
+
+  // build a dictionary of nodes that are linked
+  links.forEach(function(d) {
+      linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
+
+  // check the dictionary to see if nodes are linked
+  function isConnected(a, b) {
+      return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+  }
+
+  // fade nodes on hover
+  function clickOver(opacity) {
+
+      node.style("stroke-opacity", 1);
+      node.style("fill-opacity", 1);
+      link.style("stroke-opacity", 1);
+      link.style("stroke", "#ddd");
+
+      
+      return function(d) {
+          // check all other nodes to see if they're connected
+          // to this one. if so, keep the opacity at 1, otherwise
+          // fade
+
+
+          node.style("stroke-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : opacity;
+              return thisOpacity;
+          });
+          node.style("fill-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : opacity;
+              return thisOpacity;
+          });
+          // also style link accordingly
+          link.style("stroke-opacity", function(o) {
+              return o.source === d || o.target === d ? 1 : opacity;
+          });
+          link.style("stroke", function(o){
+              return o.source === d || o.target === d ? o.source.colour : "#ddd";
+          });
+      };
+  }
+
+  function clickOut() {
+   
+      node.style("stroke-opacity", 1);
+      node.style("fill-opacity", 1);
+      link.style("stroke-opacity", 1);
+      link.style("stroke", "#ddd");
+  }
+
+
+
+  //start with sdg box displayed
+  d3.select('#sdg').dispatch('click');
+});
+
+function setupButtons() {
+
+    d3.select('#toolbar')
+      .selectAll('.button')
+      .on('click', function () {
+        // Remove active class from all buttons
+        d3.selectAll('.button').classed('active', false);
+        // Find the button just clicked
+        var button = d3.select(this);
+
+        // Set it as the active button
+        button.classed('active', true);
+
+        // Get the id of the button
+        var buttonId = button.attr('id');
+
+
+        var alternate=0;
+
+        document.getElementById("list").innerHTML = '';
+        
+        if (buttonId== "document"){
+
+          node.style("stroke-opacity", 1);
+          node.style("fill-opacity", 1);
+          link.style("stroke-opacity", 1);
+          link.style("stroke", "#ddd");
+
+          document.getElementById("list").innerHTML = 'documents';
+          
+          changeNodeSize("document")
+
+          toplist = d3.select("#list").append("ul").attr("class","navList");
+          toplist.selectAll("li")
+              .data(nodes.filter(function(d){ return d.cat=="document" }).sort(function(a, b){ return d3.ascending(a.name, b.name); }))
+              .enter()
+              .append("li")
+              .attr("class",function(){
+                if (alternate==0){
+                  alternate=1
+                  return "formatList"
+                }
+                else{
+                  alternate=0;
+                  return  "formatList light"
+                }
+              })
+              .attr("id",function(d){return d.name;})
+              .text(function(d){return d.name;})
+              .on("mouseover",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+
+
+                d3.select("#chart").select(nodeSel).style("fill","#939393");
+
+
+                d3.select("#chart").select(nodeSel).attr("r",function(d){
+                  return  1.15 * radius(d.value);
+                })
+              })
+              .on("mouseout",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+
+                d3.select("#chart").select(nodeSel).style("fill",function(d) { return color(d.cat); });
+
+
+                d3.select("#chart").select(nodeSel).attr("r",function(d){
+                  return  radius(d.value);
+                })
+              })
+              .on("click",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+                var nodeSel=d3.select("#chart").select(nodeSel)._groups["0"]["0"].__data__
+
+                clickOverList(nodeSel,0.15)
+          
+              
+              });
+        } else if (buttonId== "concept"){
+
+          node.style("stroke-opacity", 1);
+          node.style("fill-opacity", 1);
+          link.style("stroke-opacity", 1);
+          link.style("stroke", "#ddd");
+
+          document.getElementById("list").innerHTML = 'Concept';
+
+          changeNodeSize("concept")
+          toplist = d3.select("#list").append("ul").attr("class","navList");
+          toplist.selectAll("li")
+              .data(nodes.filter(function(d){ return d.cat=="Concept" }).sort(function(a, b){ return d3.ascending(a.name, b.name); }))
+              .enter()
+              .append("li")
+              .attr("class",function(){
+                if (alternate==0){
+                  alternate=1
+                  return "formatList"
+                }
+                else{
+                  alternate=0;
+                  return  "formatList light"
+                }
+              })
+              .attr("id",function(d){return d.name;})
+              .text(function(d){
+                            return d.name;
+                      })
+              .on("mouseover",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+
+
+
+                d3.select("#chart").select(nodeSel).style("fill","#939393");
+
+
+                d3.select("#chart").select(nodeSel).attr("r",function(d){
+                  return 1.15 * radius(d.value);
+                })
+              })
+              .on("mouseout",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+
+                d3.select("#chart").select(nodeSel).style("fill",function(d) { return color(d.cat); });
+
+
+                d3.select("#chart").select(nodeSel).attr("r",function(d){
+                  return  radius(d.value);
+                })
+              })
+                .on("click",function(d){
+                
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+                var nodeSel=d3.select("#chart").select(nodeSel)._groups["0"]["0"].__data__
+
+                clickOverList(nodeSel,0.15)
+          
+              
+              });
+        }else if (buttonId== "sdg"){
+
+          node.style("stroke-opacity", 1);
+          node.style("fill-opacity", 1);
+          link.style("stroke-opacity", 1);
+          link.style("stroke", "#ddd");
+
+
+          document.getElementById("list").innerHTML = 'SDGs';
+
+          changeNodeSize("sdg")
+          toplist = d3.select("#list").append("ul").attr("class","navList");
+          toplist.selectAll("li")
+              .data(nodes.filter(function(d){ return (d.cat=="SDG") }).sort(function(a, b){ return d3.ascending(a.name, b.name); }))
+              .enter()
+              .append("li")
+              .attr("class", function(){
+                if (alternate==0){
+                  alternate=1
+                  return "formatList"
+                }
+                else{
+                  alternate=0;
+                  return  "formatList light"
+                }
+              })
+              .attr("id",function(d){return d.name;})
+              .text(function(d){return d.name;})
+              .on("mouseover",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+
+
+
+                d3.select("#chart").select(nodeSel).style("fill","#939393");
+
+                d3.select("#chart").select(nodeSel).attr("r",function(d){
+                  return  1.15 * radius(d.value);
+                })
+              })
+              .on("mouseout",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+
+                d3.select("#chart").select(nodeSel).style("fill",function(d) { return color(d.cat); });
+
+
+                d3.select("#chart").select(nodeSel).attr("r",function(d){
+                  return  radius(d.value);
+                })
+              })
+                .on("click",function(d){
+                var nodeSel="#"+d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_")
+                var nodeSel=d3.select("#chart").select(nodeSel)._groups["0"]["0"].__data__
+
+                clickOverList(nodeSel,0.15)
+          
+              
+              });
+        }
+      })
+  }  
+    
+setupButtons();
+// check the dictionary to see if nodes are linked
+function isConnectedList(a, b) {
+    return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+}
+// fade nodes on hover
+function clickOverList(nodeSel,opacity) {
+
+    d3.select("#chart").selectAll("g").style("stroke-opacity", 1);
+
+    
+    d3.select("#chart").selectAll("g").style("fill-opacity", 1);
+    
+    d3.select("#chart").selectAll(".link").style("stroke-opacity", 1);
+    
+    d3.select("#chart").selectAll(".link").style("stroke", "##999");
+
+
+    /**return function(d) {
+        // check all other nodes to see if they're connected
+        // to this one. if so, keep the opacity at 1, otherwise
+        // fade**/
+        node.style("stroke-opacity", function(o) {
+            thisOpacity = isConnectedList(nodeSel, o) ? 1 : 0.1;
+            return thisOpacity;
+        });
+        node.style("fill-opacity", function(o) {
+            thisOpacity = isConnectedList(nodeSel, o) ? 1 : 0.1;
+            return thisOpacity;
+        });
+        // also style link accordingly
+        link.style("stroke-opacity", function(o) {
+            return o.source === nodeSel || o.target === nodeSel ? 1 : 0.1;
+        });
+        link.style("stroke", function(o){
+            return o.source === nodeSel || o.target === nodeSel ? o.source.colour : "#ddd";
+        });
+        
+        //console.log(nodeSel)
+        
+        drawWordCloud(nodeSel);
+    //};
+}
+
+function changeNodeSize(variable){
+
+  if (variable=="Document"){
+    d3.select("#chart")
+      .selectAll("circle")
+      .transition().duration(500)
+      .attr("stroke","#939393")
+      .attr("stroke-width", function(d){
+        if(d.cat=="document")
+          return "4px";
+
+        if(d.cat=="concept")
+          return "0px";
+
+        if(d.cat=="Integrated Policy Framework")
+          return "0px";
+      })
+
+  };
+  if (variable=="Concept"){
+    d3.select("#chart")
+      .selectAll("circle")
+      .transition().duration(500)
+      .attr("stroke","#939393")
+      .attr("stroke-width",function(d){
+        if(d.cat=="document")
+          return "0px";
+
+        if(d.cat=="concept")
+          return "4px";
+
+
+        if(d.cat=="Integrated Policy Framework")
+          return "0px";
+      })
+  };
+  if (variable=="SDG"){
+    d3.select("#chart")
+      .selectAll("circle")
+      .transition().duration(500)
+      .attr("stroke","#939393")
+      .attr("stroke-width", function(d){
+        if(d.cat=="document")
+          return "0px";
+
+        if(d.cat=="concept")
+          return "0px";
+
+
+        if(d.cat=="Integrated Policy Framework")
+          return "4px";
+      })
+  };
+
+
+}
+
+
+function wrap(text, width) {  
+  text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+      while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
+      }
+  });
+}
+
+</script>
