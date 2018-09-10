@@ -1,0 +1,676 @@
+<!--look at https://d3plus.org/examples/advanced/9956648/-->
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<link href="style.css" rel="stylesheet">  
+</head>
+
+<div id="search_section" class="control">
+
+</div>
+<div class="banner">
+
+<h1>SDG map</h1>
+</div>
+
+
+
+<!--<div id="toolbar">
+  <div class="button " id="concept">Concept </div>
+  <div class="button " id="sdg">SDGs </div>
+  <div class="button " id="project">Project</div>--><!-- previous class was "button right"
+</div>-->
+<br/>
+<div id="legend"></div>
+<div id="chart"></div>
+<div id="detailledchart"></div>
+<!--<div id="listTitle">
+<input placeholder="Search Me" id="box" type="text" />
+  <div id="list"></div>
+</div>-->
+<script src="libs/jquery-1.7.2.min.js"></script>
+<script src="libs/d3.v4.min.js"></script>
+<script src="libs/d3.layout.cloud.js"></script>
+<script src="libs/d3-queue.v3.min.js"></script>
+<script src="libs/removeStopWords.js"></script>
+<script src="functions.js" >  </script>
+<script src="setupbuttonsfilters.js" >  </script>
+<script src="legend.js" >  </script>
+
+<script>
+
+var tooltip = d3.select("#chart")
+        .append("div")
+        .attr("class", "my-tooltip")
+        .style("position", "absolute")
+        .style("z-index", "9")
+        .style("visibility", "hidden");
+    tooltip.append("div")
+        .attr("id", "tt-name")
+        .text("simple")
+
+    tooltip.append("div")
+        .attr("id", "tt-def")
+        .style("font-style","italic")
+        .text("simple");;
+
+    tooltip.append("div")
+        .attr("id", "tt-ref")
+        .style("font-style","italic")
+        .text("simple");;
+
+var width = window.innerWidth;
+
+var height= 1.75*window.innerHeight;
+var height2=window.innerHeight/3;
+
+var heightLeg=60;
+
+
+var wrapWidth = width/8;
+
+
+var svg = d3.select("#chart").append("svg")
+          .attr("width", width)
+          .attr("height",height);
+
+var svg2 = d3.select("#detailledchart").append("svg")
+          .attr("width", width)
+          .attr("height",height2);
+
+
+var color = d3.scaleOrdinal().domain(["Concept","Publication","SDG"]).range(["#63C7E3","#F08372","#A9F489"]);
+//.range(["#142f4e","#00b1b2","#32A674"]);
+
+drawLegend();
+
+var simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(1))
+    .force("collide",d3.forceCollide( function(d){return d.iteration }).iterations(5) )
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("y", d3.forceY(0))
+    .force("x", d3.forceX(0))
+
+
+var fakeBackground=svg
+    .append("rect")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height" , height);
+
+     
+
+var nodes = [];
+var links=[];
+var linkedByIndex = {};
+var radius;
+var node;
+var link;
+
+var nodes2 = [];
+var links2=[];
+var linkedByIndex2 = {};
+var node2;
+var link2;
+
+var simulation2 = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(0.1).distance(75))
+    .force("collide",d3.forceCollide( function(d){return d.iteration }).iterations(10) )
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height2 / 2))
+    .force("y", d3.forceY(0))
+    .force("x", d3.forceX(0))
+
+
+var urls = {
+concept: "data/class_concept.tsv",
+data: "data/data.tsv"
+}
+
+
+d3.queue()
+.defer(d3.tsv, urls.concept)
+.defer(d3.tsv, urls.data)
+.await(render);
+
+var dimension=[];
+
+function render(err,concept,data){
+  if (err) throw error;
+ 
+  data.forEach(function(d){
+    var toPush=d.Pub_title;
+
+    nodes.forEach(function(k){
+      if(d.Pub_title==k.name){
+        toPush="not";
+        k.iteration=k.iteration+1;
+       
+      }
+    })
+    if (toPush!="not" && d.Pub_title!=""){
+      nodes.push({"name": d.Pub_title, "cat": "Publication" , "iteration": 1})
+      }
+  })
+
+  data.forEach(function(d){
+    var toPush=d.Pub_concept;
+    var class_concept_check=0;
+    var score=0;
+    nodes.forEach(function(k){
+      if(d.Pub_concept==k.name){
+        toPush="not";
+        k.iteration=k.iteration+1;
+        if(k.class_concept=="1")
+          k.class_concept_score=k.class_concept_score+1;
+      }
+    })
+    if (toPush!="not"){
+      concept.forEach(function(v){
+        if(d.Pub_concept==v.Active_concepts){
+          class_concept_check=1;
+          score=1;  
+        }
+      })
+    }
+
+    if (toPush!="not" && d.Pub_concept!="")
+      nodes.push({"name": d.Pub_concept, "cat": "Concept", "iteration": 1, "class_concept": class_concept_check,"class_concept_score":score});
+  })
+
+  data.forEach(function(d){
+    var toPush=d.SDG;
+
+    nodes.forEach(function(k){
+      if(d.SDG==k.name){
+        toPush="not";
+        //k.iteration=k.iteration+1;
+      }
+    })
+    if (toPush!="not" && d.SDG!="")
+      nodes.push({"name": d.SDG, "cat": "SDG", "iteration": 1})
+  })
+
+  var min=d3.min(nodes.map(function(d) {return (parseFloat(d.iteration));} ));
+  var max=d3.max(nodes.map(function(d) {return (parseFloat(d.iteration));} ));
+
+  radius = d3.scaleSqrt().domain([min,max]).range([1,20]);
+
+  var linksTemp = [];
+
+  data.forEach(function(d){
+    if(d.SDG!=""){
+      var sdgConcept={"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept};
+      var conceptPub={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept };
+
+      var pushsdgConcept="yes";
+      var pushConceptPub="yes";
+
+      linksTemp.forEach(function(k){
+        if(k==sdgConcept)
+          pushsdgConcept="no";
+        if(k==conceptPub)
+          pushConceptPub="no";
+      })
+
+      if(pushsdgConcept=="yes")
+        linksTemp.push({"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept});
+
+      if(pushConceptPub=="yes")
+        linksTemp.push({"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept});  
+
+    };
+  })
+
+
+  links = linksTemp.filter(function(elem, pos) {
+    return linksTemp.indexOf(elem) == pos;
+  });
+
+
+  link = svg.selectAll(".link")
+    .data(links.filter(function(d){return d.value=="1"}))
+    .enter()
+        .append("line")
+        .attr("class", "link")
+    .attr("stroke-width", 1)
+
+
+  node = svg.selectAll(".node")
+  .attr("class","node")
+  .data(nodes.filter(function(d){return d.cat=="SDG" || d.cat=="Concept"}))
+   // .data(nodes.filter(function(k){return k.cat!="Document"}))
+    .enter()
+    .append("g");
+
+     
+  node.append("circle")
+  .attr("class","node")
+    .attr("class", function(d){
+      return d.cat;
+    })
+    .attr("id",function(d){ 
+         return d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_");
+     })
+    .attr("r", function(d){ 
+      if (d.cat=="SDG")
+        return 30;
+      else 
+         return radius(d.iteration)
+     })
+    .attr("fill", function(d) { 
+      if (d.class_concept=="1")
+        return "#123123"
+      else
+        return color(d.cat); 
+    })
+    .attr("stroke","#939393")
+    .attr("stroke-width","0px");
+      /**.call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));**/
+
+
+  /**node.append("image")
+      .attr("xlink:href", function(d){
+        var key=key=d.cat.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_");
+        var url;
+        if(key=="concept")
+           url="icons/"+"Concept"+".svg";
+         else 
+           url="icons/"+key+".svg";
+          return url;
+      })
+      .attr("x", function(d){
+          return -radius(d.value)/2;
+      })
+      .attr("y", function(d){
+          return -radius(d.value)/2;
+      })
+      .attr("width", function(d){
+          return radius(d.value);
+      })
+      .attr("height", function(d){
+          return radius(d.value);
+      });
+**/
+
+
+   simulation
+      .nodes(nodes.filter(function(d){return d.cat=="SDG" || d.cat=="Concept"}))
+      .on("tick", ticked);
+
+  simulation
+      .force("link")
+      .links(links.filter(function(d){return d.value=="1"}));
+
+
+
+  node.on("mouseover", function (d) { 
+
+      d3.select(this).select("circle").style("fill","#939393");
+
+        
+          node.style("stroke-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.15;
+              return thisOpacity;
+          });
+          node.style("fill-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.15;
+              return thisOpacity;
+          });
+          // also style link accordingly
+          link.style("stroke-opacity", function(o) {
+              return o.source === d || o.target === d ? 1 : 0.15;
+          });
+          link.style("stroke", function(o){
+              return o.source === d || o.target === d ? o.source.colour : "#ddd";
+          })       
+      tooltip.select("#tt-name").text(d.name);
+        if (d.cat=="Committee"){
+          var def;
+          acronymDef.forEach(function(k){
+            if(k.concept==d.name)
+              def= k.fullName;
+          })
+          tooltip.select("#tt-def").text(def); 
+
+        }
+        else{
+          tooltip.select("#tt-def").text("");
+        }
+
+        tooltip.select("#tt-ref").text(d.refNumber);
+
+        return tooltip.style("visibility", "visible");
+
+    })
+  .on("mousemove", function (d) {
+        return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
+    })
+  .on("mouseout", function (d) {
+
+      /**node.style("stroke-opacity", 1);
+      node.style("fill-opacity", 1);
+      link.style("stroke-opacity", 1);
+      link.style("stroke", "#ddd");
+      **/ 
+
+      d3.select(this).select("circle").style("fill",function(d) {  
+        if (d.class_concept=="1")
+          return "#123123"
+        else
+          return color(d.cat); 
+      });
+
+        return tooltip.style("visibility", "hidden");
+    })
+    .on("click", 
+      clickOver(0.15)
+    )
+
+  fakeBackground
+        .on("click",  clickOut)
+  
+
+  function displaySubPub(sel){
+    svg2.selectAll("*").remove();
+
+    var data2concept=data.filter(function(d){return d.Pub_concept==sel.name})
+    var nodes2=[] 
+
+    data2concept.forEach(function(d){
+    var toPush=d.Pub_title;
+
+    nodes2.forEach(function(k){
+      if(d.Pub_title==k.name){
+        toPush="not";
+        k.iteration=k.iteration+1;
+       
+      }
+    })
+    if (toPush!="not" && d.Pub_title!=""){
+      nodes2.push({"name": d.Pub_title, "cat": "Publication" , "iteration": 1})
+      }
+  })
+
+  data2concept.forEach(function(d){
+    var toPush=d.Pub_concept;
+    var class_concept_check=0;
+    var score=0;
+    nodes2.forEach(function(k){
+      if(d.Pub_concept==k.name){
+        toPush="not";
+        k.iteration=k.iteration+1;
+        if(k.class_concept=="1")
+          k.class_concept_score=k.class_concept_score+1;
+      }
+    })
+    if (toPush!="not"){
+      concept.forEach(function(v){
+        if(d.Pub_concept==v.Active_concepts){
+          class_concept_check=1;
+          score=1;  
+        }
+      })
+    }
+
+    if (toPush!="not" && d.Pub_concept!="")
+      nodes2.push({"name": d.Pub_concept, "cat": "Concept", "iteration": 1, "class_concept": class_concept_check,"class_concept_score":score});
+  })
+
+  data2concept.forEach(function(d){
+    var toPush=d.SDG;
+
+    nodes2.forEach(function(k){
+      if(d.SDG==k.name){
+        toPush="not";
+        //k.iteration=k.iteration+1;
+      }
+    })
+    if (toPush!="not" && d.SDG!="")
+      nodes2.push({"name": d.SDG, "cat": "SDG", "iteration": 1})
+  })
+
+  var links2=[];
+  var linksTemp2 = [];
+
+  data2concept.forEach(function(d){
+    if(d.SDG!=""){
+      var sdgConcept={"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept};
+      var conceptPub={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept };
+
+      var pushsdgConcept="yes";
+      var pushConceptPub="yes";
+
+      linksTemp2.forEach(function(k){
+        if(k==sdgConcept)
+          pushsdgConcept="no";
+        if(k==conceptPub)
+          pushConceptPub="no";
+      })
+
+      if(pushsdgConcept=="yes")
+        linksTemp2.push({"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept});
+
+      if(pushConceptPub=="yes")
+        linksTemp2.push({"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept});  
+
+    };
+  })
+
+
+  links2 = linksTemp2.filter(function(elem, pos) {
+    return linksTemp2.indexOf(elem) == pos;
+  });
+
+       link2 = svg2.selectAll(".link")
+          .data(links2)
+          .enter()
+              .append("line")
+              .attr("class", "link2")
+          .attr("stroke-width", 1)
+
+
+        node2 = svg2.selectAll(".node")
+        .attr("class","node")
+        .data(nodes2)
+         // .data(nodes.filter(function(k){return k.cat!="Document"}))
+          .enter()
+          .append("g");
+
+           
+        node2.append("circle")
+        .attr("class","node")
+          .attr("class", function(d){
+            return d.cat;
+          })
+          .attr("id",function(d){ 
+               return d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_");
+           })
+          .attr("r", function(d){ 
+            if (d.cat=="SDG")
+                return 10;
+            else if (d.cat=="Concept")
+                return 20;
+            else
+                return 10;
+           })
+          .attr("fill", function(d) { 
+            if (d.class_concept=="1")
+              return "#123123"
+            else
+              return color(d.cat); 
+          })
+          .attr("stroke","#939393")
+          .attr("stroke-width","0px");
+
+         simulation2
+            .nodes(nodes2)
+            .on("tick", ticked2);
+
+        simulation2
+            .force("link")
+            .links(links2);
+
+  node2.on("mouseover", function (d) { 
+
+      d3.select(this).select("circle").style("fill","#939393");
+    
+      tooltip.select("#tt-name").text(d.name);
+        if (d.cat=="Committee"){
+          var def;
+          acronymDef.forEach(function(k){
+            if(k.concept==d.name)
+              def= k.fullName;
+          })
+          tooltip.select("#tt-def").text(def); 
+
+        }
+        else{
+          tooltip.select("#tt-def").text("");
+        }
+
+        tooltip.select("#tt-ref").text(d.refNumber);
+
+        return tooltip.style("visibility", "visible");
+
+    })
+  .on("mousemove", function (d) {
+        return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
+    })
+  .on("mouseout", function (d) {
+
+      d3.select(this).select("circle").style("fill",function(d) {  
+        if (d.class_concept=="1")
+          return "#123123"
+        else
+          return color(d.cat); 
+      });
+
+        return tooltip.style("visibility", "hidden");
+    })
+
+
+  }
+
+  function ticked() {
+   link
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+    node
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+    
+    /**node
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });**/
+  }
+
+  function ticked2() {
+   link2
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+    node2
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+    
+    /**node
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });**/
+  }
+  // build a dictionary of nodes that are linked
+  links.forEach(function(d) {
+      linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
+  // build a dictionary of nodes that are linked
+  links2.forEach(function(d) {
+      linkedByIndex2[d.source.index + "," + d.target.index] = 1;
+  });
+
+  // check the dictionary to see if nodes are linked
+  function isConnected(a, b) {
+      return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+  }
+
+  // fade nodes on hover
+  function clickOver(opacity) {
+      node.style("stroke-opacity", 1);
+      node.style("fill-opacity", 1);
+      link.style("stroke-opacity", 1);
+      link.style("stroke", "#ddd");
+
+
+      return function(d) {
+          // check all other nodes to see if they're connected
+          // to this one. if so, keep the opacity at 1, otherwise
+          // fade
+
+        //launch display of pubs
+        displaySubPub(d);
+
+          node.style("stroke-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : opacity;
+              return thisOpacity;
+          });
+          node.style("fill-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : opacity;
+              return thisOpacity;
+          });
+          // also style link accordingly
+          link.style("stroke-opacity", function(o) {
+              return o.source === d || o.target === d ? 1 : opacity;
+          });
+          link.style("stroke", function(o){
+              return o.source === d || o.target === d ? o.source.colour : "#ddd";
+          });
+      };
+  }
+
+  function clickOut() {
+   
+      node.style("stroke-opacity", 1);
+      node.style("fill-opacity", 1);
+      link.style("stroke-opacity", 1);
+      link.style("stroke", "#ddd");
+  }
+
+
+
+  //start with sdg box displayed
+  //d3.select('#sdg').dispatch('click');
+}
+
+
+
+
+function wrap(text, width) {  
+  text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+      while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
+      }
+  });
+}
+
+</script>
