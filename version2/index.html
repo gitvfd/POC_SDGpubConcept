@@ -41,8 +41,8 @@
 <script src="libs/d3.layout.cloud.js"></script>
 <script src="libs/d3-queue.v3.min.js"></script>
 <script src="libs/removeStopWords.js"></script>
-<script src="functions.js" >  </script>
-<script src="setupbuttonsfilters.js" >  </script>
+<!--<script src="functions.js" >  </script>
+<script src="setupbuttonsfilters.js" >  </script>-->
 <script src="legend.js" >  </script>
 
 <script>
@@ -374,7 +374,7 @@ function render(connectedNode,conceptSel){
      //.call(wrap, 50);
 
   var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {if(connectedNode!=0)return 1/connectedNode; else return 1;} ).distance(function(d) {if(connectedNode!=0)return 50*connectedNode; else return 50;}))
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {if(connectedNode!=0)return 1/Math.pow(connectedNode,2); else return 1;} ).distance(function(d) {if(connectedNode!=0)return 75*Math.pow(connectedNode,1.5); else return 50;}))
     .force("collide",d3.forceCollide( function(d){return 1.1*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
