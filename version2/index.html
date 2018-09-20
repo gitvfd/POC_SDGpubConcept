@@ -189,7 +189,7 @@ function loadData(err,concept,data){
       }
     })
     if (toPush!="not" && d.SDG!="")
-      nodes.push({"name": d.SDG, "cat": "SDG", "iteration": 1})
+      nodes.push({"name": d.SDG, "cat": "SDG", "iteration": 15})
   })
 
   min=d3.min(nodes.map(function(d) {return (parseFloat(d.iteration));} ));
