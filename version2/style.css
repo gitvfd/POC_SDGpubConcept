@@ -212,6 +212,16 @@ max-height:500px;
   float:right;
 }
 
+#secondChart{
+  margin-left:5%;
+  margin-right:5%;
+}
+
+#selectedConcept{
+
+  font : 18px Caecilia lt bold; color:#123123;
+  margin-bottom: 10px;
+}
 @media screen and (max-width: 670px) {
   h1{
     top: -15px; 

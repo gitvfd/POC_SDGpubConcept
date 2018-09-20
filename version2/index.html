@@ -31,7 +31,10 @@
 
 <div id="legend"></div>
 <div id="chart"></div>
-<div id="detailledchart"></div>
+<div id="secondChart">
+  <div id="selectedConcept">Click on a concept in the viz</div>
+  <div id="detailledchart"></div>
+</div>
 <!--<div id="listTitle">
 <input placeholder="Search Me" id="box" type="text" />
   <div id="list"></div>
@@ -374,8 +377,8 @@ function render(connectedNode,conceptSel){
      //.call(wrap, 50);
 
   var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {if(connectedNode!=0)return 1/Math.pow(connectedNode,2); else return 1;} ).distance(function(d) {if(connectedNode!=0)return 75*Math.pow(connectedNode,1.1); else return 50;}))
-    .force("collide",d3.forceCollide( function(d){return 1.1*radius(d.iteration) }).iterations(1) )
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {if(connectedNode!=0)return 1/Math.pow(connectedNode,2); else return 1;} ).distance(function(d) {if(connectedNode!=0)return 75; else return 50;}))
+    .force("collide",d3.forceCollide( function(d){if(connectedNode>1)return 1.1*radius(d.iteration)*Math.pow(connectedNode,0.5);else return 1.1*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
     .force("y", d3.forceY(0))
@@ -455,6 +458,8 @@ function render(connectedNode,conceptSel){
   function displaySubPub(sel){
     svg2.selectAll("*").remove();
 
+    document.getElementById("selectedConcept").innerHTML=sel.name;
+
     var data2concept=loadedData.filter(function(d){return d.Pub_concept==sel.name})
     var nodes2=[] 
 
@@ -473,7 +478,7 @@ function render(connectedNode,conceptSel){
       }
     })
 
-    data2concept.forEach(function(d){
+    /**data2concept.forEach(function(d){
       var toPush=d.Pub_concept;
       var class_concept_check=0;
       var score=0;
@@ -496,7 +501,7 @@ function render(connectedNode,conceptSel){
 
       if (toPush!="not" && d.Pub_concept!="")
         nodes2.push({"name": d.Pub_concept, "cat": "Concept", "iteration": 1, "class_concept": class_concept_check,"class_concept_score":score});
-    })
+    })**/
 
     data2concept.forEach(function(d){
       var toPush=d.SDG;
@@ -504,11 +509,10 @@ function render(connectedNode,conceptSel){
       nodes2.forEach(function(k){
         if(d.SDG==k.name){
           toPush="not";
-          //k.iteration=k.iteration+1;
         }
       })
       if (toPush!="not" && d.SDG!="")
-        nodes2.push({"name": d.SDG, "cat": "SDG", "iteration": 1})
+        nodes2.push({"name": d.SDG, "cat": "SDG", "iteration": 15})
     })
 
     var links2=[];
@@ -516,25 +520,34 @@ function render(connectedNode,conceptSel){
 
     data2concept.forEach(function(d){
       if(d.SDG!=""){
-        var sdgConcept={"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept};
-        var conceptPub={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept };
-
-        var pushsdgConcept="yes";
-        var pushConceptPub="yes";
+        //var sdgConcept={"source": d.Pub_title,"target": d.SDG ,"value": "1","class":d.Pub_concept};
+        //var conceptPub={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept };
+        var sdgPub={"source": d.Pub_title,"target": d.SDG ,"value": "1","class":d.Pub_title};
+        
+        //var pushsdgConcept="yes";
+        //var pushConceptPub="yes";
+        var pushsdgPub="yes";
 
         linksTemp2.forEach(function(k){
-          if(k==sdgConcept)
+         /** if(k==sdgConcept)
             pushsdgConcept="no";
           if(k==conceptPub)
-            pushConceptPub="no";
+            pushConceptPub="no";**/
+
+          if(k==sdgPub)
+            pushsdgPub="no";
         })
 
-        if(pushsdgConcept=="yes")
+        /**if(pushsdgConcept=="yes")
           linksTemp2.push({"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept});
 
         if(pushConceptPub=="yes")
           linksTemp2.push({"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept});  
+        **/
 
+
+        if(pushsdgPub=="yes")
+          linksTemp2.push({"source": d.Pub_title,"target": d.SDG ,"value": "2","class":d.Pub_title});
       };
     })
 
@@ -613,29 +626,10 @@ function render(connectedNode,conceptSel){
         });
 
 
-    node2.append("text")
-      .attr("class","nodeText")
-      .attr("dx", function(d){
-        //if(d.name.length<nodeLabelLength)
-          return widthSDG*1.5 + 10;
-        //else
-          //return -2*nodeLabelLength;
-      })
-      .attr("dy", function(d){
-          return 10;
-      })
-      .text(function(d){
-        if(d.cat=="Concept")
-          //return d.name.substring(0, nodeLabelLength);
-          return d.name;
-        else
-          return "";
-      })      
-     //.call(wrap, 50);
 
     var simulation2 = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(0.1).distance(function(d){if(d.target.cat=="SDG") return 5*widthSDG; else return 10*widthSDG;}))
-        .force("collide",d3.forceCollide(function(d){return 2*radius(d.iteration) }).iterations(5) )
+        .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(0.5).distance(function(d){if(d.target.cat=="SDG") return 7*widthSDG; else return 10*widthSDG;}))
+        .force("collide",d3.forceCollide(function(d){return 3*radius(d.iteration) }).iterations(1) )
         .force("charge", d3.forceManyBody())
         .force("center", d3.forceCenter(width / 2, height2 / 2))
         .force("y", d3.forceY(0))
@@ -653,6 +647,24 @@ function render(connectedNode,conceptSel){
 
       d3.select(this).select("circle").style("fill","#939393");
     
+
+
+          node2.style("stroke-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.05;
+              return thisOpacity;
+          });
+          node2.style("fill-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.05;
+              return thisOpacity;
+          });
+          // also style link accordingly
+          link2.style("stroke-opacity", function(o) {
+              return o.source === d || o.target === d ? 1 : 0.05;
+          });
+          link2.style("stroke", function(o){
+              return o.source === d || o.target === d ? o.source.colour : "#ddd";
+          })       
+
       tooltip.select("#tt-name").text(d.name);
         if (d.cat=="Committee"){
           var def;
@@ -676,15 +688,20 @@ function render(connectedNode,conceptSel){
         return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
     })
     .on("mouseout", function (d) {
-
-      d3.select(this).select("circle").style("fill",function(d) {  
-        if (d.class_concept=="1")
-          return "#123123"
-        else
-          return color(d.cat); 
-      });
+        node2.style("stroke-opacity",  1 );
+        node2.style("fill-opacity",  1 );
+        link2.style("stroke-opacity",1 );
+        link.style("stroke", "#ddd");
+              
+        d3.select(this).select("circle").style("fill",function(d) {  
+          if (d.class_concept=="1")
+            return "#123123"
+          else
+            return color(d.cat); 
+        });
 
         return tooltip.style("visibility", "hidden");
+
     })
   }
 
