@@ -16,7 +16,7 @@ function drawLegend(){
     })
     .attr("transform",function(d,i){
           i++;
-          return "translate("+i*width/5 + ","+heightLeg/4 + ")"
+          return "translate("+i*width/5 + ","+heightLeg/3 + ")"
         });
 
     var radiusLegend=heightLeg/4
@@ -29,6 +29,15 @@ function drawLegend(){
           return color("Concept");
         else
           return color(d.name); })
+
+    .attr("stroke","#939393")
+    .attr("stroke-width",function(d){
+      
+      if(d.name=="SDG")
+        return "2px"
+      else 
+        return "0px";
+    });
 
         
     nodeLegend.append("text")
