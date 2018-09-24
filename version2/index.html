@@ -171,7 +171,7 @@ function loadData(err,concept,data){
     })
     if (toPush!="not"){
       concept.forEach(function(v){
-        if(d.Pub_concept==v.Active_concepts){
+        if(d.Pub_concept==v.Active_concepts && d.SDG_short==v.SDG){
           class_concept_check=1;
           score=1;  
         }
@@ -230,14 +230,14 @@ function loadData(err,concept,data){
 
      if(pushsdgConcept=="yes"){
             concept.forEach(function(v){
-              if(d.Pub_concept==v.Active_concepts)
+              if(d.Pub_concept==v.Active_concepts && d.SDG_short==v.SDG)
                         class_sgd_concept_check="1"
             })
             linksTemp.push({"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept,'class_concept':class_sgd_concept_check});
       }
       if(pushConceptPub=="yes"){
             concept.forEach(function(v){
-              if(d.Pub_concept==v.Active_concepts)
+              if(d.Pub_concept==v.Active_concepts  && d.SDG_short==v.SDG)
                         class_pub_concept_check="1"
             })
             linksTemp.push({"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept,'class_concept':class_pub_concept_check});
