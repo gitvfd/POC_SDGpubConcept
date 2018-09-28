@@ -241,13 +241,14 @@ function loadData(err,concept,data){
 }
 
 function render(){
+
   svg.selectAll("*").remove();
 
   var fakeBackground=svg
     .append("rect")
     .attr("class", "overlay")
     .attr("width", width)
-    .attr("height" , height);
+    .attr("height" ,height);
 
   var dispNodes=nodes;
   var dispLinks=links;
@@ -320,15 +321,15 @@ function render(){
           return 3*widthSDG;
       });
   
-  node.append("rect")
-      .attr("class","nodeText")
-      .attr("x", function(d){
+  /**node.append("rect")
+      //.attr("class","nodeText")
+      .attr("dx", function(d){
         if(d.name.length<nodeLabelLength)
           return - 2*d.name.length;
         else
           return -2*nodeLabelLength;
       })
-      .attr("y", function(d){
+      .attr("dy", function(d){
           return radius(d.iteration)-5;
       })
       .attr("width", function(d){
@@ -342,16 +343,16 @@ function render(){
           return 20;
       }) 
       .attr("fill", function(d) { 
-          return "#979797"; 
+          return "#FE906F"; 
       })   
       .attr("opacity",function(d){
         if(d.cat=="Concept" && d.iteration>6)
           return 0.3;
         else
           return 0;
-      }); 
+      }); **/
 
-  node.append("text")
+  var test=node.append("text")
       .attr("class","nodeText")
       .attr("dx", function(d){
         if(d.name.length<nodeLabelLength)
@@ -369,7 +370,6 @@ function render(){
           return "";
       })      
 
-     //.call(wrap, 50);
 
   var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {return 0.2; } ).distance(height/200))
