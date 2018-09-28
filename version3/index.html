@@ -54,7 +54,7 @@ var tooltip = d3.select("#chart")
 
 var width = window.innerWidth;
 
-var height= 1.5*window.innerHeight;
+var height= 1.3*window.innerHeight;
 var height2=window.innerHeight/3;
 
 var heightLeg=60;
@@ -129,18 +129,17 @@ function loadData(err,concept,data){
       loadedData.push(d);
   })
 
+
   data.forEach(function(d){
-    var toPush=d.Pub_title;
+    var toPush=d.SDG;
 
     nodesTrans.forEach(function(k){
-      if(d.Pub_title==k.name){
+      if(d.SDG==k.name){
         toPush="not";
-        k.iteration=k.iteration+1;
       }
     })
-    if (toPush!="not" && d.Pub_title!=""){
-      nodesTrans.push({"name": d.Pub_title, "cat": "Publication" , "iteration": 1})
-      }
+    if (toPush!="not" && d.SDG!="")
+      nodesTrans.push({"name": d.SDG, "cat": "SDG", "iteration": 15})
   })
 
   data.forEach(function(d){
@@ -164,20 +163,14 @@ function loadData(err,concept,data){
       })
     }
 
-    if (toPush!="not" && d.Pub_concept!="")
+    if (toPush!="not" && class_concept_check==1)
       nodesTrans.push({"name": d.Pub_concept, "cat": "Concept", "iteration": 1, "class_concept": class_concept_check,"class_concept_score":score});
   })
 
-  data.forEach(function(d){
-    var toPush=d.SDG;
 
-    nodesTrans.forEach(function(k){
-      if(d.SDG==k.name){
-        toPush="not";
-      }
-    })
-    if (toPush!="not" && d.SDG!="")
-      nodesTrans.push({"name": d.SDG, "cat": "SDG", "iteration": 15})
+  nodesTrans.forEach(function(d){
+    if(d.cat=="SDG" || (d.cat=="Concept" && d.iteration>1 ))
+      nodes.push(d);
   })
 
   min=d3.min(nodesTrans.map(function(d) {return (parseFloat(d.iteration));} ));
@@ -191,22 +184,16 @@ function loadData(err,concept,data){
 
   data.forEach(function(d){
     if(d.SDG!=""){
-      var sdgConcept_v1={"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept,'class_concept':"0"};
-      var conceptPub_v1={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept,'class_concept':"0" };
-      var sdgConcept_v2={"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept,'class_concept':"1"};
-      var conceptPub_v2={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept,'class_concept':"1" };
+      var sdgConcept={"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept,'class_concept':"1"};
+      var conceptPub={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept,'class_concept':"1" };
 
       var pushsdgConcept="yes";
       var pushConceptPub="yes";
 
       linksTemp.forEach(function(k){
-        if(k==sdgConcept_v1)
-          pushsdgConcept="no";
-        if(k==conceptPub_v1)
+        if(k==conceptPub)
           pushConceptPub="no";
-        if(k==conceptPub_v2)
-          pushConceptPub="no";
-        if(k==conceptPub_v2)
+        if(k==conceptPub)
           pushConceptPub="no";
       })
       
@@ -231,10 +218,6 @@ function loadData(err,concept,data){
     };
   })
 
-  nodesTrans.forEach(function(d){
-    if(d.cat=="SDG" || (d.cat=="Concept" && d.iteration>1 && d.class_concept=="1"))
-      nodes.push(d);
-  })
 
 
   nodes.forEach(function(d){
@@ -337,6 +320,36 @@ function render(){
           return 3*widthSDG;
       });
   
+  node.append("rect")
+      .attr("class","nodeText")
+      .attr("x", function(d){
+        if(d.name.length<nodeLabelLength)
+          return - 2*d.name.length;
+        else
+          return -2*nodeLabelLength;
+      })
+      .attr("y", function(d){
+          return radius(d.iteration)-5;
+      })
+      .attr("width", function(d){
+        if(d.name.length<nodeLabelLength)
+          return 7.5*d.name.length;
+        else
+          return 7.5*nodeLabelLength;
+      
+      })
+      .attr("height", function(d){
+          return 20;
+      }) 
+      .attr("fill", function(d) { 
+          return "#979797"; 
+      })   
+      .attr("opacity",function(d){
+        if(d.cat=="Concept" && d.iteration>6)
+          return 0.3;
+        else
+          return 0;
+      }); 
 
   node.append("text")
       .attr("class","nodeText")
@@ -355,11 +368,12 @@ function render(){
         else
           return "";
       })      
+
      //.call(wrap, 50);
 
   var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {return 0.32; } ).distance(width/200))
-    .force("collide",d3.forceCollide( function(d){return 1.5*radius(d.iteration) }).iterations(1) )
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {return 0.2; } ).distance(height/200))
+    .force("collide",d3.forceCollide( function(d){return 1.25*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
     .force("y", d3.forceY(0))
