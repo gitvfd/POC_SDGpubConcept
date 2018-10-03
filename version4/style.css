@@ -88,7 +88,7 @@ caption{
   text-align:left;
   padding-left:10px;
   font:20px Caecilia lt bold; color:#557693;
-  font-style:underline;
+  text-decoration:underline;
 }
 
 th {
@@ -147,7 +147,10 @@ td {
 .overlay{
     fill: #ffffff;
 }
-
+.overlayTemp{
+    fill: #ffffff;
+    opacity: 0.001;
+}
 
 #listTitle{
     font: 21px  Caecilia, Helvetica, Arial, sans-serif;

@@ -409,8 +409,8 @@ function render(){
 
         return tooltip.style("visibility", "hidden");
     })
-    .on("click",clickOver(0.15))
-    .on("dblclick",function(d){ dblclickOver();})
+    .on("dblclick",clickOver(0.15))
+   // .on("dblclick",function(d){ dblclickOver();})
     
 
 
@@ -437,16 +437,24 @@ function render(){
       linkedByIndex[d.source.index + "," + d.target.index] = 1;
   });
 
-
-
   // check the dictionary to see if nodes are linked
   function isConnected(a, b) {
       return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
   }
 
-  function displaySubPub(sel){
-    var data2concept=loadedData.filter(function(d){return d.Pub_concept==sel.name})
+  function displaySubPub(sel){console.log("test")
 
+     svg
+      .append("rect")
+      .attr("class", "overlayTemp")
+      .attr("id","tempLayer")
+      .attr("width", width)
+      .attr("height" ,height)
+      .on("click",  function (){
+        d3.selectAll("#tempLayer").remove()
+      })
+  ;
+    var data2concept=loadedData.filter(function(d){return d.Pub_concept==sel.name})
     tabulate(data2concept,['SDG','Pub_title','Star'],sel.name)
   }
 
@@ -513,7 +521,7 @@ function render(){
   // fade nodes on hover
   function clickOver(opacity) {
 
-   // console.log("test1");
+
 
       node.style("stroke-opacity", 1);
       node.style("fill-opacity", 1);
