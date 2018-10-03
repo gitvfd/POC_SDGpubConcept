@@ -1,0 +1,599 @@
+<!--look at https://d3plus.org/examples/advanced/9956648/-->
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<link href="style.css" rel="stylesheet"> 
+
+</head>
+
+<body>
+<div id="search_section" class="control">
+
+</div>
+<div id="chart"></div>
+<!--<div id="secondChart">
+  <div id="selectedConcept">Click on a concept in the viz</div>
+  <div id="detailledchart"></div>
+</div>-->
+<script src="libs/jquery-1.7.2.min.js"></script>
+<script src="libs/d3.v4.min.js"></script>
+<script src="libs/d3.layout.cloud.js"></script>
+<script src="libs/d3-queue.v3.min.js"></script>
+<script src="libs/removeStopWords.js"></script>
+
+<script>
+
+var tooltip = d3.select("#chart")
+        .append("div")
+        .attr("class", "my-tooltip")
+        .style("position", "absolute")
+        .style("z-index", "9")
+        .style("visibility", "hidden");
+    tooltip.append("div")
+        .attr("id", "tt-name")
+        .text("simple")
+
+    tooltip.append("div")
+        .attr("id", "tt-def")
+        .style("font-style","italic")
+        .text("simple");;
+
+    tooltip.append("div")
+        .attr("id", "tt-ref")
+        .style("font-style","italic")
+        .text("simple");;
+
+var width = window.innerWidth;
+
+var height= 1*window.innerHeight;
+
+var heightLeg=60;
+
+
+var wrapWidth = width/8;
+
+
+var svg = d3.select("#chart").append("svg")
+          .attr("width", width)
+          .attr("height",height);
+
+
+var color = d3.scaleOrdinal().domain(["Concept","Publication","SDG"]).range(["#557693","#F08372","#123123"]);
+
+var colorSDGList=[];
+
+
+     
+var loadedData=[];
+var loadedConcept=[];
+
+var nodesTrans=[];
+var linksTrans=[];
+
+var nodes = [];
+var links=[];
+
+var linkedByIndex = {};
+var radius;
+var node;
+var link;
+var maxIteration;
+
+var nodeLabelLength=35;
+
+var widthSDG=width/60;
+var min,max;
+
+
+
+var urls = {
+concept: "data/class_concept.tsv",
+data: "data/data.tsv",
+colorSDG:"data/SDG_colors.tsv"
+}
+
+
+d3.queue()
+.defer(d3.tsv, urls.concept)
+.defer(d3.tsv, urls.data)
+.defer(d3.tsv, urls.colorSDG)
+.await(loadData);
+
+var dimension=[];
+
+function loadData(err,concept,data,colorSDG){
+  if (err) throw error;
+  concept.forEach(function(d){
+      loadedConcept.push(d);
+  })
+
+  colorSDG.forEach(function(d){
+      colorSDGList.push(d);
+  })
+  
+
+  data.forEach(function(d){
+      loadedData.push(d);
+  })
+
+
+  data.forEach(function(d){
+    var toPush=d.SDG;
+
+    nodesTrans.forEach(function(k){
+      if(d.SDG==k.name){
+        toPush="not";
+      }
+    })
+    if (toPush!="not" && d.SDG!="")
+      nodesTrans.push({"name": d.SDG, "cat": "SDG", "iteration": 20})
+  })
+
+  data.forEach(function(d){
+    var toPush=d.Pub_concept;
+    var class_concept_check=0;
+    var score=0;
+    nodesTrans.forEach(function(k){
+      if(d.Pub_concept==k.name){
+        toPush="not";
+        k.iteration=k.iteration+1;
+        if(k.class_concept=="1")
+          k.class_concept_score=k.class_concept_score+1;
+      }
+    })
+    if (toPush!="not"){
+      concept.forEach(function(v){
+        if(d.Pub_concept==v.Active_concepts && d.SDG_short==v.SDG){
+          class_concept_check=1;
+          score=1;  
+        }
+      })
+    }
+
+    if (toPush!="not" && class_concept_check==1)
+      nodesTrans.push({"name": d.Pub_concept, "cat": "Concept", "iteration": 1, "class_concept": class_concept_check,"class_concept_score":score});
+  })
+
+
+  nodesTrans.forEach(function(d){
+    if(d.cat=="SDG" || (d.cat=="Concept" && d.iteration>1 ))
+      nodes.push(d);
+  })
+
+  min=d3.min(nodesTrans.map(function(d) {return (parseFloat(d.iteration));} ));
+  max=d3.max(nodesTrans.map(function(d) {return (parseFloat(d.iteration));} ));
+
+  maxIteration=d3.max(nodesTrans.map(function(d) {if(d.cat=="Concept"){ return (parseFloat(d.iteration));}} ));
+
+  radius = d3.scaleSqrt().domain([min,maxIteration]).range([1,width/70]);
+
+  var linksTemp = [];
+
+  data.forEach(function(d){
+    if(d.SDG!=""){
+      var sdgConcept={"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept,'class_concept':"1"};
+      var conceptPub={"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept,'class_concept':"1" };
+
+      var pushsdgConcept="yes";
+      var pushConceptPub="yes";
+
+      linksTemp.forEach(function(k){
+        if(k==conceptPub)
+          pushConceptPub="no";
+        if(k==conceptPub)
+          pushConceptPub="no";
+      })
+      
+      var class_sgd_concept_check="0";
+      var class_pub_concept_check="0";
+
+     if(pushsdgConcept=="yes"){
+            concept.forEach(function(v){
+              if(d.Pub_concept==v.Active_concepts && d.SDG_short==v.SDG)
+                        class_sgd_concept_check="1"
+            })
+            linksTemp.push({"source": d.Pub_concept,"target": d.SDG ,"value": "1","class":d.Pub_concept,'class_concept':class_sgd_concept_check});
+      }
+      if(pushConceptPub=="yes"){
+            concept.forEach(function(v){
+              if(d.Pub_concept==v.Active_concepts  && d.SDG_short==v.SDG)
+                        class_pub_concept_check="1"
+            })
+            linksTemp.push({"source": d.Pub_concept,"target": d.Pub_title ,"value": "2","class":d.Pub_concept,'class_concept':class_pub_concept_check});
+      }
+
+    };
+  })
+
+
+
+  nodes.forEach(function(d){
+    linksTemp.forEach(function(k){
+    if(d.name==k.source)
+      k.score=d.iteration
+    })
+  })
+
+  linksTemp.forEach(function(d){
+    if(d.value=="1" && d.score>1 && d.class_concept=="1")
+      linksTrans.push(d);
+  })
+
+
+  links = linksTrans.filter(function(elem, pos) {
+    return linksTrans.indexOf(elem) == pos;
+  });
+
+  render(); 
+}
+
+function render(){
+
+  svg.selectAll("*").remove();
+
+  var fakeBackground=svg
+    .append("rect")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height" ,height);
+
+  var dispNodes=nodes;
+  var dispLinks=links;
+  
+    link = svg.selectAll(".link")
+      .data(dispLinks)
+      .enter()
+        .append("line")
+        .attr("class", "link")
+        .attr("stroke-width", 0.25)
+        .attr("stroke",function(d) { 
+          var color2return="#999";
+          colorSDGList.forEach(function(k){
+            if(k.SDG_Title==d.target.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
+              color2return=k.color_code;
+          }) 
+          return color2return; 
+      })
+
+    node = svg.selectAll(".node")
+      .attr("class","node")
+      .data(dispNodes)
+      .enter()
+      .append("g");
+  
+     
+  node.append("circle")
+  .attr("class","node")
+    .attr("class", function(d){
+      return d.cat;
+    })
+    .attr("id",function(d){ 
+         return d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_");
+     })
+    .attr("r", function(d){ 
+      if (d.cat=="SDG")
+        return widthSDG;
+      else 
+         return radius(d.iteration)
+     })
+    .attr("fill", function(d) { 
+
+        var color2return;
+        if(d.cat=="SDG"){
+          colorSDGList.forEach(function(k){
+            if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
+              color2return=k.color_code;
+          })
+        }else{
+          color2return="#557693"
+        }
+      return color2return; 
+    })
+    .attr("stroke","#939393")
+    .attr("stroke-width",function(d){
+      if(d.cat=="SDG")
+        return "0px"
+      else 
+        return "0px";
+    });
+
+
+  node.append("image")
+      .attr("class","SDGPic")
+      .attr("xlink:href", function(d){
+        var key=d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_");
+        var url;
+        if(d.cat=="SDG"){
+           url="icons/"+key+".svg";
+
+        }
+        return url;
+      })
+      .attr("x", function(d){
+        if(d.cat=="SDG")
+          return -1.25*widthSDG;
+      })
+      .attr("y", function(d){
+        if(d.cat=="SDG")
+          return -1.25*widthSDG;
+      })
+      .attr("width", function(d){
+        if(d.cat=="SDG")
+          return 2.5*widthSDG;
+      })
+      .attr("height", function(d){
+        if(d.cat=="SDG")
+          return 2.5*widthSDG;
+      });
+  
+  
+
+  var simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {return 0.2; } ).distance(height/200))
+    .force("collide",d3.forceCollide( function(d){return 1.25*radius(d.iteration) }).iterations(1) )
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("y", d3.forceY(0))
+    .force("x", d3.forceX(0))
+
+  simulation
+      .nodes(dispNodes)
+      .on("tick", ticked);
+
+  simulation
+      .force("link")
+      .links(dispLinks);
+
+
+  node.on("mouseover", function (d) { 
+
+          node.style("stroke-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.15;
+              return thisOpacity;
+          });
+          node.style("fill-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.15;
+              return thisOpacity;
+          });
+          // also style link accordingly
+          link.style("stroke-opacity", function(o) {
+              return o.source === d || o.target === d ? 1 : 0.15;
+          });
+
+          link.style("stroke-width", function(o) {
+              return o.source === d || o.target === d ? 1 : 0.25;
+          });
+
+          link.style("stroke", function(o){
+              return o.source === d || o.target === d ? o.source.colour : "#ddd";
+          })       
+          tooltip.select("#tt-name").text(d.name);
+            if (d.cat=="Committee"){
+              var def;
+              acronymDef.forEach(function(k){
+                if(k.concept==d.name)
+                  def= k.fullName;
+            })
+            tooltip.select("#tt-def").text(def); 
+
+        }
+        else{
+          tooltip.select("#tt-def").text("");
+        }
+
+        tooltip.select("#tt-ref").text(d.refNumber);
+
+        return tooltip.style("visibility", "visible");
+
+    })
+  .on("mousemove", function (d) {
+        return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
+    })
+  .on("mouseout", function (d) {
+
+
+      d3.select(this).select("circle").style("fill",function(d) { 
+
+          var color2return;
+          if(d.cat=="SDG"){
+            colorSDGList.forEach(function(k){
+              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
+                color2return=k.color_code;
+            })
+          }else{
+            color2return="#557693"
+          }
+        return color2return; 
+      });
+
+        return tooltip.style("visibility", "hidden");
+    })
+    .on("click",clickOver(0.15))
+    .on("dblclick",function(d){ dblclickOver();})
+    
+
+
+  fakeBackground
+        .on("click",  clickOut)
+  
+
+  function ticked() {
+   link
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+    node
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+    
+  }
+
+
+  //reinitialize dictionnary
+  linkedByIndex={};
+  // build a dictionary of nodes that are linked
+  dispLinks.forEach(function(d) {
+      linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
+
+
+
+  // check the dictionary to see if nodes are linked
+  function isConnected(a, b) {
+      return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+  }
+
+  function displaySubPub(sel){
+    var data2concept=loadedData.filter(function(d){return d.Pub_concept==sel.name})
+
+    tabulate(data2concept,['SDG','Pub_title','Star'],sel.name)
+  }
+
+
+  function tabulate(data, columns,concept) {
+
+    d3.selectAll("#conceptTable").remove();
+
+    var table = d3.select('body').append('table').attr("id","conceptTable")
+
+    // append the header row
+    table
+      .selectAll('caption')
+      .data([concept]).enter()
+      .append('caption')
+        .text(function (column) { return column; });
+
+
+    //var thead = table.append('thead')
+    var tbody = table.append('tbody');
+
+    // create a row for each object in the data
+    var rows = tbody.selectAll('tr')
+      .data(data)
+      .enter()
+      .append('tr');
+
+    // create a cell in each row for each column
+    var cells = rows.selectAll('td')
+      .data(function (row) {
+        return columns.map(function (column) {
+          return {column: column, value: row[column]};
+        });
+      })
+      .enter()
+      .append('td')
+      .style("background-color",function(d){
+          var color2return="";
+          if(d.column=="SDG"){
+            colorSDGList.forEach(function(k){
+              if(k.SDG_Title==d.value.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
+                color2return=k.color_code;
+            })
+          }
+          return color2return;
+      })
+      .attr("class",function(d){
+        if (d.column=="Star")
+          return "rating";
+      })
+      .text(function (d) {
+        if(d.column=="SDG")
+          return "  ";
+        else if (d.column=="Star")
+         return "☆";
+        else
+          return d.value; 
+      });
+
+    return table;
+  }
+
+
+  // fade nodes on hover
+  function clickOver(opacity) {
+
+   // console.log("test1");
+
+      node.style("stroke-opacity", 1);
+      node.style("fill-opacity", 1);
+      link.style("stroke-opacity", 1);
+      link.style("stroke", "#ddd");
+
+
+      return function(d) {
+          // check all other nodes to see if they're connected
+          // to this one. if so, keep the opacity at 1, otherwise
+          // fade
+
+
+          node.style("stroke-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : opacity;
+              return thisOpacity;
+          });
+          node.style("fill-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : opacity;
+              return thisOpacity;
+          });
+          // also style link accordingly
+          link.style("stroke-opacity", function(o) {
+              return o.source === d || o.target === d ? 1 : opacity;
+          });
+          link.style("stroke", function(o){
+              return o.source === d || o.target === d ? o.source.colour : "#ddd";
+          });
+
+          //launch display of pubs
+          if(d.cat=="Concept")
+            displaySubPub(d);
+      };
+  }
+
+  function clickOut() {
+
+      d3.selectAll("#conceptTable").remove();
+
+      node.style("stroke-opacity", 1);
+      node.style("fill-opacity", 1);
+      link.style("stroke-opacity", 1);
+      link.style("stroke", "#ddd");
+  }
+
+
+  function dblclickOver(){
+    //console.log("test3")
+  }
+
+
+}
+
+
+
+
+function wrap(text, width) {  
+  text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+      while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
+      }
+  });
+}
+
+</script>
+
+</body>
