@@ -12,10 +12,6 @@
 
 </div>
 <div id="chart"></div>
-<!--<div id="secondChart">
-  <div id="selectedConcept">Click on a concept in the viz</div>
-  <div id="detailledchart"></div>
-</div>-->
 <script src="libs/jquery-1.7.2.min.js"></script>
 <script src="libs/d3.v4.min.js"></script>
 <script src="libs/d3.layout.cloud.js"></script>
@@ -49,7 +45,6 @@ var width = window.innerWidth;
 var height= 1*window.innerHeight;
 
 var heightLeg=60;
-
 
 var wrapWidth = width/8;
 
@@ -329,7 +324,7 @@ function render(){
   
   
 
-  var simulation = d3.forceSimulation()
+  var simulation = d3.forceSimulation().alphaDecay(0.115) // the alphaDecay speeds up or slowdown the nodes positioning default is 0.0228
     .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {return 0.2; } ).distance(height/200))
     .force("collide",d3.forceCollide( function(d){return 1.25*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
@@ -408,8 +403,8 @@ function render(){
       });
 
         return tooltip.style("visibility", "hidden");
-    })
-    .on("dblclick",clickOver(0.15))
+  })
+  .on("click",clickOver(0.15))
    // .on("dblclick",function(d){ dblclickOver();})
     
 
@@ -452,6 +447,7 @@ function render(){
       .attr("height" ,height)
       .on("click",  function (){
         d3.selectAll("#tempLayer").remove()
+        d3.selectAll("#conceptTable").remove()
       })
   ;
     var data2concept=loadedData.filter(function(d){return d.Pub_concept==sel.name})

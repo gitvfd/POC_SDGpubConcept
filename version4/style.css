@@ -148,8 +148,8 @@ td {
     fill: #ffffff;
 }
 .overlayTemp{
-    fill: #ffffff;
-    opacity: 0.001;
+    fill: #999;
+    opacity: 0.25;
 }
 
 #listTitle{
