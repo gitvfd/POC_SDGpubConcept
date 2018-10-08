@@ -82,6 +82,9 @@ table {
   table-layout: auto;
   width: 30%; 
   opacity:1;  
+
+     font-family: sans-serif;
+     font-size:13px;
 }
 caption{
   background-color: rgba(85, 118, 147,0.2);
