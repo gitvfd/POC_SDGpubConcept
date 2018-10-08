@@ -341,74 +341,6 @@ function render(){
       .links(dispLinks);
 
 
-  node.on("mouseover", function (d) { 
-
-          node.style("stroke-opacity", function(o) {
-              thisOpacity = isConnected(d, o) ? 1 : 0.15;
-              return thisOpacity;
-          });
-          node.style("fill-opacity", function(o) {
-              thisOpacity = isConnected(d, o) ? 1 : 0.15;
-              return thisOpacity;
-          });
-          // also style link accordingly
-          link.style("stroke-opacity", function(o) {
-              return o.source === d || o.target === d ? 1 : 0.15;
-          });
-
-          link.style("stroke-width", function(o) {
-              return o.source === d || o.target === d ? 1 : 0.25;
-          });
-
-          link.style("stroke", function(o){
-              return o.source === d || o.target === d ? o.source.colour : "#ddd";
-          })       
-          tooltip.select("#tt-name").text(d.name);
-            if (d.cat=="Committee"){
-              var def;
-              acronymDef.forEach(function(k){
-                if(k.concept==d.name)
-                  def= k.fullName;
-            })
-            tooltip.select("#tt-def").text(def); 
-
-        }
-        else{
-          tooltip.select("#tt-def").text("");
-        }
-
-        tooltip.select("#tt-ref").text(d.refNumber);
-
-        return tooltip.style("visibility", "visible");
-
-    })
-  .on("mousemove", function (d) {
-        return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
-    })
-  .on("mouseout", function (d) {
-
-
-      d3.select(this).select("circle").style("fill",function(d) { 
-
-          var color2return;
-          if(d.cat=="SDG"){
-            colorSDGList.forEach(function(k){
-              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-                color2return=k.color_code;
-            })
-          }else{
-            color2return="#557693"
-          }
-        return color2return; 
-      });
-
-        return tooltip.style("visibility", "hidden");
-  })
-  .on("click",clickOver(0.15))
-   // .on("dblclick",function(d){ dblclickOver();})
-    
-
-
   fakeBackground
         .on("click",  clickOut)
   
@@ -437,10 +369,9 @@ function render(){
       return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
   }
 
-  function displaySubPub(sel){console.log("test")
+  function displaySubPub(sel){
 
-     svg
-      .append("rect")
+     svg.append("rect")
       .attr("class", "overlayTemp")
       .attr("id","tempLayer")
       .attr("width", width)
@@ -508,6 +439,20 @@ function render(){
          return "☆";
         else
           return d.value; 
+      })
+      .on("mouseover",function(d){
+        if(d.column=="SDG"){
+                  tooltip.select("#tt-name").text(d.value);
+                  return tooltip.style("visibility", "visible");
+        }
+      })
+      .on("mousemove",function (d){
+        if(d.column=="SDG")
+          return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px")
+      })
+      .on("mouseout",function (d){
+        if(d.column=="SDG")
+          return tooltip.style("visibility", "hidden");
       });
 
     return table;
@@ -516,8 +461,6 @@ function render(){
 
   // fade nodes on hover
   function clickOver(opacity) {
-
-
 
       node.style("stroke-opacity", 1);
       node.style("fill-opacity", 1);
@@ -548,9 +491,17 @@ function render(){
           });
 
           //launch display of pubs
-          if(d.cat=="Concept")
-            displaySubPub(d);
-      };
+          if(d.cat=="Concept"){
+                      displaySubPub(d)
+                      node.on("mouseover", mouseOverfunction)
+                        .on("mousemove", mouseMoveFunction)
+                        .on("mouseout", mouseOutFunction);
+          }else{
+            node.on("mouseover", mouseOverSDGfunction)
+              .on("mousemove", mouseMoveSDGFunction)
+              .on("mouseout", mouseOutSDGFunction);
+        };
+    };
   }
 
   function clickOut() {
@@ -562,13 +513,119 @@ function render(){
       link.style("stroke-opacity", 1);
       link.style("stroke", "#ddd");
   }
+  function mouseOverfunction(d) { 
 
+          node.style("stroke-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.15;
+              return thisOpacity;
+          });
+          node.style("fill-opacity", function(o) {
+              thisOpacity = isConnected(d, o) ? 1 : 0.15;
+              return thisOpacity;
+          });
+          // also style link accordingly
+          link.style("stroke-opacity", function(o) {
+              return o.source === d || o.target === d ? 1 : 0.15;
+          });
 
-  function dblclickOver(){
-    //console.log("test3")
-  }
+          link.style("stroke-width", function(o) {
+              return o.source === d || o.target === d ? 1 : 0.25;
+          });
 
+          link.style("stroke", function(o){
+              return o.source === d || o.target === d ? o.source.colour : "#ddd";
+          })       
+          tooltip.select("#tt-name").text(d.name);
+            if (d.cat=="Committee"){
+              var def;
+              acronymDef.forEach(function(k){
+                if(k.concept==d.name)
+                  def= k.fullName;
+            })
+            tooltip.select("#tt-def").text(def); 
 
+        }
+        else{
+          tooltip.select("#tt-def").text("");
+        }
+
+        tooltip.select("#tt-ref").text(d.refNumber);
+
+        return tooltip.style("visibility", "visible");
+
+    }
+
+    function mouseMoveFunction(d) {
+        return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
+    }
+
+    function mouseOutFunction (d) {
+
+      d3.select(this).select("circle").style("fill",function(d) { 
+
+          var color2return;
+          if(d.cat=="SDG"){
+            colorSDGList.forEach(function(k){
+              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
+                color2return=k.color_code;
+            })
+          }else{
+            color2return="#557693"
+          }
+        return color2return; 
+      });
+
+        return tooltip.style("visibility", "hidden");
+    }
+    function mouseOverSDGfunction(d) { 
+
+          tooltip.select("#tt-name").text(d.name);
+            if (d.cat=="Committee"){
+              var def;
+              acronymDef.forEach(function(k){
+                if(k.concept==d.name)
+                  def= k.fullName;
+            })
+            tooltip.select("#tt-def").text(def); 
+
+        }
+        else{
+          tooltip.select("#tt-def").text("");
+        }
+
+        tooltip.select("#tt-ref").text(d.refNumber);
+
+        return tooltip.style("visibility", "visible");
+
+    }
+
+    function mouseMoveSDGFunction(d) {
+        return tooltip.style("top", (d3.event.pageY - 75) + "px").style("left", (d3.event.pageX - 75) + "px");
+    }
+
+    function mouseOutSDGFunction (d) {
+
+      d3.select(this).select("circle").style("fill",function(d) { 
+
+          var color2return;
+          if(d.cat=="SDG"){
+            colorSDGList.forEach(function(k){
+              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
+                color2return=k.color_code;
+            })
+          }else{
+            color2return="#557693"
+          }
+        return color2return; 
+      });
+
+        return tooltip.style("visibility", "hidden");
+    }
+
+      node.on("mouseover", mouseOverfunction)
+        .on("mousemove", mouseMoveFunction)
+        .on("mouseout", mouseOutFunction)
+        .on("click",clickOver(0.15))
 }
 
 
