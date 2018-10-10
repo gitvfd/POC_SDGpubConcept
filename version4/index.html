@@ -380,9 +380,9 @@ function render(){
         d3.selectAll("#tempLayer").remove()
         d3.selectAll("#conceptTable").remove()
       })
-  ;
+  
     var data2concept=loadedData.filter(function(d){return d.Pub_concept==sel.name})
-    tabulate(data2concept,['SDG','Pub_title','Star'],sel.name)
+    tabulate(data2concept,['SDG','Publisher','Pub_title','Star'],sel.name)
   }
 
 
