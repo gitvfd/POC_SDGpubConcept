@@ -93,7 +93,7 @@ caption{
   border-bottom: 2px solid #fff;
 
   padding-bottom:10px;
-  font:20px Caecilia lt bold; color:#fff;
+  font:20px Roboto condensed; color:#fff;
   text-decoration:underline;
 }
 
@@ -109,6 +109,7 @@ td {
   stroke:#fff;
   background-color: #557693;
   color:#fff;
+  font:14px Roboto condensed; color:#fff;
   border-bottom: 2px solid #fff;
   ;
 }
