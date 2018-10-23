@@ -87,22 +87,25 @@ table {
   border-collapse: collapse;
 }
 caption{
-  background-color: rgba(85, 118, 147,0.2);
+  background-color: rgba(11, 30, 45,0.95);
   text-align:left;
   padding-left:10px;
-  font:20px Caecilia lt bold; color:#557693;
+  border-bottom: 2px solid #fff;
+
+  padding-bottom:10px;
+  font:20px Caecilia lt bold; color:#fff;
   text-decoration:underline;
 }
 
 th {
-  padding: 4px 4px 4px;
+  padding: 5px 5px 5px 5px;
   stroke:#fff;
   background-color: #fff;
   color:#557693;
   ;
 }
 td {
-  padding: 4px 4px 4px;
+  padding: 5px 5px 5px 5px;
   stroke:#fff;
   background-color: #557693;
   color:#fff;
