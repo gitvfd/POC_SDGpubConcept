@@ -39,7 +39,7 @@ var tooltip = d3.select("#chart")
 
 var width = window.innerWidth;
 
-var height= 1*window.innerHeight;
+var height= 0.99*window.innerHeight;
 
 var heightLeg=60;
 
@@ -325,7 +325,7 @@ function render(){
     .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {return 0.2; } ).distance(height/200))
     .force("collide",d3.forceCollide( function(d){return 1.25*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("center", d3.forceCenter(width / 2, 0.9*height / 2))
     .force("y", d3.forceY(0))
     .force("x", d3.forceX(0))
 
@@ -373,7 +373,9 @@ function render(){
       .attr("id","tempLayer")
       .attr("width", width)
       .attr("height" ,height)
-      .attr("fill","url(#diagonal-stripe-1) #fff")
+      //.attr("fill","url(#diagonal-stripe-1) #fff") previous
+      .attr("fill","#fff") 
+      .style("opacity",0.5) 
       .on("click",  function (){
         d3.selectAll("#tempLayer").remove()
         d3.selectAll("#conceptTable").remove()
@@ -427,12 +429,17 @@ function render(){
           return color2return;
       })
       .attr("class",function(d){
+        if (d.column=="Publisher")
+          return "publisher"
         if (d.column=="Star")
           return "rating";
       })
-      .text(function (d) {
+      .html(function (d) {
         if(d.column=="SDG")
           return "  ";
+
+        if(d.column=="Publisher")
+          return "<mark>"+d.value+"</mark>";
         else if (d.column=="Star")
          return "☆";
         else
@@ -654,6 +661,6 @@ function wrap(text, width) {
 }
 
 </script>
-<svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <pattern id="diagonal-stripe-1" patternUnits="userSpaceOnUse" width="10" height="10"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScvPgogIDxwYXRoIGQ9J00tMSwxIGwyLC0yCiAgICAgICAgICAgTTAsMTAgbDEwLC0xMAogICAgICAgICAgIE05LDExIGwyLC0yJyBzdHJva2U9J2JsYWNrJyBzdHJva2Utd2lkdGg9JzEnLz4KPC9zdmc+Cg==" x="0" y="0" width="10" height="10"> </image> </pattern> </defs> </svg>
+<!--<svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <pattern id="diagonal-stripe-1" patternUnits="userSpaceOnUse" width="10" height="10"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScvPgogIDxwYXRoIGQ9J00tMSwxIGwyLC0yCiAgICAgICAgICAgTTAsMTAgbDEwLC0xMAogICAgICAgICAgIE05LDExIGwyLC0yJyBzdHJva2U9J2JsYWNrJyBzdHJva2Utd2lkdGg9JzEnLz4KPC9zdmc+Cg==" x="0" y="0" width="10" height="10"> </image> </pattern> </defs> </svg>-->
 
 </body>

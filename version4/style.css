@@ -75,16 +75,16 @@ h2{
 
 
 table {
-  background:#ffffff;
+  background:#557693;
   position: absolute;
   left: 65%;
   top: 50%;
   table-layout: auto;
   width: 30%; 
   opacity:1;  
-
-     font-family: sans-serif;
-     font-size:13px;
+  font-family: sans-serif;
+  font-size:13px;
+  border-collapse: collapse;
 }
 caption{
   background-color: rgba(85, 118, 147,0.2);
@@ -95,17 +95,18 @@ caption{
 }
 
 th {
-  padding: 1px 4px;
+  padding: 4px 4px 4px;
   stroke:#fff;
   background-color: #fff;
   color:#557693;
   ;
 }
 td {
-  padding: 1px 4px;
+  padding: 4px 4px 4px;
   stroke:#fff;
   background-color: #557693;
   color:#fff;
+  border-bottom: 2px solid #fff;
   ;
 }
 
@@ -124,6 +125,11 @@ td {
    content: "\2605";
    position: absolute;
 }**/
+
+mark { 
+    background-color: #0F8FD9;
+    color: #fff;
+}
 .rating {
   cursor:pointer;
   unicode-bidi: bidi-override;
