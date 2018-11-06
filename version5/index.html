@@ -14,7 +14,7 @@
 </form>
 <div id="chart"></div>
 <div id="chartIndic"></div>
-<div id="conceptSlider">Find out the most connected concepts across SDGs<input type="text" id="connectionSlider" class="slider" /></div>
+<div id="conceptSlider">Filter concepts by minimum number of connections:<input type="text" id="connectionSlider" class="slider" /></div>
 <script src="libs/jquery-1.7.2.min.js"></script>
 <script src="libs/d3.v4.min.js"></script>
 <script src="libs/d3.layout.cloud.js"></script>
@@ -105,7 +105,9 @@ var maxIterationIndic;
 
 var nodeLabelLength=35;
 
-var widthSDG=width/60;
+var widthSDG=width/80;
+var widthBubbleMax=width/80;
+
 var min,max;
 var minIndic,maxIndic;
 
@@ -206,7 +208,7 @@ function loadData(err,concept,data,colorSDG,indicData){
   
   maxList=d3.max(nodesTrans.map(function(d) { if(d.cat=="Concept"){return d.list.length;}} ));
 
-  radius = d3.scaleSqrt().domain([min,maxIteration]).range([1,width/70]);
+  radius = d3.scaleSqrt().domain([min,maxIteration]).range([1,widthBubbleMax]);
 
   var linksTemp = [];
 
@@ -295,7 +297,7 @@ function loadData(err,concept,data,colorSDG,indicData){
 
   maxIterationIndic=d3.max(nodesTransIndic.map(function(d) {if(d.cat=="Concept"){ return (parseFloat(d.iteration));}} ));
 
-  radiusIndic = d3.scaleSqrt().domain([minIndic,maxIterationIndic]).range([1,width/70]);
+  radiusIndic = d3.scaleSqrt().domain([minIndic,maxIterationIndic]).range([1,widthBubbleMax]);
 
 
   var linksTempIndic = [];
@@ -356,7 +358,55 @@ function render(connectedNodes){
     .attr("height" ,height);
 
     var dispLinks=links.filter(function(d){return  d.connection>=connectedNodes})
-    var dispNodes=nodes.filter(function(d){return d.cat=="SDG" || (d.cat=="Concept" && d.list.length>=connectedNodes)})
+
+ 
+    
+    var listSDG=[]
+    links.filter(function(d){return  d.connection>=connectedNodes}).forEach(function(d){
+
+        var toPush="yes";
+        listSDG.forEach(function(k){
+        if(d.target==k)
+          toPush="no"
+        })
+        if(toPush=="yes")
+          listSDG.push(d.target)
+      
+    })
+
+    function isJson(item) {
+        item = typeof item !== "string"
+            ? JSON.stringify(item)
+            : item;
+
+        try {
+            item = JSON.parse(item);
+        } catch (e) {
+            return false;
+        }
+
+        if (typeof item === "object" && item !== null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    var listSDGcheck=[]
+    listSDG.forEach(function(d){
+      listSDGcheck.push(d.name)
+      
+    })
+
+    var dispNodes=nodes.filter(function(d){
+     if (!isJson(listSDG[0])){
+        return d.cat=="SDG" || (d.cat=="Concept" && d.list.length>=connectedNodes)
+     }else{
+
+              return (d.cat=="SDG" && listSDGcheck.includes(d.name))|| (d.cat=="Concept" && d.list.length>=connectedNodes)
+        }
+    })
+
 
 
     link = svg.selectAll(".link")
