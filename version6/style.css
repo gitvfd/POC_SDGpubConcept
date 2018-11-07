@@ -78,14 +78,19 @@ h2{
   stroke-opacity: 0.1;
 }
 
+#conceptTable{
 
+}
 table {
   background:#557693;
   position: absolute;
   left: 65%;
   top: 50%;
   table-layout: auto;
+  display: block;
   width: 30%; 
+  height: 30%;
+  overflow-y: scroll;
   opacity:1;  
   font-family: sans-serif;
   font-size:13px;

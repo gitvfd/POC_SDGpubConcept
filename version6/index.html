@@ -165,7 +165,7 @@ function loadData(err,concept,data,colorSDG,indicData){
       }
     })
     if (toPush!="not" && d.SDG!="")
-      nodesTrans.push({"name": d.SDG, "cat": "SDG", "iteration": 20})
+      nodesTrans.push({"name": d.SDG, "cat": "SDG", "iteration": 100})
   })
 
 
@@ -297,8 +297,7 @@ function loadData(err,concept,data,colorSDG,indicData){
 
   maxIterationIndic=d3.max(nodesTransIndic.map(function(d) {if(d.cat=="Concept"){return (parseFloat(d.iteration));}} ));
 
-console.log(maxIterationIndic)
-console.log(minIndic)
+
 
   radiusIndic = d3.scaleSqrt().domain([minIndic,maxIterationIndic]).range([1,widthBubbleMax]);
 
@@ -501,7 +500,7 @@ function render(connectedNodes){
   
 
   var simulation = d3.forceSimulation().alphaDecay(0.115) // the alphaDecay speeds up or slowdown the nodes positioning default is 0.0228
-    .force("link", d3.forceLink().id(function(d) { return d.name; }).strength(function(d) {return 0.2; } ).distance(height/200))
+    .force("link", d3.forceLink().id(function(d) { return d.name; })/*.strength(function(d) {return 0.9; } )*/.distance(10))
     .force("collide",d3.forceCollide( function(d){return 1.25*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, 0.9*height / 2))
