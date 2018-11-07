@@ -74,7 +74,7 @@ var maxIteration;
 
 var nodeLabelLength=35;
 
-var widthSDG=width/60;
+var widthSDG=width/80;
 var min,max;
 
 
@@ -158,7 +158,7 @@ function loadData(err,concept,data,colorSDG){
 
   maxIteration=d3.max(nodesTrans.map(function(d) {if(d.cat=="Concept"){ return (parseFloat(d.iteration));}} ));
 
-  radius = d3.scaleSqrt().domain([min,maxIteration]).range([1,width/70]);
+  radius = d3.scaleSqrt().domain([min,maxIteration]).range([1,width/80]);
 
   var linksTemp = [];
 
