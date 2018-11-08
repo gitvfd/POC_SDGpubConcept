@@ -88,8 +88,8 @@ table {
   top: 50%;
   table-layout: auto;
   display: block;
-  width: 30%; 
-  height: 30%;
+  max-width: 30%; 
+  max-height: 30%;
   overflow-y: scroll;
   opacity:1;  
   font-family: sans-serif;
