@@ -6,8 +6,23 @@ body{
 #chartIndic{
   display:none;
 }
+#dimensions{
+  overflow: hidden;
+  float:left;
+}
 
+#connectionRadio{  
+  margin-left : 2.5%;
+  padding-left : 2.5%;
+  overflow: hidden;
+  float:left;
+  border-left: 4px solid lightgrey;
+   
+}
+.minConnect{
+  margin-left : 20px;
 
+}
 
 h1{
   font : 24px Caecilia lt bold; color:#0297C9;
