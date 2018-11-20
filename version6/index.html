@@ -568,7 +568,6 @@ function render(connectedNodes){
 
 
   function tabulate(data, columns,concept) {
-
     d3.selectAll("#conceptTable").remove();
 
     var table = d3.select('body').append('table').attr("id","conceptTable")
@@ -594,7 +593,7 @@ function render(connectedNodes){
     var cells = rows.selectAll('td')
       .data(function (row) {
         return columns.map(function (column) {
-          return {column: column, value: row[column]};
+          return {column: column, value: row[column],doi:row.Pub_doi};
         });
       })
       .enter()
@@ -624,7 +623,7 @@ function render(connectedNodes){
         else if (d.column=="Star")
          return "☆";
         else
-          return d.value; 
+          return "<a class=\"tableLink\" href=\"https://dx.doi.org/"+d.doi+"\" target=\"_blank\" >"+d.value+"</a>"; 
       })
       .on("mouseover",function(d){
         if(d.column=="SDG"){
