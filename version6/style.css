@@ -139,6 +139,12 @@ td {
   ;
 }
 
+.tableLink{ 
+  color:#fff;
+  font:14px Roboto condensed; color:#fff;
+  text-decoration: none;
+
+}
 /**.rating {
   cursor:pointer;
   unicode-bidi: bidi-override;
