@@ -162,6 +162,7 @@ td {
 }**/
 
 mark { 
+  padding:2px 5px 2px 5px;
     background-color: #0F8FD9;
     color: #fff;
 }
