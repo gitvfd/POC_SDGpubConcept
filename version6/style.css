@@ -97,7 +97,7 @@ h2{
 
 }
 table {
-  background:#557693;
+  background:#324E63;
   position: absolute;
   left: 65%;
   top: 50%;
@@ -126,13 +126,13 @@ th {
   padding: 5px 5px 5px 5px;
   stroke:#fff;
   background-color: #fff;
-  color:#557693;
+  color:#324E63;
   ;
 }
 td {
   padding: 5px 5px 5px 5px;
   stroke:#fff;
-  background-color: #557693;
+  background-color: #324E63;
   color:#fff;
   font:14px Roboto condensed; color:#fff;
   border-bottom: 2px solid #fff;
