@@ -23,6 +23,7 @@
 <script src="libs/d3-queue.v3.min.js"></script>
 <script src="libs/removeStopWords.js"></script>
 <script src="libs/rSlider.min.js"></script>
+<script src="libs/sdg-app.js"></script>
 
 <script>
 
@@ -68,8 +69,6 @@ var svgIndic = d3.select("#chartIndic").append("svg")
 
 var color = d3.scaleOrdinal().domain(["Concept","Publication","SDG"]).range(["#557693","#F08372","#123123"]);
 
-var colorSDGList=[];
-
 var dataValidated=[];
      
 var loadedData=[];
@@ -113,38 +112,51 @@ var widthBubbleMax=width/80;
 var min,max;
 var minIndic,maxIndic;
 
-
-
 var urls = {
-concept: "data/class_concept.tsv",
-data: "data/data.tsv",
-colorSDG:"data/SDG_colors.tsv",
-indicData: "data/indic_data.tsv",
+  concept: "data/class_concept.tsv",
+  data: "data/data.tsv",
+  indicData: "data/indic_data.tsv",
+};
 
+if (isEmbeddedInIFrame) {
+  sdgAppGetData(urls.indicData, loadData);
+} else {
+  d3.queue()
+    .defer(d3.tsv, urls.concept)
+    .defer(d3.tsv, urls.data)
+    .defer(d3.tsv, urls.indicData)
+    .await(loadData);
 }
 
-
-d3.queue()
-.defer(d3.tsv, urls.concept)
-.defer(d3.tsv, urls.data)
-.defer(d3.tsv, urls.colorSDG)
-.defer(d3.tsv, urls.indicData)
-.await(loadData);
+var sdgConfigs = {
+  'no-poverty': { label: '1: No poverty', color: '#EB1C2D' },
+  'zero-hunger': { label: '2: Zero hunger', color: '#D3A029' },
+  'good-health': { label: '3: Good health and well-being', color: '#279B48' },
+  'quality-education': { label: '4: Quality education', color: '#C31F33' },
+  'gender-equality': { label: '5: Gender equality', color: '#EF402B' },
+  'clean-water': { label: '6: Clean water and sanitation', color: '#00AED9' },
+  'affordable-energy': { label: '7: Affordable and clean energy', color: '#FDB713' },
+  'decent-work-growth': { label: '8: Decent work and economic growth', color: '#8F1838' },
+  'industry-innovation-and-infrastructure': { label: '9: Industry, innovation and infrastructure', color: '#F36D25' },
+  'reduced-inequalities': { label: '10: Reduced inequalities', color: '#E11484' },
+  'sustainable-cities': { label: '11: Sustainable cities and communities', color: '#F99D26' },
+  'responsible-consumption': { label: '12: Responsible consumption and production', color: '#CF8D2A' },
+  'climate-action': { label: '13: Climate action', color: '#48773E' },
+  'life-below-water': { label: '14: Life below water', color: '#007DBC' },
+  'life-on-land': { label: '15: Life on land', color: '#3EB049' },
+  'peace-justice-and-strong-institutions': { label: '16: Peace, justice and strong institutions', color: '#02558B' },
+  'partnerships-for-the-goals': { label: '17: Partnerships for the goals', color: '#183668' },
+};
 
 var dimension=[];
 
-function loadData(err,concept,data,colorSDG,indicData){
-  if (err) throw error;
+function loadData(err,concept,data,indicData){
+  if (err) throw err;
 
   //Formatting studies data
   concept.forEach(function(d){
       loadedConcept.push(d);
   })
-
-  colorSDG.forEach(function(d){
-      colorSDGList.push(d);
-  })
-  
 
   data.forEach(function(d){
       loadedData.push(d);
@@ -421,12 +433,7 @@ function render(connectedNodes){
         .attr("class", "link")
         .attr("stroke-width", 0.25)
         .attr("stroke",function(d) { 
-          var color2return="#999";
-          /**colorSDGList.forEach(function(k){
-            if(k.SDG_Title==d.target.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-              color2return=k.color_code;
-          }) **/
-          return color2return; 
+          return "#999"; 
       })
 
     node = svg.selectAll(".node")
@@ -454,10 +461,7 @@ function render(connectedNodes){
 
         var color2return;
         if(d.cat=="SDG"){
-          colorSDGList.forEach(function(k){
-            if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-              color2return=k.color_code;
-          })
+          color2return = sdgConfigs[d.name].color;
         }else{
           color2return="#557693"
         }
@@ -601,10 +605,7 @@ function render(connectedNodes){
       .style("background-color",function(d){
           var color2return="";
           if(d.column=="SDG"){
-            colorSDGList.forEach(function(k){
-              if(k.SDG_Title==d.value.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-                color2return=k.color_code;
-            })
+            color2return = sdgConfigs[d.value].color;
           }
           return color2return;
       })
@@ -627,7 +628,7 @@ function render(connectedNodes){
       })
       .on("mouseover",function(d){
         if(d.column=="SDG"){
-                  tooltip.select("#tt-name").text(d.value);
+                  tooltip.select("#tt-name").text(sdgConfigs[d.value] ? sdgConfigs[d.value].label : d.value);
                   return tooltip.style("visibility", "visible");
         }
       })
@@ -720,7 +721,7 @@ function render(connectedNodes){
           link.style("stroke", function(o){
               return o.source === d || o.target === d ? o.source.colour : "#ddd";
           })       
-          tooltip.select("#tt-name").text(d.name);
+          tooltip.select("#tt-name").text(sdgConfigs[d.name] ? sdgConfigs[d.name].label : d.name);
             if (d.cat=="Committee"){
               var def;
               acronymDef.forEach(function(k){
@@ -750,10 +751,7 @@ function render(connectedNodes){
 
           var color2return;
           if(d.cat=="SDG"){
-            colorSDGList.forEach(function(k){
-              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-                color2return=k.color_code;
-            })
+            color2return = sdgConfigs[d.name].color;
           }else{
             color2return="#557693"
           }
@@ -794,10 +792,7 @@ function render(connectedNodes){
 
           var color2return;
           if(d.cat=="SDG"){
-            colorSDGList.forEach(function(k){
-              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-                color2return=k.color_code;
-            })
+            color2return = sdgConfigs[d.name].color;
           }else{
             color2return="#557693"
           }
@@ -833,12 +828,7 @@ function renderIndic(){
         .attr("class", "link")
         .attr("stroke-width", 0.25)
         .attr("stroke",function(d) { 
-          var color2return="#999";
-          colorSDGList.forEach(function(k){
-            if(k.SDG_Title==d.target.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-              color2return=k.color_code;
-          }) 
-          return color2return; 
+          return sdgConfigs[d.target].color;; 
       })
 
     nodeIndic = svgIndic.selectAll(".node")
@@ -866,10 +856,7 @@ function renderIndic(){
 
         var color2return;
         if(d.cat=="SDG"){
-          colorSDGList.forEach(function(k){
-            if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-              color2return=k.color_code;
-          })
+          color2return = sdgConfigs[d.name].color;
         }else{
           color2return="#557693"
         }
@@ -1014,10 +1001,7 @@ function renderIndic(){
       .style("background-color",function(d){
           var color2return="";
           if(d.column=="SDG"){
-            colorSDGList.forEach(function(k){
-              if(k.SDG_Title==d.value.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-                color2return=k.color_code;
-            })
+            color2return = sdgConfigs[d.value].color;
           }
           return color2return;
       })
@@ -1040,7 +1024,7 @@ function renderIndic(){
       })
       .on("mouseover",function(d){
         if(d.column=="SDG"){
-                  tooltip.select("#tt-name").text(d.value);
+                  tooltip.select("#tt-name").text(sdgConfigs[d.value] ? sdgConfigs[d.value].label : d.value);
                   return tooltip.style("visibility", "visible");
         }
       })
@@ -1133,7 +1117,7 @@ function renderIndic(){
           linkIndic.style("stroke", function(o){
               return o.source === d || o.target === d ? o.source.colour : "#ddd";
           })       
-          tooltip.select("#tt-name").text(d.name);
+          tooltip.select("#tt-name").text(sdgConfigs[d.name] ? sdgConfigs[d.name].label : d.name);
             if (d.cat=="Committee"){
               var def;
               acronymDef.forEach(function(k){
@@ -1163,10 +1147,7 @@ function renderIndic(){
 
           var color2return;
           if(d.cat=="SDG"){
-            colorSDGList.forEach(function(k){
-              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-                color2return=k.color_code;
-            })
+            color2return = sdgConfigs[d.name].color;
           }else{
             color2return="#557693"
           }
@@ -1207,10 +1188,7 @@ function renderIndic(){
 
           var color2return;
           if(d.cat=="SDG"){
-            colorSDGList.forEach(function(k){
-              if(k.SDG_Title==d.name.replace(/[ .,\/#!$%\^&\*;:{}=\-_`~()]/g,"_"))
-                color2return=k.color_code;
-            })
+            color2return = sdgConfigs[d.name].color;
           }else{
             color2return="#557693"
           }

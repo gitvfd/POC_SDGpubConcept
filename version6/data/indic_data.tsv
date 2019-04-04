@@ -1,112 +1,112 @@
 Publisher	Indic_title	indic_doi	Indic_group	SDG	SDG_secondary	SDG_tertiary
-OECD	Meat consumption	10.1787/fa290fd0-en	Agricultural output	SDG12: Responsible Consumption And Production	SDG02: Zero hunger	
-OECD	Crop production	10.1787/49a4e677-en	Agricultural output	SDG15: Life On Land	SDG02: Zero hunger	
-OECD	Agricultural support	10.1787/6ea85c58-en	Agricultural policy	SDG15: Life On Land	SDG12: Responsible Consumption And Production	
-OECD	Producer protection	10.1787/f99067c0-en	Agricultural policy	SDG15: Life On Land	SDG12: Responsible Consumption And Production	
-OECD	Air and GHG emissions	10.1787/93d10cf7-en	Air and climate	SDG13: Climate Action	SDG12: Responsible Consumption And Production	
-OECD	Mobile broadband subscriptions	10.1787/1277ddc6-en	Broadband access	SDG09: Industry, Innovation, And Infrastructure	SDG17: Partnerships For The Goals	
-OECD	Business use of broadband	10.1787/6e2e8a67-en	Broadband access	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Households with broadband access	10.1787/f9b84af5-en	Broadband access	SDG09: Industry, Innovation, And Infrastructure	SDG10: Reduced Inequalities	
-OECD	Fixed broadband subscriptions	10.1787/902e48ee-en	Broadband access	SDG09: Industry, Innovation, And Infrastructure	SDG17: Partnerships For The Goals	
-OECD	Exchange rates	10.1787/037ed317-en	Conversion rates	SDG10: Reduced Inequalities		
-OECD	Purchasing power parities (PPP)	10.1787/1290ee5a-en	Conversion rates	SDG10: Reduced Inequalities		
+OECD	Meat consumption	10.1787/fa290fd0-en	Agricultural output	responsible-consumption	zero-hunger	
+OECD	Crop production	10.1787/49a4e677-en	Agricultural output	life-on-land	zero-hunger	
+OECD	Agricultural support	10.1787/6ea85c58-en	Agricultural policy	life-on-land	responsible-consumption	
+OECD	Producer protection	10.1787/f99067c0-en	Agricultural policy	life-on-land	responsible-consumption	
+OECD	Air and GHG emissions	10.1787/93d10cf7-en	Air and climate	climate-action	responsible-consumption	
+OECD	Mobile broadband subscriptions	10.1787/1277ddc6-en	Broadband access	industry-innovation-and-infrastructure	partnerships-for-the-goals	
+OECD	Business use of broadband	10.1787/6e2e8a67-en	Broadband access	industry-innovation-and-infrastructure		
+OECD	Households with broadband access	10.1787/f9b84af5-en	Broadband access	industry-innovation-and-infrastructure	reduced-inequalities	
+OECD	Fixed broadband subscriptions	10.1787/902e48ee-en	Broadband access	industry-innovation-and-infrastructure	partnerships-for-the-goals	
+OECD	Exchange rates	10.1787/037ed317-en	Conversion rates	reduced-inequalities		
+OECD	Purchasing power parities (PPP)	10.1787/1290ee5a-en	Conversion rates	reduced-inequalities		
 OECD	Value-added in non-financial corporations	10.1787/731f0874-en	Corporate sector			
 OECD	Value-added in financial corporations	10.1787/f891bfeb-en	Corporate sector			
 OECD	Financial corporations debt to equity ratio	10.1787/a3108a99-en	Corporate sector			
 OECD	Banking sector leverage	10.1787/027a0800-en	Corporate sector			
 OECD	Non-Financial corporations debt to surplus ratio	10.1787/dc95ffa7-en	Corporate sector			
-NCM	Visits to museums	10.6027/21a86541-en	Culture	SDG04: Quality education		
-NCM	Lending in public libraries	10.6027/3f3f95fd-en	Culture	SDG04: Quality education		
+NCM	Visits to museums	10.6027/21a86541-en	Culture	quality-education		
+NCM	Lending in public libraries	10.6027/3f3f95fd-en	Culture	quality-education		
 NCM	Visits to theatres	10.6027/ce44421f-en	Culture			
-NCM	Government spending on culture and leisure	10.6027/4763cde5-en	Culture	SDG11: Sustainable Cities And Communities		
-NCM	Granted asylum	10.6027/53b61168-en	Demography	SDG10: Reduced Inequalities		
-NCM	Population density	10.6027/3dfedd09-en	Demography	SDG11: Sustainable Cities And Communities		
-NCM	Elderly population	10.6027/2bee6de6-en	Demography	SDG11: Sustainable Cities And Communities		
-OECD	Fertility rates	10.1787/8272fb01-en	Demography	SDG03: Good health and well-being	SDG05: Gender equality	
-NCM	Induced abortions	10.6027/524a2652-en	Demography	SDG05: Gender equality	SDG03: Good health and well-being	
-NCM	Fertility rate	10.6027/71e0882a-en	Demography	SDG05: Gender equality	SDG03: Good health and well-being	
-OECD	Working age population	10.1787/d339918b-en	Demography	SDG08: Decent work and economic growth		
-NCM	Population	10.6027/3798009a-en	Demography	SDG11: Sustainable Cities And Communities		
-OECD	Population	10.1787/d434f82b-en	Demography	SDG11: Sustainable Cities And Communities		
-OECD	Young population	10.1787/3d774f19-en	Demography	SDG11: Sustainable Cities And Communities		
-OECD	Elderly population	10.1787/8d805ea1-en	Demography	SDG11: Sustainable Cities And Communities		
-OECD	Other official flows (OOF)	10.1787/6afef3df-en	Development resource flows	SDG10: Reduced Inequalities		
-OECD	Private flows	10.1787/4d31a9d6-en	Development resource flows	SDG10: Reduced Inequalities		
-OECD	Grants by private agencies and NGOs	10.1787/a42ccf0e-en	Development resource flows	SDG10: Reduced Inequalities		
-OECD	Total official and private flows	10.1787/52c1b6b4-en	Development resource flows	SDG10: Reduced Inequalities		
-OECD	Gender wage gap	10.1787/7cee77aa-en	Earnings and wages	SDG05: Gender equality	SDG10: Reduced Inequalities	
-OECD	Employee compensation by activity	10.1787/7af78603-en	Earnings and wages	SDG08: Decent work and economic growth		
-OECD	Wage levels	10.1787/0a1c27bc-en	Earnings and wages	SDG08: Decent work and economic growth		
-OECD	Average wages	10.1787/cc3e1387-en	Earnings and wages	SDG08: Decent work and economic growth		
-NCM	House price index	10.6027/8c55fed5-en	Economy	SDG11: Sustainable Cities And Communities		
+NCM	Government spending on culture and leisure	10.6027/4763cde5-en	Culture	sustainable-cities		
+NCM	Granted asylum	10.6027/53b61168-en	Demography	reduced-inequalities		
+NCM	Population density	10.6027/3dfedd09-en	Demography	sustainable-cities		
+NCM	Elderly population	10.6027/2bee6de6-en	Demography	sustainable-cities		
+OECD	Fertility rates	10.1787/8272fb01-en	Demography	good-health	gender-equality	
+NCM	Induced abortions	10.6027/524a2652-en	Demography	gender-equality	good-health	
+NCM	Fertility rate	10.6027/71e0882a-en	Demography	gender-equality	good-health	
+OECD	Working age population	10.1787/d339918b-en	Demography	decent-work-growth		
+NCM	Population	10.6027/3798009a-en	Demography	sustainable-cities		
+OECD	Population	10.1787/d434f82b-en	Demography	sustainable-cities		
+OECD	Young population	10.1787/3d774f19-en	Demography	sustainable-cities		
+OECD	Elderly population	10.1787/8d805ea1-en	Demography	sustainable-cities		
+OECD	Other official flows (OOF)	10.1787/6afef3df-en	Development resource flows	reduced-inequalities		
+OECD	Private flows	10.1787/4d31a9d6-en	Development resource flows	reduced-inequalities		
+OECD	Grants by private agencies and NGOs	10.1787/a42ccf0e-en	Development resource flows	reduced-inequalities		
+OECD	Total official and private flows	10.1787/52c1b6b4-en	Development resource flows	reduced-inequalities		
+OECD	Gender wage gap	10.1787/7cee77aa-en	Earnings and wages	gender-equality	reduced-inequalities	
+OECD	Employee compensation by activity	10.1787/7af78603-en	Earnings and wages	decent-work-growth		
+OECD	Wage levels	10.1787/0a1c27bc-en	Earnings and wages	decent-work-growth		
+OECD	Average wages	10.1787/cc3e1387-en	Earnings and wages	decent-work-growth		
+NCM	House price index	10.6027/8c55fed5-en	Economy	sustainable-cities		
 NCM	Real GDP growth rate	10.6027/090b9e27-en	Economy			
-NCM	Service sector	10.6027/775733e5-en	Economy	SDG09: Industry, Innovation, And Infrastructure		
-NCM	General government expenditure	10.6027/f743d6a9-en	Economy	SDG08: Decent work and economic growth		
-NCM	Government aid to developing countries	10.6027/e944badd-en	Economy	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
+NCM	Service sector	10.6027/775733e5-en	Economy	industry-innovation-and-infrastructure		
+NCM	General government expenditure	10.6027/f743d6a9-en	Economy	decent-work-growth		
+NCM	Government aid to developing countries	10.6027/e944badd-en	Economy	decent-work-growth	partnerships-for-the-goals	
 NCM	Taxes and social security contributions	10.6027/fde68a60-en	Economy			
 NCM	Gross Domestic Product (GDP)	10.6027/06038d41-en	Economy			
-NCM	Financial support per student	10.6027/f451c825-en	Education	SDG04: Quality education		
-NCM	Public spending on education	10.6027/5bd2fd1f-en	Education	SDG04: Quality education		
-NCM	Level of education achieved	10.6027/0edf1867-en	Education	SDG04: Quality education		
-NCM	Students performance	10.6027/077b67a4-en	Education	SDG04: Quality education		
-OECD	Graduation rate	10.1787/b858e05b-en	Education attainment	SDG04: Quality education		
-OECD	Enrolment rate	10.1787/1d7e7216-en	Education attainment	SDG04: Quality education		
-OECD	Population with tertiary education	10.1787/0b8f90e9-en	Education attainment	SDG04: Quality education		
-OECD	Adult education level	10.1787/36bce3fe-en	Education attainment	SDG04: Quality education		
-OECD	Education spending	10.1787/ca274bac-en	Education resources	SDG04: Quality education		
-OECD	Women teachers	10.1787/ee964f55-en	Education resources	SDG04: Quality education	SDG05: Gender equality	
-OECD	Teaching hours	10.1787/af23ce9b-en	Education resources	SDG04: Quality education		
-OECD	Spending on tertiary education	10.1787/a3523185-en	Education resources	SDG04: Quality education		
-OECD	Public spending on education	10.1787/f99b45d0-en	Education resources	SDG04: Quality education		
-OECD	Teachers' salaries	10.1787/f689fb91-en	Education resources	SDG04: Quality education		
-OECD	Teachers	10.1787/93af1f9d-en	Education resources	SDG04: Quality education		
-OECD	Number of students	10.1787/efa0dd43-en	Education resources	SDG04: Quality education		
-OECD	Teaching staff	10.1787/6a32426b-en	Education resources	SDG04: Quality education		
-OECD	Private spending on education	10.1787/6e70bede-en	Education resources	SDG04: Quality education		
-OECD	School principals	10.1787/206df7b1-en	Education resources	SDG04: Quality education		
-OECD	Part-time employment rate	10.1787/f2ad596c-en	Employment	SDG08: Decent work and economic growth		
-OECD	Labour force participation rate	10.1787/8a801325-en	Employment	SDG08: Decent work and economic growth		
-OECD	Temporary employment	10.1787/75589b8a-en	Employment	SDG08: Decent work and economic growth		
-OECD	Labour force forecast	10.1787/c6d4db79-en	Employment	SDG08: Decent work and economic growth		
-OECD	Self-employment rate	10.1787/fb58715e-en	Employment	SDG08: Decent work and economic growth		
-OECD	Labour force	10.1787/ef2e7159-en	Employment	SDG08: Decent work and economic growth		
-OECD	Employment by activity	10.1787/a258bb52-en	Employment	SDG08: Decent work and economic growth		
-OECD	Employment by education level	10.1787/26f676c7-en	Employment	SDG08: Decent work and economic growth		
-OECD	Employment rate by age group	10.1787/084f32c7-en	Employment	SDG08: Decent work and economic growth		
-OECD	Hours worked	10.1787/47be1c78-en	Employment	SDG08: Decent work and economic growth		
-OECD	Employment rate	10.1787/1de68a9b-en	Employment	SDG08: Decent work and economic growth		
-NCM	Production of renewable energies	10.6027/ea3bf437-en	Energy	SDG12: Responsible Consumption And Production	SDG07: Affordable and clean energy	
-NCM	Consumption of renewable energies	10.6027/b53e76f9-en	Energy	SDG07: Affordable and clean energy		
-NCM	Energy consumption	10.6027/edeb4dda-en	Energy	SDG07: Affordable and clean energy		
-OECD	Renewable energy	10.1787/aac7c3f1-en	Energy	SDG07: Affordable and clean energy		
-OECD	Crude oil import prices	10.1787/9ee0e3ab-en	Energy	SDG07: Affordable and clean energy		
-OECD	Nuclear power plants	10.1787/3cc1191d-en	Energy	SDG07: Affordable and clean energy		
-OECD	Primary energy supply	10.1787/1b33c15a-en	Energy	SDG07: Affordable and clean energy		
-OECD	Crude oil production	10.1787/4747b431-en	Energy	SDG07: Affordable and clean energy		
-OECD	Electricity generation	10.1787/c6e6caa2-en	Energy	SDG07: Affordable and clean energy		
-OECD	Employees by business size	10.1787/ceaf53c9-en	Entrepreneurship	SDG08: Decent work and economic growth		
-OECD	Self-employed with employees	10.1787/b7bf59b6-en	Entrepreneurship	SDG08: Decent work and economic growth		
-OECD	Starting a business	10.1787/a22da914-en	Entrepreneurship	SDG08: Decent work and economic growth		
-OECD	Self-employed without employees	10.1787/5d5d0d63-en	Entrepreneurship	SDG08: Decent work and economic growth		
-OECD	Enterprises by business size	10.1787/31d5eeaf-en	Entrepreneurship	SDG09: Industry, Innovation, And Infrastructure	SDG08: Decent work and economic growth	
-NCM	Greenhouse gas emissions	10.6027/2881654f-en	Environment accounts	SDG12: Responsible Consumption And Production	SDG07: Affordable and clean energy	SDG13: Climate Action
-NCM	Share of biofuel use of total fuel use	10.6027/e2d06a72-en	Environment accounts	SDG12: Responsible Consumption And Production	SDG07: Affordable and clean energy	SDG13: Climate Action
-NCM	Domestic material consumption (DMC)	10.6027/1329e58b-en	Environment accounts	SDG12: Responsible Consumption And Production		
-NCM	Emissions of acidifying pollutants	10.6027/41efdfa1-en	Environment accounts	SDG12: Responsible Consumption And Production		
-NCM	Greenhouse gases from production	10.6027/e84a46a1-en	Environment accounts	SDG13: Climate Action		
-NCM	Export of natural resources	10.6027/244cc400-en	Environment accounts	SDG07: Affordable and clean energy		
-NCM	Energy intensity	10.6027/dc1922d4-en	Environment accounts	SDG07: Affordable and clean energy		
-NCM	Import of natural resources	10.6027/36089226-en	Environment accounts	SDG07: Affordable and clean energy		
+NCM	Financial support per student	10.6027/f451c825-en	Education	quality-education		
+NCM	Public spending on education	10.6027/5bd2fd1f-en	Education	quality-education		
+NCM	Level of education achieved	10.6027/0edf1867-en	Education	quality-education		
+NCM	Students performance	10.6027/077b67a4-en	Education	quality-education		
+OECD	Graduation rate	10.1787/b858e05b-en	Education attainment	quality-education		
+OECD	Enrolment rate	10.1787/1d7e7216-en	Education attainment	quality-education		
+OECD	Population with tertiary education	10.1787/0b8f90e9-en	Education attainment	quality-education		
+OECD	Adult education level	10.1787/36bce3fe-en	Education attainment	quality-education		
+OECD	Education spending	10.1787/ca274bac-en	Education resources	quality-education		
+OECD	Women teachers	10.1787/ee964f55-en	Education resources	quality-education	gender-equality	
+OECD	Teaching hours	10.1787/af23ce9b-en	Education resources	quality-education		
+OECD	Spending on tertiary education	10.1787/a3523185-en	Education resources	quality-education		
+OECD	Public spending on education	10.1787/f99b45d0-en	Education resources	quality-education		
+OECD	Teachers' salaries	10.1787/f689fb91-en	Education resources	quality-education		
+OECD	Teachers	10.1787/93af1f9d-en	Education resources	quality-education		
+OECD	Number of students	10.1787/efa0dd43-en	Education resources	quality-education		
+OECD	Teaching staff	10.1787/6a32426b-en	Education resources	quality-education		
+OECD	Private spending on education	10.1787/6e70bede-en	Education resources	quality-education		
+OECD	School principals	10.1787/206df7b1-en	Education resources	quality-education		
+OECD	Part-time employment rate	10.1787/f2ad596c-en	Employment	decent-work-growth		
+OECD	Labour force participation rate	10.1787/8a801325-en	Employment	decent-work-growth		
+OECD	Temporary employment	10.1787/75589b8a-en	Employment	decent-work-growth		
+OECD	Labour force forecast	10.1787/c6d4db79-en	Employment	decent-work-growth		
+OECD	Self-employment rate	10.1787/fb58715e-en	Employment	decent-work-growth		
+OECD	Labour force	10.1787/ef2e7159-en	Employment	decent-work-growth		
+OECD	Employment by activity	10.1787/a258bb52-en	Employment	decent-work-growth		
+OECD	Employment by education level	10.1787/26f676c7-en	Employment	decent-work-growth		
+OECD	Employment rate by age group	10.1787/084f32c7-en	Employment	decent-work-growth		
+OECD	Hours worked	10.1787/47be1c78-en	Employment	decent-work-growth		
+OECD	Employment rate	10.1787/1de68a9b-en	Employment	decent-work-growth		
+NCM	Production of renewable energies	10.6027/ea3bf437-en	Energy	responsible-consumption	affordable-energy	
+NCM	Consumption of renewable energies	10.6027/b53e76f9-en	Energy	affordable-energy		
+NCM	Energy consumption	10.6027/edeb4dda-en	Energy	affordable-energy		
+OECD	Renewable energy	10.1787/aac7c3f1-en	Energy	affordable-energy		
+OECD	Crude oil import prices	10.1787/9ee0e3ab-en	Energy	affordable-energy		
+OECD	Nuclear power plants	10.1787/3cc1191d-en	Energy	affordable-energy		
+OECD	Primary energy supply	10.1787/1b33c15a-en	Energy	affordable-energy		
+OECD	Crude oil production	10.1787/4747b431-en	Energy	affordable-energy		
+OECD	Electricity generation	10.1787/c6e6caa2-en	Energy	affordable-energy		
+OECD	Employees by business size	10.1787/ceaf53c9-en	Entrepreneurship	decent-work-growth		
+OECD	Self-employed with employees	10.1787/b7bf59b6-en	Entrepreneurship	decent-work-growth		
+OECD	Starting a business	10.1787/a22da914-en	Entrepreneurship	decent-work-growth		
+OECD	Self-employed without employees	10.1787/5d5d0d63-en	Entrepreneurship	decent-work-growth		
+OECD	Enterprises by business size	10.1787/31d5eeaf-en	Entrepreneurship	industry-innovation-and-infrastructure	decent-work-growth	
+NCM	Greenhouse gas emissions	10.6027/2881654f-en	Environment accounts	responsible-consumption	affordable-energy	climate-action
+NCM	Share of biofuel use of total fuel use	10.6027/e2d06a72-en	Environment accounts	responsible-consumption	affordable-energy	climate-action
+NCM	Domestic material consumption (DMC)	10.6027/1329e58b-en	Environment accounts	responsible-consumption		
+NCM	Emissions of acidifying pollutants	10.6027/41efdfa1-en	Environment accounts	responsible-consumption		
+NCM	Greenhouse gases from production	10.6027/e84a46a1-en	Environment accounts	climate-action		
+NCM	Export of natural resources	10.6027/244cc400-en	Environment accounts	affordable-energy		
+NCM	Energy intensity	10.6027/dc1922d4-en	Environment accounts	affordable-energy		
+NCM	Import of natural resources	10.6027/36089226-en	Environment accounts	affordable-energy		
 NCM	Domestic extraction by material category	10.6027/b55034f0-en	Environment accounts			
 NCM	Consumer price index (CPI)	10.6027/f82d3c4a-en	Finance and prices			
-OECD	Fish landings	10.1787/93a69a82-en	Fisheries	SDG14: Life Below Water		
-OECD	Aquaculture production	10.1787/d00923d8-en	Fisheries	SDG14: Life Below Water		
-NCM	Fish catches	10.6027/4125675b-en	Fisheries	SDG14: Life Below Water		
-OECD	Fisheries support	10.1787/1ff7e544-en	Fisheries	SDG14: Life Below Water		
-OECD	FDI flows	10.1787/99f6e393-en	Foreign direct investment (FDI)	SDG17: Partnerships For The Goals		
-OECD	FDI stocks	10.1787/80eca1f9-en	Foreign direct investment (FDI)	SDG17: Partnerships For The Goals		
-OECD	FDI restrictiveness	10.1787/c176b7fa-en	Foreign direct investment (FDI)	SDG17: Partnerships For The Goals		
-OECD	Forest resources	10.1787/2546ca0a-en	Forest	SDG15: Life On Land	SDG13: Climate Action	
+OECD	Fish landings	10.1787/93a69a82-en	Fisheries	life-below-water		
+OECD	Aquaculture production	10.1787/d00923d8-en	Fisheries	life-below-water		
+NCM	Fish catches	10.6027/4125675b-en	Fisheries	life-below-water		
+OECD	Fisheries support	10.1787/1ff7e544-en	Fisheries	life-below-water		
+OECD	FDI flows	10.1787/99f6e393-en	Foreign direct investment (FDI)	partnerships-for-the-goals		
+OECD	FDI stocks	10.1787/80eca1f9-en	Foreign direct investment (FDI)	partnerships-for-the-goals		
+OECD	FDI restrictiveness	10.1787/c176b7fa-en	Foreign direct investment (FDI)	partnerships-for-the-goals		
+OECD	Forest resources	10.1787/2546ca0a-en	Forest	life-on-land	climate-action	
 OECD	Quarterly GDP	10.1787/b86d1fc8-en	GDP and spending			
 OECD	Real GDP long-term forecast	10.1787/d927bc18-en	GDP and spending			
 OECD	Investment (GFCF)	10.1787/b6793677-en	GDP and spending			
@@ -117,52 +117,52 @@ OECD	Domestic demand forecast	10.1787/cf2732d3-en	GDP and spending
 OECD	Investment forecast	10.1787/bc5b411d-en	GDP and spending			
 OECD	Real GDP forecast	10.1787/1f84150b-en	GDP and spending			
 OECD	Nominal GDP forecast	10.1787/dad11be4-en	GDP and spending			
-OECD	General government financial wealth	10.1787/325ddad1-en	General government	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-OECD	General government deficit	10.1787/77079edb-en	General government	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-OECD	General government spending by destination	10.1787/d853db3b-en	General government	SDG08: Decent work and economic growth		
-OECD	General government revenue	10.1787/b68b04ae-en	General government	SDG08: Decent work and economic growth		
-OECD	General government debt	10.1787/a0528cc2-en	General government	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-OECD	General government spending	10.1787/a31cbf4d-en	General government	SDG08: Decent work and economic growth		
+OECD	General government financial wealth	10.1787/325ddad1-en	General government	decent-work-growth	partnerships-for-the-goals	
+OECD	General government deficit	10.1787/77079edb-en	General government	decent-work-growth	partnerships-for-the-goals	
+OECD	General government spending by destination	10.1787/d853db3b-en	General government	decent-work-growth		
+OECD	General government revenue	10.1787/b68b04ae-en	General government	decent-work-growth		
+OECD	General government debt	10.1787/a0528cc2-en	General government	decent-work-growth	partnerships-for-the-goals	
+OECD	General government spending	10.1787/a31cbf4d-en	General government	decent-work-growth		
 OECD	Government reserves	10.1787/1edb11ee-en	General government			
 OECD	Government production costs	10.1787/44ec61e6-en	General government			
-OECD	Central government spending	10.1787/83a23f1b-en	General government	SDG08: Decent work and economic growth		
-NCM	Land use	10.6027/6591a257-en	Geography	SDG15: Life On Land		
-OECD	Hospital discharge rates	10.1787/5880c955-en	Health care use	SDG03: Good health and well-being		
-OECD	Influenza vaccination rates	10.1787/e452582e-en	Health care use	SDG03: Good health and well-being		
-OECD	Computed tomography (CT) exams	10.1787/3c994537-en	Health care use	SDG03: Good health and well-being		
-OECD	Doctors' consultations	10.1787/173dcf26-en	Health care use	SDG03: Good health and well-being		
-OECD	Child vaccination rates	10.1787/b23c7d13-en	Health care use	SDG03: Good health and well-being		
-OECD	Caesarean sections	10.1787/adc3c39f-en	Health care use	SDG03: Good health and well-being	SDG05: Gender equality	
-OECD	Length of hospital stay	10.1787/8dda6b7a-en	Health care use	SDG03: Good health and well-being		
-OECD	Magnetic resonance imaging (MRI) exams	10.1787/1d89353f-en	Health care use	SDG03: Good health and well-being		
-OECD	Magnetic resonance imaging (MRI) units	10.1787/1a72e7d1-en	Health equipment	SDG03: Good health and well-being		
-OECD	Hospital beds	10.1787/0191328e-en	Health equipment	SDG03: Good health and well-being		
-OECD	Computed tomography (CT) scanners	10.1787/bedece12-en	Health equipment	SDG03: Good health and well-being		
-OECD	Radiotherapy equipment	10.1787/47a5492f-en	Health equipment	SDG03: Good health and well-being		
-OECD	Mammography machines	10.1787/685c9c5e-en	Health equipment	SDG03: Good health and well-being		
-OECD	Doctors	10.1787/4355e1ec-en	Health resources	SDG03: Good health and well-being		
-OECD	Nursing graduates	10.1787/c54611e3-en	Health resources	SDG03: Good health and well-being		
-OECD	Medical graduates	10.1787/ac5bd5d3-en	Health resources	SDG03: Good health and well-being		
-OECD	Health spending	10.1787/8643de7e-en	Health resources	SDG03: Good health and well-being	SDG10: Reduced Inequalities	
-OECD	Pharmaceutical spending	10.1787/998febf6-en	Health resources	SDG03: Good health and well-being		
-NCM	Doctors and dentists	10.6027/328d3fbd-en	Health resources	SDG03: Good health and well-being		
-NCM	Hospital beds	10.6027/be537f32-en	Health resources	SDG03: Good health and well-being		
-NCM	Health care spending	10.6027/570cc4ed-en	Health resources	SDG03: Good health and well-being		
-OECD	Nurses	10.1787/283e64de-en	Health resources	SDG03: Good health and well-being		
-NCM	Alcohol consumption	10.6027/469a1560-en	Health risk	SDG03: Good health and well-being		
-NCM	Daily smokers	10.6027/10e02d6f-en	Health risk	SDG03: Good health and well-being		
-OECD	Daily smokers	10.1787/1ff488c2-en	Health risks	SDG03: Good health and well-being		
-OECD	Overweight or obese population	10.1787/86583552-en	Health risks	SDG03: Good health and well-being		
-OECD	Alcohol consumption	10.1787/e6895909-en	Health risks	SDG03: Good health and well-being		
-OECD	Suicide rates	10.1787/a82f3459-en	Health status	SDG03: Good health and well-being		
-OECD	Potential years of life lost	10.1787/193a2829-en	Health status	SDG03: Good health and well-being		
-OECD	Life expectancy at birth	10.1787/27e0fc9d-en	Health status	SDG03: Good health and well-being		
-OECD	Infant mortality rates	10.1787/83dea506-en	Health status	SDG03: Good health and well-being		
-OECD	Life expectancy at 65	10.1787/0e9a3f00-en	Health status	SDG03: Good health and well-being		
-OECD	Deaths from cancer	10.1787/8ea65c4b-en	Health status	SDG03: Good health and well-being		
-NCM	Life expectancy for men	10.6027/5658450d-en	Health status	SDG03: Good health and well-being		
-NCM	Deaths from cancer	10.6027/47a385bc-en	Health status	SDG03: Good health and well-being		
-NCM	Life expectancy for women	10.6027/ecc8db0d-en	Health status	SDG03: Good health and well-being	SDG05: Gender equality	
+OECD	Central government spending	10.1787/83a23f1b-en	General government	decent-work-growth		
+NCM	Land use	10.6027/6591a257-en	Geography	life-on-land		
+OECD	Hospital discharge rates	10.1787/5880c955-en	Health care use	good-health		
+OECD	Influenza vaccination rates	10.1787/e452582e-en	Health care use	good-health		
+OECD	Computed tomography (CT) exams	10.1787/3c994537-en	Health care use	good-health		
+OECD	Doctors' consultations	10.1787/173dcf26-en	Health care use	good-health		
+OECD	Child vaccination rates	10.1787/b23c7d13-en	Health care use	good-health		
+OECD	Caesarean sections	10.1787/adc3c39f-en	Health care use	good-health	gender-equality	
+OECD	Length of hospital stay	10.1787/8dda6b7a-en	Health care use	good-health		
+OECD	Magnetic resonance imaging (MRI) exams	10.1787/1d89353f-en	Health care use	good-health		
+OECD	Magnetic resonance imaging (MRI) units	10.1787/1a72e7d1-en	Health equipment	good-health		
+OECD	Hospital beds	10.1787/0191328e-en	Health equipment	good-health		
+OECD	Computed tomography (CT) scanners	10.1787/bedece12-en	Health equipment	good-health		
+OECD	Radiotherapy equipment	10.1787/47a5492f-en	Health equipment	good-health		
+OECD	Mammography machines	10.1787/685c9c5e-en	Health equipment	good-health		
+OECD	Doctors	10.1787/4355e1ec-en	Health resources	good-health		
+OECD	Nursing graduates	10.1787/c54611e3-en	Health resources	good-health		
+OECD	Medical graduates	10.1787/ac5bd5d3-en	Health resources	good-health		
+OECD	Health spending	10.1787/8643de7e-en	Health resources	good-health	reduced-inequalities	
+OECD	Pharmaceutical spending	10.1787/998febf6-en	Health resources	good-health		
+NCM	Doctors and dentists	10.6027/328d3fbd-en	Health resources	good-health		
+NCM	Hospital beds	10.6027/be537f32-en	Health resources	good-health		
+NCM	Health care spending	10.6027/570cc4ed-en	Health resources	good-health		
+OECD	Nurses	10.1787/283e64de-en	Health resources	good-health		
+NCM	Alcohol consumption	10.6027/469a1560-en	Health risk	good-health		
+NCM	Daily smokers	10.6027/10e02d6f-en	Health risk	good-health		
+OECD	Daily smokers	10.1787/1ff488c2-en	Health risks	good-health		
+OECD	Overweight or obese population	10.1787/86583552-en	Health risks	good-health		
+OECD	Alcohol consumption	10.1787/e6895909-en	Health risks	good-health		
+OECD	Suicide rates	10.1787/a82f3459-en	Health status	good-health		
+OECD	Potential years of life lost	10.1787/193a2829-en	Health status	good-health		
+OECD	Life expectancy at birth	10.1787/27e0fc9d-en	Health status	good-health		
+OECD	Infant mortality rates	10.1787/83dea506-en	Health status	good-health		
+OECD	Life expectancy at 65	10.1787/0e9a3f00-en	Health status	good-health		
+OECD	Deaths from cancer	10.1787/8ea65c4b-en	Health status	good-health		
+NCM	Life expectancy for men	10.6027/5658450d-en	Health status	good-health		
+NCM	Deaths from cancer	10.6027/47a385bc-en	Health status	good-health		
+NCM	Life expectancy for women	10.6027/ecc8db0d-en	Health status	good-health	gender-equality	
 OECD	Household spending	10.1787/b5f46047-en	Household accounts			
 OECD	Household disposable income	10.1787/dd50eddd-en	Household accounts			
 OECD	Household savings forecast	10.1787/6ab4e1bd-en	Household accounts			
@@ -171,29 +171,29 @@ OECD	Household financial transactions	10.1787/cc5c6282-en	Household accounts
 OECD	Household net worth	10.1787/2cc2469a-en	Household accounts			
 OECD	Household debt	10.1787/f03b6469-en	Household accounts			
 OECD	Household savings	10.1787/cfc6f499-en	Household accounts			
-OECD	Industrial production	10.1787/39121c55-en	Industry	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Poverty rate	10.1787/0fe1315d-en	Inequality	SDG01: No Poverty	SDG10: Reduced Inequalities	
-NCM	Risk of poverty	10.6027/8daf3c37-en	Inequality	SDG01: No Poverty		
-OECD	Income inequality	10.1787/459aa7f1-en	Inequality	SDG10: Reduced Inequalities		
-OECD	Poverty gap	10.1787/349eb41b-en	Inequality	SDG10: Reduced Inequalities	SDG01: No Poverty	
-NCM	Income inequality	10.6027/0569db73-en	Inequality	SDG10: Reduced Inequalities		
-OECD	Women in politics	10.1787/edc3ff4f-en	Inequality	SDG05: Gender equality		
-OECD	Discriminatory family code	10.1787/7ce07d5f-en	Inequality	SDG05: Gender equality		
-OECD	Violence against women	10.1787/f1eb4876-en	Inequality	SDG05: Gender equality		
-NCM	Women in national parliament	10.6027/42687f5a-en	Inequality	SDG05: Gender equality		
-OECD	Social Institutions and Gender	10.1787/7b6cfcf0-en	Inequality	SDG05: Gender equality	SDG10: Reduced Inequalities	
-NCM	Internet access at home	10.6027/1f7ac3dc-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure	SDG17: Partnerships For The Goals	
-NCM	Internet use	10.6027/56689c2b-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure	SDG17: Partnerships For The Goals	
-NCM	Enterprises using e-Administration	10.6027/ba8234fd-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure		
-NCM	Individuals using e-Administration	10.6027/4c1920fc-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure		
-NCM	Mobile phone subscriptions	10.6027/f72a7271-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure	SDG17: Partnerships For The Goals	
-NCM	Internet purchases	10.6027/206725e1-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	ICT investment	10.1787/b23ec1da-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	ICT goods exports	10.1787/b4d99334-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure	SDG17: Partnerships For The Goals	
-OECD	Access to computers from home	10.1787/a70b8a9f-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	ICT employment	10.1787/0938c4a0-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	ICT value added	10.1787/4bc7753c-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Internet access	10.1787/69c2b997-en	Information and communication technology (ICT)	SDG09: Industry, Innovation, And Infrastructure	SDG17: Partnerships For The Goals	
+OECD	Industrial production	10.1787/39121c55-en	Industry	industry-innovation-and-infrastructure		
+OECD	Poverty rate	10.1787/0fe1315d-en	Inequality	no-poverty	reduced-inequalities	
+NCM	Risk of poverty	10.6027/8daf3c37-en	Inequality	no-poverty		
+OECD	Income inequality	10.1787/459aa7f1-en	Inequality	reduced-inequalities		
+OECD	Poverty gap	10.1787/349eb41b-en	Inequality	reduced-inequalities	no-poverty	
+NCM	Income inequality	10.6027/0569db73-en	Inequality	reduced-inequalities		
+OECD	Women in politics	10.1787/edc3ff4f-en	Inequality	gender-equality		
+OECD	Discriminatory family code	10.1787/7ce07d5f-en	Inequality	gender-equality		
+OECD	Violence against women	10.1787/f1eb4876-en	Inequality	gender-equality		
+NCM	Women in national parliament	10.6027/42687f5a-en	Inequality	gender-equality		
+OECD	Social Institutions and Gender	10.1787/7b6cfcf0-en	Inequality	gender-equality	reduced-inequalities	
+NCM	Internet access at home	10.6027/1f7ac3dc-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure	partnerships-for-the-goals	
+NCM	Internet use	10.6027/56689c2b-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure	partnerships-for-the-goals	
+NCM	Enterprises using e-Administration	10.6027/ba8234fd-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure		
+NCM	Individuals using e-Administration	10.6027/4c1920fc-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure		
+NCM	Mobile phone subscriptions	10.6027/f72a7271-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure	partnerships-for-the-goals	
+NCM	Internet purchases	10.6027/206725e1-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure		
+OECD	ICT investment	10.1787/b23ec1da-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure		
+OECD	ICT goods exports	10.1787/b4d99334-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure	partnerships-for-the-goals	
+OECD	Access to computers from home	10.1787/a70b8a9f-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure		
+OECD	ICT employment	10.1787/0938c4a0-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure		
+OECD	ICT value added	10.1787/4bc7753c-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure		
+OECD	Internet access	10.1787/69c2b997-en	Information and communication technology (ICT)	industry-innovation-and-infrastructure	partnerships-for-the-goals	
 OECD	Insurance spending	10.1787/adb73055-en	Insurance			
 OECD	National insurance market share	10.1787/b0d48d65-en	Insurance			
 OECD	Gross direct insurance premiums	10.1787/8fd6f107-en	Insurance			
@@ -202,41 +202,41 @@ OECD	Short-term interest rates forecast	10.1787/9446e151-en	Interest rates
 OECD	Long-term interest rates forecast	10.1787/ed0d5b2e-en	Interest rates			
 OECD	Long-term interest rates	10.1787/662d712c-en	Interest rates			
 OECD	Short-term interest rates	10.1787/2cc37d77-en	Interest rates			
-OECD	Reading performance (PISA)	10.1787/79913c69-en	International student assessment (PISA)	SDG04: Quality education		
-OECD	Mathematics performance (PISA)	10.1787/04711c74-en	International student assessment (PISA)	SDG04: Quality education		
-OECD	Science performance (PISA)	10.1787/91952204-en	International student assessment (PISA)	SDG04: Quality education		
-OECD	Trade in goods and services	10.1787/0fe445d9-en	International trade	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-OECD	Trade in goods	10.1787/1ea6b5ed-en	International trade	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-OECD	Terms of trade	10.1787/7722246c-en	International trade	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-OECD	Trade in services	10.1787/3796b5f0-en	International trade	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-OECD	Exports by business size	10.1787/54d56e8b-en	International trade	SDG08: Decent work and economic growth		
-OECD	Imports by business size	10.1787/ef8f00b7-en	International trade	SDG08: Decent work and economic growth		
-NCM	Foreign trade ��� imports	10.6027/8b9cab9c-en	International trade	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-NCM	Foreign trade ��� exports	10.6027/f5b797a7-en	International trade	SDG08: Decent work and economic growth	SDG17: Partnerships For The Goals	
-NCM	Intra-Nordic trade ��� imports	10.6027/fb5b7472-en	International trade			
-NCM	Intra-Nordic trade ��� exports	10.6027/230ce64f-en	International trade			
+OECD	Reading performance (PISA)	10.1787/79913c69-en	International student assessment (PISA)	quality-education		
+OECD	Mathematics performance (PISA)	10.1787/04711c74-en	International student assessment (PISA)	quality-education		
+OECD	Science performance (PISA)	10.1787/91952204-en	International student assessment (PISA)	quality-education		
+OECD	Trade in goods and services	10.1787/0fe445d9-en	International trade	decent-work-growth	partnerships-for-the-goals	
+OECD	Trade in goods	10.1787/1ea6b5ed-en	International trade	decent-work-growth	partnerships-for-the-goals	
+OECD	Terms of trade	10.1787/7722246c-en	International trade	decent-work-growth	partnerships-for-the-goals	
+OECD	Trade in services	10.1787/3796b5f0-en	International trade	decent-work-growth	partnerships-for-the-goals	
+OECD	Exports by business size	10.1787/54d56e8b-en	International trade	decent-work-growth		
+OECD	Imports by business size	10.1787/ef8f00b7-en	International trade	decent-work-growth		
+NCM	Foreign trade ????????? imports	10.6027/8b9cab9c-en	International trade	decent-work-growth	partnerships-for-the-goals	
+NCM	Foreign trade ????????? exports	10.6027/f5b797a7-en	International trade	decent-work-growth	partnerships-for-the-goals	
+NCM	Intra-Nordic trade ????????? imports	10.6027/fb5b7472-en	International trade			
+NCM	Intra-Nordic trade ????????? exports	10.6027/230ce64f-en	International trade			
 OECD	Trade in goods and services forecast	10.1787/0529d9fc-en	International trade			
 OECD	Current account balance forecast	10.1787/38d572e4-en	International trade			
 OECD	Domestic value added in gross exports	10.1787/3959a0c6-en	International trade			
 OECD	Import content of exports	10.1787/5834f58a-en	International trade			
 OECD	Current account balance	10.1787/b2f74f3a-en	International trade			
-NCM	Youth employment rate	10.6027/25239ae1-en	Labour market	SDG08: Decent work and economic growth		
-NCM	Employment rate	10.6027/ce4b6ff5-en	Labour market	SDG08: Decent work and economic growth		
-NCM	Part-time employment	10.6027/bf1c970d-en	Labour market	SDG08: Decent work and economic growth		
-NCM	Youth unemployment rate	10.6027/29ef01e2-en	Labour market	SDG08: Decent work and economic growth		
-NCM	Unemployment rate	10.6027/abe82fe2-en	Labour market	SDG08: Decent work and economic growth		
+NCM	Youth employment rate	10.6027/25239ae1-en	Labour market	decent-work-growth		
+NCM	Employment rate	10.6027/ce4b6ff5-en	Labour market	decent-work-growth		
+NCM	Part-time employment	10.6027/bf1c970d-en	Labour market	decent-work-growth		
+NCM	Youth unemployment rate	10.6027/29ef01e2-en	Labour market	decent-work-growth		
+NCM	Unemployment rate	10.6027/abe82fe2-en	Labour market	decent-work-growth		
 OECD	Business confidence index (BCI)	10.1787/3092dc4f-en	Leading indicators			
 OECD	Consumer confidence index (CCI)	10.1787/46434d78-en	Leading indicators			
 OECD	Composite leading indicator (CLI)	10.1787/4a174487-en	Leading indicators			
-OECD	Permanent immigrant inflows	10.1787/304546b6-en	Migration	SDG10: Reduced Inequalities		
-OECD	Foreign-born employment	10.1787/05428726-en	Migration	SDG10: Reduced Inequalities		
-OECD	Foreign population	10.1787/16a914e3-en	Migration	SDG10: Reduced Inequalities		
-OECD	Foreign-born participation rates	10.1787/fa75b43e-en	Migration	SDG10: Reduced Inequalities		
-OECD	Native-born unemployment	10.1787/0f9d8842-en	Migration	SDG10: Reduced Inequalities		
-OECD	Foreign-born population	10.1787/5a368e1b-en	Migration	SDG10: Reduced Inequalities		
-OECD	Foreign-born unemployment	10.1787/ba5d2ce0-en	Migration	SDG10: Reduced Inequalities		
-OECD	Native-born participation rates	10.1787/afed6c9e-en	Migration	SDG10: Reduced Inequalities		
-OECD	Native-born employment	10.1787/9e33a6ea-en	Migration	SDG10: Reduced Inequalities		
+OECD	Permanent immigrant inflows	10.1787/304546b6-en	Migration	reduced-inequalities		
+OECD	Foreign-born employment	10.1787/05428726-en	Migration	reduced-inequalities		
+OECD	Foreign population	10.1787/16a914e3-en	Migration	reduced-inequalities		
+OECD	Foreign-born participation rates	10.1787/fa75b43e-en	Migration	reduced-inequalities		
+OECD	Native-born unemployment	10.1787/0f9d8842-en	Migration	reduced-inequalities		
+OECD	Foreign-born population	10.1787/5a368e1b-en	Migration	reduced-inequalities		
+OECD	Foreign-born unemployment	10.1787/ba5d2ce0-en	Migration	reduced-inequalities		
+OECD	Native-born participation rates	10.1787/afed6c9e-en	Migration	reduced-inequalities		
+OECD	Native-born employment	10.1787/9e33a6ea-en	Migration	reduced-inequalities		
 OECD	Stocks of foreign-born population in OECD countries	10.1787/b1fc67fa-en	Migration			
 OECD	Broad money (M3)	10.1787/1036a2cf-en	Monetary aggregates			
 OECD	Narrow money (M1)	10.1787/7a23d68b-en	Monetary aggregates			
@@ -245,60 +245,60 @@ OECD	Net national income	10.1787/af9be38a-en	National income
 OECD	Net lending/borrowing by sector	10.1787/693a515e-en	National income			
 OECD	Gross national income	10.1787/8a36773a-en	National income			
 OECD	Saving rate	10.1787/ff2e64d4-en	National income			
-OECD	Food aid	10.1787/5a3f903e-en	Official development assistance (ODA)	SDG02: Zero hunger		
-OECD	ODA by sector	10.1787/a5a1f674-en	Official development assistance (ODA)	SDG10: Reduced Inequalities		
-OECD	Net ODA	10.1787/33346549-en	Official development assistance (ODA)	SDG10: Reduced Inequalities		
-OECD	Country Programmable Aid (CPA)	10.1787/69d8099b-en	Official development assistance (ODA)	SDG10: Reduced Inequalities		
-OECD	Distribution of net ODA	10.1787/2334182b-en	Official development assistance (ODA)	SDG10: Reduced Inequalities		
+OECD	Food aid	10.1787/5a3f903e-en	Official development assistance (ODA)	zero-hunger		
+OECD	ODA by sector	10.1787/a5a1f674-en	Official development assistance (ODA)	reduced-inequalities		
+OECD	Net ODA	10.1787/33346549-en	Official development assistance (ODA)	reduced-inequalities		
+OECD	Country Programmable Aid (CPA)	10.1787/69d8099b-en	Official development assistance (ODA)	reduced-inequalities		
+OECD	Distribution of net ODA	10.1787/2334182b-en	Official development assistance (ODA)	reduced-inequalities		
 OECD	Net pension wealth	10.1787/c634eb4f-en	Pensions			
 OECD	Net pension replacement rates	10.1787/4b03f028-en	Pensions			
 OECD	Gross pension wealth	10.1787/62cdd9d3-en	Pensions			
 OECD	Gross pension replacement rates	10.1787/3d1afeb1-en	Pensions			
 OECD	Pension funds' assets	10.1787/d66f4f9f-en	Pensions			
 OECD	Private pension assets	10.1787/e694378a-en	Pensions			
-OECD	National population distribution	10.1787/7314f74f-en	Population by region	SDG11: Sustainable Cities And Communities		
-OECD	Urban population by city size	10.1787/b4332f92-en	Population by region	SDG11: Sustainable Cities And Communities		
-OECD	National area distribution	10.1787/34f4ec4a-en	Population by region	SDG11: Sustainable Cities And Communities		
-OECD	Housing prices	10.1787/63008438-en	Prices	SDG11: Sustainable Cities And Communities		
-OECD	Producer price indices (PPI)	10.1787/a24f6fa9-en	Prices	SDG09: Industry, Innovation, And Infrastructure		
+OECD	National population distribution	10.1787/7314f74f-en	Population by region	sustainable-cities		
+OECD	Urban population by city size	10.1787/b4332f92-en	Population by region	sustainable-cities		
+OECD	National area distribution	10.1787/34f4ec4a-en	Population by region	sustainable-cities		
+OECD	Housing prices	10.1787/63008438-en	Prices	sustainable-cities		
+OECD	Producer price indices (PPI)	10.1787/a24f6fa9-en	Prices	industry-innovation-and-infrastructure		
 OECD	Inflation (CPI)	10.1787/eee82e6e-en	Prices			
 OECD	Share prices	10.1787/6ad82f42-en	Prices			
 OECD	Inflation forecast	10.1787/598f4aa4-en	Prices			
 OECD	Price level indices	10.1787/c0266784-en	Prices			
-NCM	Production of forest products	10.6027/8dfb8dd4-en	Primary sector	SDG15: Life On Land		
-NCM	Employment in agriculture, forestry and fishery	10.6027/3c7c3324-en	Primary sector	SDG08: Decent work and economic growth	SDG12: Responsible Consumption And Production	SDG14: Life Below Water
+NCM	Production of forest products	10.6027/8dfb8dd4-en	Primary sector	life-on-land		
+NCM	"Employment in agriculture, forestry and fishery"	10.6027/3c7c3324-en	Primary sector	decent-work-growth	responsible-consumption	life-below-water
 OECD	Labour productivity forecast	10.1787/cb12b189-en	Productivity			
-OECD	Multifactor productivity	10.1787/a40c5025-en	Productivity	SDG09: Industry, Innovation, And Infrastructure		
+OECD	Multifactor productivity	10.1787/a40c5025-en	Productivity	industry-innovation-and-infrastructure		
 OECD	Labour compensation per hour worked	10.1787/251ec2da-en	Productivity			
-OECD	Unit labour costs	10.1787/37d9d925-en	Productivity	SDG09: Industry, Innovation, And Infrastructure		
+OECD	Unit labour costs	10.1787/37d9d925-en	Productivity	industry-innovation-and-infrastructure		
 OECD	GDP per hour worked	10.1787/1439e590-en	Productivity			
 OECD	Labour productivity and utilisation	10.1787/02c02f63-en	Productivity			
-NCM	PhD graduates	10.6027/954e2f76-en	Research and development (R&D)	SDG04: Quality education		
-OECD	Gross domestic spending on R&D	10.1787/d8b068b4-en	Research and development (R&D)	SDG09: Industry, Innovation, And Infrastructure		
-NCM	Government budget for R&D	10.6027/40c15b5d-en	Research and development (R&D)	SDG09: Industry, Innovation, And Infrastructure		
-NCM	Patents	10.6027/dd637e6a-en	Research and development (R&D)	SDG09: Industry, Innovation, And Infrastructure		
-NCM	R&D staff	10.6027/8a458648-en	Research and development (R&D)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Triadic patent families	10.1787/6a8d10f4-en	Research and development (R&D)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Government researchers	10.1787/c03b3052-en	Research and development (R&D)	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Researchers	10.1787/20ddfb0f-en	Research and development (R&D)	SDG09: Industry, Innovation, And Infrastructure		
-NCM	Recipients of social assistance	10.6027/b3662566-en	Social integration	SDG10: Reduced Inequalities		
-NCM	Pensioners	10.6027/a13c0a53-en	Social integration	SDG10: Reduced Inequalities		
-NCM	Children in day care	10.6027/6caea1fb-en	Social integration	SDG10: Reduced Inequalities		
-NCM	Sick leave from work	10.6027/4e02d0e3-en	Social integration	SDG03: Good health and well-being		
-NCM	Parental leave	10.6027/964c85b1-en	Social integration	SDG05: Gender equality		
-NCM	Median income per household	10.6027/f1aff010-en	Social integration	SDG10: Reduced Inequalities		
-OECD	Family benefits public spending	10.1787/8e8b3273-en	Social protection	SDG10: Reduced Inequalities	SDG01: No Poverty	
-OECD	Social spending	10.1787/7497563b-en	Social protection	SDG10: Reduced Inequalities		
-OECD	Public unemployment spending	10.1787/55557fd4-en	Social protection	SDG08: Decent work and economic growth	SDG10: Reduced Inequalities	
-OECD	Social benefits to households	10.1787/423105c6-en	Social protection	SDG10: Reduced Inequalities		
-OECD	Pension spending	10.1787/a041f4ef-en	Social protection	SDG10: Reduced Inequalities		
-OECD	Public spending on incapacity	10.1787/f35b71ed-en	Social protection	SDG10: Reduced Inequalities		
-OECD	Public spending on labour markets	10.1787/911b8753-en	Social protection	SDG10: Reduced Inequalities		
-OECD	Agricultural land	10.1787/9d1ffd68-en	Sustainable agriculture	SDG12: Responsible Consumption And Production	SDG15: Life On Land	
-OECD	Nutrient balance	10.1787/82add6a9-en	Sustainable agriculture	SDG12: Responsible Consumption And Production	SDG03: Good health and well-being	
-NCM	Consumption of pesticides	10.6027/c39a99a8-en	Sustainable agriculture	SDG15: Life On Land		
-NCM	Organic farming area	10.6027/c6b4f2cd-en	Sustainable agriculture	SDG15: Life On Land	SDG12: Responsible Consumption And Production	
-NCM	Consumption of commercial fertilizers	10.6027/66425a45-en	Sustainable agriculture	SDG15: Life On Land		
+NCM	PhD graduates	10.6027/954e2f76-en	Research and development (R&D)	quality-education		
+OECD	Gross domestic spending on R&D	10.1787/d8b068b4-en	Research and development (R&D)	industry-innovation-and-infrastructure		
+NCM	Government budget for R&D	10.6027/40c15b5d-en	Research and development (R&D)	industry-innovation-and-infrastructure		
+NCM	Patents	10.6027/dd637e6a-en	Research and development (R&D)	industry-innovation-and-infrastructure		
+NCM	R&D staff	10.6027/8a458648-en	Research and development (R&D)	industry-innovation-and-infrastructure		
+OECD	Triadic patent families	10.1787/6a8d10f4-en	Research and development (R&D)	industry-innovation-and-infrastructure		
+OECD	Government researchers	10.1787/c03b3052-en	Research and development (R&D)	industry-innovation-and-infrastructure		
+OECD	Researchers	10.1787/20ddfb0f-en	Research and development (R&D)	industry-innovation-and-infrastructure		
+NCM	Recipients of social assistance	10.6027/b3662566-en	Social integration	reduced-inequalities		
+NCM	Pensioners	10.6027/a13c0a53-en	Social integration	reduced-inequalities		
+NCM	Children in day care	10.6027/6caea1fb-en	Social integration	reduced-inequalities		
+NCM	Sick leave from work	10.6027/4e02d0e3-en	Social integration	good-health		
+NCM	Parental leave	10.6027/964c85b1-en	Social integration	gender-equality		
+NCM	Median income per household	10.6027/f1aff010-en	Social integration	reduced-inequalities		
+OECD	Family benefits public spending	10.1787/8e8b3273-en	Social protection	reduced-inequalities	no-poverty	
+OECD	Social spending	10.1787/7497563b-en	Social protection	reduced-inequalities		
+OECD	Public unemployment spending	10.1787/55557fd4-en	Social protection	decent-work-growth	reduced-inequalities	
+OECD	Social benefits to households	10.1787/423105c6-en	Social protection	reduced-inequalities		
+OECD	Pension spending	10.1787/a041f4ef-en	Social protection	reduced-inequalities		
+OECD	Public spending on incapacity	10.1787/f35b71ed-en	Social protection	reduced-inequalities		
+OECD	Public spending on labour markets	10.1787/911b8753-en	Social protection	reduced-inequalities		
+OECD	Agricultural land	10.1787/9d1ffd68-en	Sustainable agriculture	responsible-consumption	life-on-land	
+OECD	Nutrient balance	10.1787/82add6a9-en	Sustainable agriculture	responsible-consumption	good-health	
+NCM	Consumption of pesticides	10.6027/c39a99a8-en	Sustainable agriculture	life-on-land		
+NCM	Organic farming area	10.6027/c6b4f2cd-en	Sustainable agriculture	life-on-land	responsible-consumption	
+NCM	Consumption of commercial fertilizers	10.6027/66425a45-en	Sustainable agriculture	life-on-land		
 OECD	Tax revenue	10.1787/d98b8cf5-en	Tax			
 OECD	Tax on property	10.1787/213673fa-en	Tax			
 OECD	Tax on personal income	10.1787/94af18d7-en	Tax			
@@ -310,16 +310,16 @@ OECD	Tax wedge	10.1787/cea9eba3-en	Tax
 OECD	Passenger transport	10.1787/463da4d1-en	Transport			
 OECD	Road accidents	10.1787/2fe1b899-en	Transport			
 OECD	Container transport	10.1787/26de63f3-en	Transport			
-OECD	Infrastructure investment	10.1787/b06ce3ad-en	Transport	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Infrastructure maintenance	10.1787/c73dc965-en	Transport	SDG09: Industry, Innovation, And Infrastructure		
-OECD	Freight transport	10.1787/708eda32-en	Transport	SDG09: Industry, Innovation, And Infrastructure		
+OECD	Infrastructure investment	10.1787/b06ce3ad-en	Transport	industry-innovation-and-infrastructure		
+OECD	Infrastructure maintenance	10.1787/c73dc965-en	Transport	industry-innovation-and-infrastructure		
+OECD	Freight transport	10.1787/708eda32-en	Transport	industry-innovation-and-infrastructure		
 OECD	Passenger car registrations	10.1787/c58fcf22-en	Transport			
-OECD	Long-term unemployment rate	10.1787/76471ad5-en	Unemployment	SDG08: Decent work and economic growth		
-OECD	Harmonised unemployment rate (HUR)	10.1787/52570002-en	Unemployment	SDG08: Decent work and economic growth		
-OECD	Unemployment rates by education level	10.1787/6183d527-en	Unemployment	SDG08: Decent work and economic growth		
-OECD	Youth unemployment rate	10.1787/c3634df7-en	Unemployment	SDG08: Decent work and economic growth		
-OECD	Unemployment rate	10.1787/997c8750-en	Unemployment	SDG08: Decent work and economic growth		
-OECD	Municipal waste	10.1787/89d5679a-en	Waste	SDG13: Climate Action	SDG12: Responsible Consumption And Production	
-OECD	Water withdrawals	10.1787/17729979-en	Water	SDG06: Clean water and sanitation		
-OECD	Waste water treatment	10.1787/ef27a39d-en	Water	SDG06: Clean water and sanitation		
-OECD	Youth not in employment, education or training (NEET)	10.1787/72d1033a-en	Youth and the labour market	SDG08: Decent work and economic growth	SDG04: Quality education	
+OECD	Long-term unemployment rate	10.1787/76471ad5-en	Unemployment	decent-work-growth		
+OECD	Harmonised unemployment rate (HUR)	10.1787/52570002-en	Unemployment	decent-work-growth		
+OECD	Unemployment rates by education level	10.1787/6183d527-en	Unemployment	decent-work-growth		
+OECD	Youth unemployment rate	10.1787/c3634df7-en	Unemployment	decent-work-growth		
+OECD	Unemployment rate	10.1787/997c8750-en	Unemployment	decent-work-growth		
+OECD	Municipal waste	10.1787/89d5679a-en	Waste	climate-action	responsible-consumption	
+OECD	Water withdrawals	10.1787/17729979-en	Water	clean-water		
+OECD	Waste water treatment	10.1787/ef27a39d-en	Water	clean-water		
+OECD	"Youth not in employment, education or training (NEET)"	10.1787/72d1033a-en	Youth and the labour market	decent-work-growth	quality-education	
