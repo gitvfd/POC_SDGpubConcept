@@ -365,7 +365,6 @@ function loadData(err,concept,data,indicData){
 }
 
 function render(connectedNodes){
-
   svg.selectAll("*").remove();
 
   var fakeBackground=svg
@@ -423,7 +422,6 @@ function render(connectedNodes){
               return (d.cat=="SDG" && listSDGcheck.includes(d.name))|| (d.cat=="Concept" && d.list.length>=connectedNodes)
         }
     })
-
 
 
     link = svg.selectAll(".link")
@@ -1278,6 +1276,10 @@ function changeIt(){
 
 
 function createRadioButton(max) {
+  //define number of buttons
+  var maxButton=5;
+  if (max>= maxButton)
+    max= maxButton;
       for(var i=1; i<=max; i++){
           var x = document.createElement("INPUT");
           x.setAttribute("type", "radio");
