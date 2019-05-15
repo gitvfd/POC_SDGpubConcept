@@ -650,7 +650,7 @@ if(connectedNodes==1){
             list.forEach(function(k){
               if(k==d.doi)
                 startingStar= "★";
-              
+              console.log(startingStar)
               if(counter==list.length){
                   return startingStar
 
@@ -659,7 +659,6 @@ if(connectedNodes==1){
             })
           }
           sdgAppGetBookmarkedDois(searchDOI);
-          console.log(startingStar)
           /**if(startingStar=="")
             return "☆"
           else
