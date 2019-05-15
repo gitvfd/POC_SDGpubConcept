@@ -643,6 +643,7 @@ if(connectedNodes==1){
           return "<div class=\"reportPublisher\">" + d.value + "</div>";
         }
         else if (d.column=="Star"){
+          /**
           var startingStar= "☆";
 
           function searchDOI(list) {
@@ -670,12 +671,10 @@ if(connectedNodes==1){
           var promise = sdgAppGetBookmarkedDois(searchDOI);
           promise.then(function (result) {
             return result
-          });
+          });**/
           //sdgAppGetBookmarkedDois(searchDOI);
-          /**if(startingStar=="")
-            return "☆"
-          else
-            return startingStar;**/
+            return "★";
+         
         }
         else{
           return "<div class=\"tableLink\">" + d.value + "</div>";
