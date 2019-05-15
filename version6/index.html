@@ -647,10 +647,11 @@ if(connectedNodes==1){
 
           function searchDOI(list) {
             var counter=0;
+            console.log(list.length)
             list.forEach(function(k){
+              console.log(list.length)
               if(k==d.doi)
                 startingStar= "★";
-              console.log(list.length)
               if(counter==list.length){
                   return startingStar
 
