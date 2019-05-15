@@ -516,13 +516,13 @@ function render(connectedNodes){
 var simulation;
 if(connectedNodes==1){
 
-  simulation = d3.forceSimulation().alphaDecay(0.25) // the alphaDecay speeds up or slowdown the nodes positioning default is 0.0228
+  simulation = d3.forceSimulation().alphaDecay(0.115) // the alphaDecay speeds up or slowdown the nodes positioning default is 0.0228
     .force("link", d3.forceLink().id(function(d) { return d.name; })/*.strength(function(d) {return 0.9; } )*/.distance(5))
     .force("collide",d3.forceCollide( function(d){return 1.25*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, 1*height / 2))
-    .force("y", d3.forceY(height / 2).strength(500 / height))
-    .force("x",  d3.forceX(width / 2).strength(500 / width))
+    .force("y", d3.forceY(height / 2).strength(250 / height))
+    .force("x",  d3.forceX(width / 2).strength(250 / width))
 
 }else{
 
@@ -531,8 +531,8 @@ if(connectedNodes==1){
     .force("collide", d3.forceCollide(function (d) { return Math.pow(radius(d.iteration),1.25) }).iterations(1))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, 1 * height / 2))
-    .force("y", d3.forceY(0))
-    .force("x", d3.forceX(0))
+    .force("y", d3.forceY(height / 2).strength(100 / height))
+    .force("x", d3.forceX(width / 2).strength(100 / width))
 }
   simulation
       .nodes(dispNodes)
