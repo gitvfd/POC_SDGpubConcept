@@ -55,7 +55,7 @@ var tooltip = d3.select("body")
 
 var width = window.innerWidth;
 
-var height= 0.99*window.innerHeight;
+var height= 0.95*window.innerHeight;
 
 var heightLeg=60;
 
@@ -657,12 +657,13 @@ function render(connectedNodes){
         if (d.column == "SDG") {
         } else if (d.column == "Publisher") { 
         } else if (d.column == "Star") { 
+          sdgAppBookmarkPublication(d.doi);
+
           function test(list){
             console.log(list);
           }
-          console.log(d.doi)
-          console.log(test(sdgAppGetBookmarkedDois))
-          sdgAppBookmarkPublication(d.doi);
+          test(sdgAppGetBookmarkedDois);
+          
         }else {
           sdgAppDisplayPublication(d.doi);
         }
