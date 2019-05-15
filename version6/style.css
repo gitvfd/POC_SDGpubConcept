@@ -12,7 +12,6 @@ body{
   position: fixed;
   top:80%;
   left: 1%;
-
   padding: 5px 5px 5px 5px;
    border: 1px solid rgba(50, 78, 99, 0.5);
 }
@@ -275,6 +274,8 @@ max-height:500px;
     cursor:pointer;
 }
 .my-tooltip {
+
+  position: fixed;top:20px;left:20px;
       max-width: 200px;
       height: auto;
       padding: 10px;
