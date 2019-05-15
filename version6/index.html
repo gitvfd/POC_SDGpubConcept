@@ -643,21 +643,27 @@ if(connectedNodes==1){
           return "<div class=\"reportPublisher\">" + d.value + "</div>";
         }
         else if (d.column=="Star"){
-          var startingStar="";
+          var startingStar= "☆";
+
           function searchDOI(list) {
+            var counter=0;
             list.forEach(function(k){
-              console.log(k)
-              console.log(d.doi)
               if(k==d.doi)
                 startingStar= "★";
+              
+              if(counter==list.length){
+                  return startingStar
+
+              }
+              counter++;
             })
           }
           sdgAppGetBookmarkedDois(searchDOI);
           console.log(startingStar)
-          if(startingStar=="")
+          /**if(startingStar=="")
             return "☆"
           else
-            return startingStar;
+            return startingStar;**/
         }
         else{
           return "<div class=\"tableLink\">" + d.value + "</div>";
