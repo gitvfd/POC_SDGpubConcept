@@ -646,6 +646,8 @@ if(connectedNodes==1){
           var startingStar="";
           function searchDOI(list) {
             list.forEach(function(k){
+              console.log(k)
+              console.log(doi)
               if(k==d.doi)
                 startingStar= "★";
             })
