@@ -14,7 +14,6 @@
     <input  type='radio' id="studies" name="mode" checked> Analysis</input>
     <input type='radio' id="indicators" name="mode" > Data</input>
   </form>
-    <Br/>
   <form id="connectionRadio">
     <input type='checkbox' id='checkboxConcept' checked> Hide content connected only one SDG</input>
   </form>
@@ -40,22 +39,22 @@ var tooltip = d3.select("body")
         .style("visibility", "hidden");
     tooltip.append("div")
         .attr("id", "tt-name")
-        .text("simple")
+        .text("")
 
     tooltip.append("div")
         .attr("id", "tt-def")
         .style("font-style","italic")
-        .text("simple");;
+        .text("");;
 
     tooltip.append("div")
         .attr("id", "tt-ref")
         .style("font-style","italic")
-        .text("simple");;
+        .text("");;
 
 
 var width = window.innerWidth;
 
-var height= 0.95*window.innerHeight;
+var height= window.innerHeight;
 
 var heightLeg=60;
 
@@ -512,17 +511,28 @@ function render(connectedNodes){
         if(d.cat=="SDG")
           return 2.5*widthSDG;
       });
+  connectedNodes
   
-  
+var simulation;
+if(connectedNodes==1){
 
-  var simulation = d3.forceSimulation().alphaDecay(0.115) // the alphaDecay speeds up or slowdown the nodes positioning default is 0.0228
+  simulation = d3.forceSimulation().alphaDecay(0.115) // the alphaDecay speeds up or slowdown the nodes positioning default is 0.0228
     .force("link", d3.forceLink().id(function(d) { return d.name; })/*.strength(function(d) {return 0.9; } )*/.distance(5))
     .force("collide",d3.forceCollide( function(d){return 1.25*radius(d.iteration) }).iterations(1) )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, 1*height / 2))
     .force("y", d3.forceY(0))
     .force("x", d3.forceX(0))
+}else{
 
+  simulation = d3.forceSimulation().alphaDecay(0.075) // the alphaDecay speeds up or slowdown the nodes positioning default is 0.0228
+    .force("link", d3.forceLink().id(function (d) { return d.name; })/*.strength(function(d) {return 0.9; } )*/.distance(5))
+    .force("collide", d3.forceCollide(function (d) { return Math.pow(radius(d.iteration),1.25) }).iterations(1))
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, 1 * height / 2))
+    .force("y", d3.forceY(0))
+    .force("x", d3.forceX(0))
+}
   simulation
       .nodes(dispNodes)
       .on("tick", ticked);
@@ -662,7 +672,7 @@ function render(connectedNodes){
           function test(list){
             console.log(list);
           }
-          test(sdgAppGetBookmarkedDois);
+          sdgAppGetBookmarkedDois(test);
           
         }else {
           sdgAppDisplayPublication(d.doi);
