@@ -15,7 +15,7 @@
     <input type='radio' id="indicators" name="mode" > Data</input>
   </form>
   <form id="connectionRadio">
-    <input type='checkbox' id='checkboxConcept' checked> Hide content connected only one SDG</input>
+    <input type='checkbox' id='checkboxConcept' checked> Hide content connected to only one SDG</input>
   </form>
 </div>
 <div id="chart"></div>
@@ -647,6 +647,7 @@ if(connectedNodes==1){
 
           function searchDOI(list) {console.log(list)
             if (list!=""){
+              console.log(list)
               var counter = 0;
               list.forEach(function (k) {
                 if (k == d.doi)
