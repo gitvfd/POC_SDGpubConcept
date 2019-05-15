@@ -647,17 +647,19 @@ if(connectedNodes==1){
 
           function searchDOI(list) {
             console.log(list)
-            var counter=0;
             console.log(list.length)
+            var counter=0;
             list.forEach(function(k){
               if(k==d.doi)
                 startingStar= "★";
               if(counter==list.length){
-                  return startingStar
-
+                  display(startingStar)
               }
               counter++;
             })
+          }
+          function display(startingStar){
+            return startingStar;
           }
           sdgAppGetBookmarkedDois(searchDOI);
           /**if(startingStar=="")
