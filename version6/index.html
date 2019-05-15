@@ -643,16 +643,11 @@ if(connectedNodes==1){
           return "<div class=\"reportPublisher\">" + d.value + "</div>";
         }
         else if (d.column=="Star"){
-          /**
+          
           var startingStar= "☆";
 
           function searchDOI(list) {
-            console.log(list.length)
-            if (list!=""){
-              console.log(list)
-              var counter = 0;
               list.forEach(function (k) {
-                console.log(k)
                 if (k == d.doi)
                   startingStar = "★";
                 if (counter == list.length) {
@@ -660,15 +655,12 @@ if(connectedNodes==1){
                 }
                 counter++;
               })
-            }else{
-              console.log(list)
-              return startingStar;
-            }
+           
 
           }
           
           
-          var promise = sdgAppGetBookmarkedDois(searchDOI);
+         /** var promise = sdgAppGetBookmarkedDois(searchDOI);
           promise.then(function (result) {
             return result
           });**/
@@ -676,7 +668,7 @@ if(connectedNodes==1){
           var list = sdgAppGetBookmarkedDois(searchDOI);
           console.log("list");
           console.log(list);
-            return "★";
+           // return "★";
          
         }
         else{
