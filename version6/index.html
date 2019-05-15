@@ -6,14 +6,19 @@
 <link href="style.css" rel="stylesheet"> 
 <link rel="stylesheet" href="css/rSlider.min.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
-<form id="dimensions">
-  <input  type='radio' id="studies" name="mode" checked> Analysis</input>
-  <input type='radio' id="indicators" name="mode" > Data</input>
-</form>
-<form id="connectionRadio"> Minimal number of connection to SDGs:
-</form>
+<div id="selectbox">
+  <form id="dimensions">
+    <input  type='radio' id="studies" name="mode" checked> Analysis</input>
+    <input type='radio' id="indicators" name="mode" > Data</input>
+  </form>
+    <Br/>
+  <form id="connectionRadio">
+    <input type='checkbox' id='checkboxConcept' checked> Hide content connected only one SDG</input>
+  </form>
+</div>
 <div id="chart"></div>
 <div id="chartIndic"></div>
 <!--<div id="conceptSlider">Filter concepts by minimum number of connections:<input type="text" id="connectionSlider" class="slider" /></div>-->
@@ -50,7 +55,7 @@ var tooltip = d3.select("body")
 
 var width = window.innerWidth;
 
-var height= 0.9*window.innerHeight;
+var height= window.innerHeight;
 
 var heightLeg=60;
 
@@ -261,7 +266,13 @@ function loadData(err,concept,data,indicData){
     return linksTrans.indexOf(elem) == pos;
   });
 
-  render(1); 
+
+  ////////////////////////////
+  //////ATTENTION    /////////
+  ////////////////////////////
+  //first launch of the VISUALISATION
+  ////////////////////////////
+  render(2); 
 
 
 
@@ -361,7 +372,7 @@ function loadData(err,concept,data,indicData){
 
   renderIndic();
   //defineSlider (maxList);
-  createRadioButton(maxList);
+  //createRadioButton(maxList);
 }
 
 function render(connectedNodes){
@@ -614,15 +625,19 @@ function render(connectedNodes){
           return "rating";
       })
       .html(function (d) {
-        if(d.column=="SDG")
+        if(d.column=="SDG"){
           return "  ";
-
-        if(d.column=="Publisher")
-          return "<mark>"+d.value+"</mark>";
-        else if (d.column=="Star")
-         return "☆";
-        else
-          return "<a class=\"tableLink\" href=\"https://dx.doi.org/"+d.doi+"\" target=\"_blank\" >"+d.value+"</a>"; 
+        }
+        if(d.column=="Publisher"){
+          return "<div class=\"reportPublisher\">" + d.value + "</div>";
+        }
+        else if (d.column=="Star"){
+          return "☆";
+        }
+        else{
+          return "<div class=\"tableLink\">" + d.value + "</div>";
+          //return "<a class=\"tableLink\" href=\"https://dx.doi.org/"+d.doi+"\" target=\"_blank\" >"+d.value+"</a>";
+        }
       })
       .on("mouseover",function(d){
         if(d.column=="SDG"){
@@ -637,6 +652,16 @@ function render(connectedNodes){
       .on("mouseout",function (d){
         if(d.column=="SDG")
           return tooltip.style("visibility", "hidden");
+      })
+      .on("click", function (d) {
+        if (d.column == "SDG") {
+        } else if (d.column == "Publisher") { 
+        } else if (d.column == "Star") { 
+          sdgAppBookmarkPublication(d.doi);
+          sdgAppBookmarkPublication(d.doi);
+        }else {
+          sdgAppDisplayPublication(d.doi);
+        }
       });
 
     return table;
@@ -999,7 +1024,10 @@ function renderIndic(){
       .style("background-color",function(d){
           var color2return="";
           if(d.column=="SDG"){
+          if(d.value!="")
             color2return = sdgConfigs[d.value].color;
+          else
+            color2return = "#324E63"
           }
           return color2return;
       })
@@ -1013,8 +1041,9 @@ function renderIndic(){
         if(d.column=="SDG")
           return "  ";
 
-        if(d.column=="Publisher")
-          return "<mark>"+d.value+"</mark>";
+
+        if (d.column == "Publisher")
+          return "<div class=\"reportPublisher\">" + d.value + "</div>";
         else if (d.column=="Star")
          return "☆";
         else
@@ -1227,30 +1256,6 @@ function wrap(text, width) {
   });
 }
 
-function defineSlider(max){
-  var sliderRanger=[];
-  for (i = 1; i <=max; i++) { 
-      sliderRanger.push(i);
-  }
-
-
-  var mySlider = new rSlider({
-      target: '#connectionSlider',
-      values: sliderRanger,     //[0, 1, 2, 3,4,5,6],
-      range: false, // range slider,
-      set:    null, // an array of preselected values
-      width:    null,
-      scale:    true,
-      labels:   true,
-      tooltip:  true,
-      step:     null, // step size
-      disabled: false, // is disabled?
-      onChange: function (values) {
-        render (values);
-      }   
-    });
-}
-
 function changeIt(){
       var form = document.getElementById("dimensions")
       var form_val;
@@ -1275,7 +1280,7 @@ function changeIt(){
  }
 
 
-function createRadioButton(max) {
+/**function createRadioButton(max) {
   //define number of buttons
   var maxButton=5;
   if (max>= maxButton)
@@ -1299,16 +1304,23 @@ function createRadioButton(max) {
         
           }
       }
-}
+}**/
 
 function changeConnectionLevel(){
-  var form = document.getElementById("connectionRadio")
+  /**var form = document.getElementById("connectionRadio")
       var form_val;
       for(var i=0; i<form.length; i++){
         if(form[i].checked){
          render(i+1);
         }
        } 
+**/
+  var c = document.getElementById('checkboxConcept');
+  if (c.checked) {
+    render(2);
+  } else {
+    render(1);
+  }
 
 }
 
