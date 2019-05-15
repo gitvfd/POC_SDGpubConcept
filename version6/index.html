@@ -657,6 +657,10 @@ function render(connectedNodes){
         if (d.column == "SDG") {
         } else if (d.column == "Publisher") { 
         } else if (d.column == "Star") { 
+          function test(sdgAppGetBookmarkedDois){
+            console.log(sdgAppGetBookmarkedDois);
+          }
+          console.log(d.doi)
           sdgAppBookmarkPublication(d.doi);
           sdgAppBookmarkPublication(d.doi);
         }else {

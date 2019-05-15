@@ -10,7 +10,7 @@ body{
 
 #selectbox{
   position: fixed;
-  top:90%;
+  top:80%;
   left: 1%;
 
   padding: 5px 5px 5px 5px;
@@ -191,12 +191,14 @@ mark {
   color: #fff;
   text-align: center;
 }
+
 .rating {
   cursor:pointer;
   unicode-bidi: bidi-override;
   direction: rtl;
   position: relative;
-  width: 1.1em;
+  width:30px;
+  text-align: left;
 }
 
 .rating:hover:before,
