@@ -655,7 +655,7 @@ if(connectedNodes==1){
                 if (k == d.doi)
                   startingStar = "★";
                 if (counter == list.length) {
-                  display(startingStar)
+                  return startingStar;
                 }
                 counter++;
               })
@@ -663,10 +663,12 @@ if(connectedNodes==1){
               console.log(list)
               return startingStar;
             }
-            function display(startingStar) {
-              console.log(startingStar);
-              return startingStar;
-            }
+
+             var promise =  sdgAppGetBookmarkedDois(searchDOI);
+            promise.then(function (result) {
+              return result
+            });
+          }
           }
           
           sdgAppGetBookmarkedDois(searchDOI);
