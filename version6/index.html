@@ -664,14 +664,14 @@ if(connectedNodes==1){
               return startingStar;
             }
 
-             var promise =  sdgAppGetBookmarkedDois(searchDOI);
-            promise.then(function (result) {
-              return result
-            });
-          }
           }
           
-          sdgAppGetBookmarkedDois(searchDOI);
+          
+          var promise = sdgAppGetBookmarkedDois(searchDOI);
+          promise.then(function (result) {
+            return result
+          });
+          //sdgAppGetBookmarkedDois(searchDOI);
           /**if(startingStar=="")
             return "☆"
           else
