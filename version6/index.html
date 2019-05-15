@@ -646,20 +646,25 @@ if(connectedNodes==1){
           var startingStar= "☆";
 
           function searchDOI(list) {
-            var counter=0;
-            list.forEach(function(k){
-              if(k==d.doi)
-                startingStar= "★";
-              if(counter==list.length){
+            if (list!="[]"){
+              var counter = 0;
+              list.forEach(function (k) {
+                if (k == d.doi)
+                  startingStar = "★";
+                if (counter == list.length) {
                   display(startingStar)
-              }
-              counter++;
-            })
+                }
+                counter++;
+              })
+            }else{
+              return startingStar;
+            }
+            function display(startingStar) {
+              console.log(startingStar);
+              return startingStar;
+            }
           }
-          function display(startingStar){
-            console.log(startingStar);
-            return startingStar;
-          }
+          
           sdgAppGetBookmarkedDois(searchDOI);
           /**if(startingStar=="")
             return "☆"
