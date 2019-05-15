@@ -198,6 +198,7 @@ mark {
   position: relative;
   width:30px;
   text-align: left;
+  fill:rgba(188, 188, 188, 0.65);
 }
 
 .rating:hover:before,
