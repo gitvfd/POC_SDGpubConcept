@@ -635,6 +635,10 @@ if(connectedNodes==1){
         if (d.column=="Star")
           return "rating";
       })
+      .attr("id", function (d) {
+        if (d.column == "Star")
+          return "star_"+d.doi;
+      })
       .html(function (d) {
         if(d.column=="SDG"){
           return "  ";
@@ -643,30 +647,36 @@ if(connectedNodes==1){
           return "<div class=\"reportPublisher\">" + d.value + "</div>";
         }
         else if (d.column=="Star"){
-          
+
           var startingStar= "☆";
+          var idElement= "star_" + d.doi;
 
           function searchDOI(list) {
             var counter = 1;
+
+            if(typeof list !== 'undefined' && list.length > 0){
               list.forEach(function (k) {
-              console.log(startingStar)
-              console.log(list)
-                console.log(d.doi)
                 if (k == d.doi)
                   startingStar = "★";
                 if (counter == list.length) {
-                  console.log("success")
-                  return startingStar;
+                  document.getElementById(idElement).innerHTML= startingStar;
+                //return startingStar;
                 }
                 counter++;
               })
+            }
+            else{
+              console.log(startingStar)
+              console.log(idElement)
+              document.getElementById(idElement).innerHTML = startingStar;
+            }
           }
           
           //sdgAppGetBookmarkedDois(searchDOI);
-          console.log(sdgAppGetBookmarkedDois(searchDOI))
+          sdgAppGetBookmarkedDois(searchDOI)
           //return sdgAppGetBookmarkedDois(searchDOI);
           
-          return "★";
+         // return "★";
          
         }
         else{
