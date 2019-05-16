@@ -659,14 +659,16 @@ if(connectedNodes==1){
                 if (k == d.doi)
                   startingStar = "★";
                 if (counter == list.length) {
-                  document.getElementsByClassName(classElement).innerHTML= startingStar;
+                  
+                  document.getElementsByClassName(classElement)[0].innerHTML= startingStar;
                 //return startingStar;
                 }
                 counter++;
               })
             }
             else{
-              document.getElementsByClassName(classElement).innerHTML = startingStar;
+              console.log(document.getElementsByClassName(classElement)[0])
+              document.getElementsByClassName(classElement)[0].innerHTML = startingStar;
             }
           }
           
