@@ -701,10 +701,10 @@ if(connectedNodes==1){
 
         var classStar = "rating star_" + d.doi
         if (document.getElementsByClassName(classStar)[0].innerHTML == "★"){
-            document.getElementsByClassName(classStar)[0].innerHTML == "☆";
+            document.getElementsByClassName(classStar)[0].innerHTML = "☆";
         }
         else if (document.getElementsByClassName(classStar)[0].innerHTML == "☆"){
-          document.getElementsByClassName(classStar)[0].innerHTML == "★";
+          document.getElementsByClassName(classStar)[0].innerHTML = "★";
         } 
           
         }else {
