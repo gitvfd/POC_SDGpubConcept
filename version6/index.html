@@ -648,13 +648,14 @@ if(connectedNodes==1){
 
           function searchDOI(list) {
             var counter = 1;
-            console.log(list)
               list.forEach(function (k) {
+              console.log(startingStar)
               console.log(list)
                 console.log(d.doi)
                 if (k == d.doi)
                   startingStar = "★";
                 if (counter == list.length) {
+                  console.log("success")
                   return startingStar;
                 }
                 counter++;
