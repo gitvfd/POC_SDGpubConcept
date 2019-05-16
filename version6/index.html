@@ -661,21 +661,16 @@ if(connectedNodes==1){
                 if (counter == list.length) {
                   
                   document.getElementsByClassName(classElement)[0].innerHTML= startingStar;
-                //return startingStar;
                 }
                 counter++;
               })
             }
             else{
-              console.log(document.getElementsByClassName(classElement)[0])
               document.getElementsByClassName(classElement)[0].innerHTML = startingStar;
             }
           }
           
           sdgAppGetBookmarkedDois(searchDOI)
-          //return sdgAppGetBookmarkedDois(searchDOI);
-          
-         // return "★";
          
         }
         else{
@@ -701,21 +696,15 @@ if(connectedNodes==1){
         if (d.column == "SDG") {
         } else if (d.column == "Publisher") { 
         } else if (d.column == "Star") { 
-          sdgAppBookmarkPublication(d.doi);
+          var classElement = "rating star_" + d.doi;
+          console.log(classElement)
+          console.log(document.getElementsByClassName(classElement)[0].innerHTML == "☆")
 
+          if(document.getElementsByClassName(classElement)[0].innerHTML == "★")
+            document.getElementsByClassName(classElement)[0].innerHTML == "☆"
+          else if (document.getElementsByClassName(classElement)[0].innerHTML == "☆")
+           document.getElementsByClassName(classElement)[0].innerHTML == "★"
 
-         var basketStar = "";
-          function searchDOI(list) {
-            list.forEach(function (k) {
-              if (k == d.doi)
-                basketStar = "★";
-            })
-          }
-          sdgAppGetBookmarkedDois(searchDOI);
-          if (basketStar == "★")
-            this.html= "☆"
-          else
-            this.html = "★"
           
         }else {
           sdgAppDisplayPublication(d.doi);
