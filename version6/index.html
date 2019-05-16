@@ -891,7 +891,7 @@ function renderIndic(){
 
   var dispNodesIndic=nodesIndic;
   var dispLinksIndic=linksIndic;
-  
+  console.log(dispLinksIndic)
     linkIndic = svgIndic.selectAll(".link")
       .data(dispLinksIndic)
       .enter()
@@ -1093,7 +1093,7 @@ function renderIndic(){
         if (d.column == "Publisher")
           return "<div class=\"reportPublisher\">" + d.value + "</div>";
         else if (d.column=="Star")
-         return "☆";
+         return "&nbsp;";
         else
           return "<a class=\"tableLink\" href=\"https://dx.doi.org/"+d.doi+"\" target=\"_blank\" >"+d.value+"</a>"; 
       })
