@@ -693,17 +693,23 @@ if(connectedNodes==1){
           return tooltip.style("visibility", "hidden");
       })
       .on("click", function (d) {
-         if (d.column == "Star") { 
-          /**var classElement = "rating star_" + d.doi;
-          console.log(classElement)
-          console.log(document.getElementsByClassName(classElement)[0].innerHTML == "☆")
+        if (d.column == "SDG") {
+        } else if (d.column == "Publisher") { 
+        } else if (d.column == "Star") { 
+          
+          sdgAppBookmarkPublication(d.doi);
 
-          if(document.getElementsByClassName(classElement)[0].innerHTML == "★")
-            document.getElementsByClassName(classElement)[0].innerHTML == "☆"
-          else if (document.getElementsByClassName(classElement)[0].innerHTML == "☆")
-           document.getElementsByClassName(classElement)[0].innerHTML == "★"  
-          **/ 
-         }
+        var classStar = "rating star_" + d.doi
+        if (document.getElementsByClassName(classStar)[0].innerHTML == "★"){
+            document.getElementsByClassName(classStar)[0].innerHTML == "☆";
+        }
+        else if (document.getElementsByClassName(classStar)[0].innerHTML == "☆"){
+          document.getElementsByClassName(classStar)[0].innerHTML == "★";
+        } 
+          
+        }else {
+          sdgAppDisplayPublication(d.doi);
+        }
       });
 
     return table;
