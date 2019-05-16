@@ -656,14 +656,12 @@ if(connectedNodes==1){
                 }
                 counter++;
               })
-           
-
           }
           
           //sdgAppGetBookmarkedDois(searchDOI);
-          var list = sdgAppGetBookmarkedDois(searchDOI);
+          return sdgAppGetBookmarkedDois(searchDOI);
           
-          return "★";
+          //return "★";
          
         }
         else{
