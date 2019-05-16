@@ -633,7 +633,7 @@ if(connectedNodes==1){
         if (d.column=="Publisher")
           return "publisher"
         if (d.column=="Star")
-          return "rating";
+          return "rating star_"+d.doi;
       })
       .attr("id", function (d) {
         if (d.column == "Star")
@@ -649,7 +649,7 @@ if(connectedNodes==1){
         else if (d.column=="Star"){
 
           var startingStar= "☆";
-          var idElement= "star_" + d.doi;
+          var classElement= "star_" + d.doi;
 
           function searchDOI(list) {
             var counter = 1;
@@ -659,16 +659,14 @@ if(connectedNodes==1){
                 if (k == d.doi)
                   startingStar = "★";
                 if (counter == list.length) {
-                  document.getElementById(idElement).innerHTML= startingStar;
+                  document.getElementsByClassName(classElement).innerHTML= startingStar;
                 //return startingStar;
                 }
                 counter++;
               })
             }
             else{
-              console.log(startingStar)
-              console.log(idElement)
-              document.getElementById(idElement).innerHTML = startingStar;
+              document.getElementsByClassName(classElement).innerHTML = startingStar;
             }
           }
           
