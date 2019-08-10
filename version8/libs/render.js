@@ -96,9 +96,10 @@ function render(param) {
                 context.beginPath()
                 context.arc(d.x, d.y, r, 0, pi2)
                 context.clip()
-                context.drawImage(d.img,
+                context.drawImage(d.img,d.x -  0.6* r, d.y -0.6 *r, img_w, img_h) 
+                //context.drawImage(d.img,
                     //img_w, img_h, img_w, img_h, //sx, sy, swidth, sheight
-                    d.x -  0.6* r, d.y -0.6 *r, img_w, img_h) //x, y, width, height
+                 //   d.x - 0.6 * r, d.y - 0.6 * r, img_w, img_h) //x, y, width, height
                 context.restore()
 
             }//if
