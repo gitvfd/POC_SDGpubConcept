@@ -10,7 +10,7 @@ function loadData(data) {
 
     })
 
-
+var counter=0;
     //import SDG pics
     nodes_raw.forEach(function (d) {
         d.img = new Image
@@ -18,6 +18,9 @@ function loadData(data) {
         d.img_loaded = false
         d.img.onload = function () {
             d.img_loaded = true
+            counter++;
+            if(counter==17)
+            render();
         }//onload
     })
 
@@ -101,7 +104,7 @@ function loadData(data) {
     })
     nodes_raw.forEach(d => { node_by_id[d.id] = d })
     iteration_max = d3.max(nodes_raw, function (d) { return d.iteration; });
-    render();
+  //  render();
 console.log(data)
 
 
