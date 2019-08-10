@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="css/rSlider.min.css">-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+</head>
+
+<body>
+<div id="chart">
+    <div id="chart-tooltip">
+        <p class="tooltip-type"></p>
+        <p class="tooltip-title"></p>
+        <p class="tooltip-explanation"></p>
+    </div>
+</div>
+<div id="conceptInfo">
+    <div id="conceptLinkName">test</div>
+    <br/>
+    <div id="biblioLink">
+        <a  id="conceptLinkhtml" href="https://www.wikipedia.org" target="_blank"><img src="icons/plus.png" id="conceptLinkimage" alt="link icons"><span id="conceptLinkinfo">Click to access the publications</span></a>
+    </div>
+    <br/>
+    <div id="conceptChart"></div>
+</div>
+<div id="helpIcon"><img src="icons/help.png" id="helplink" alt="link icons"></div>
+<div id="helpIndic"><img src="icons/Legend.png" id="legendPic" alt="link icons"></div>
+
+
+<script src="libs/jquery-1.7.2.min.js"></script>
+<script src="libs/d3.min.js"></script>
+<script src="libs/d3.layout.cloud.js"></script>
+<script src="libs/sdg-app.js"></script>
+<script src="libs/loadData.js"></script>
+<script src="libs/drawarcs.js"></script>
+<script src="libs/mousehover.js"></script>
+<script src="libs/mouseclick.js"></script>
+<script src="libs/drawsubnetworks.js"></script>
+<script src="libs/addonstats.js"></script>
+<script src="libs/render.js"></script>
+<script>
+    
+    var files = ["data/class_concept.tsv", "data/search-data.json", "data/indic_data.tsv"];
+    var promises = [];
+
+    let types = ["SDG", "Concept", "Publication"]
+
+    //data arrays
+    var nodes_raw = [];
+    var links_raw = [];
+    let nodes_selected = [], edges_selected = []
+    let edge_by_id = {};
+    let node_by_id = {};
+
+    let conceptList=[];
+    let pubList = [];
+
+    let iteration_max;
+
+    //geo
+    const pi2 = 2 * Math.PI;
+    //zoom level
+    let transform=1;
+
+    function loadImage(url) {
+        return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
+    }
+
+
+    
+
+    if (isEmbeddedInIFrame) {
+        sdgAppGetData(files[2], loadData);
+    } else {
+        files.forEach(function (url) {
+            if (url.slice(-3) == "tsv"){ 
+                promises.push(d3.tsv(url));
+            } else{
+                promises.push(d3.json(url));
+            }
+                
+        });
+        Promise.all(promises).then(loadData);
+    }
+
+
+    //Sizes
+    let base_width = 2400, base_height = 2400
+    let width = 2400, height = 2400
+    let total_width, total_height
+    let margin = {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+    }
+    let w,h;
+
+    if(document.documentElement.clientWidth>= document.documentElement.clientHeight){
+        if(document.documentElement.clientWidth>=1250){
+            w = document.documentElement.clientWidth
+            h = 0.65 * document.documentElement.clientWidth
+        }else if (document.documentElement.clientWidth >= 900){
+            w = document.documentElement.clientWidth
+            h = 0.8 * document.documentElement.clientWidth
+        }else{
+            w = document.documentElement.clientWidth
+            h = 1 * document.documentElement.clientWidth
+        }
+    }
+    else {
+        w = document.documentElement.clientWidth
+        h = 1.4*document.documentElement.clientHeight
+    }
+
+    /////////////////////////// Scales ///////////////////////////
+
+
+    //The radius that belongs to the nodes based on their type (concept is done differently)
+    const SDG_scale = d3.scaleOrdinal()
+        .domain(types)
+        .range([100, 6, 6])
+        .unknown(1)
+    //The radius that belongs to the concept nodes based on their degree
+    const concept_scale = d3.scaleLinear() //linear on purpose
+        .domain([1, 10, 50, 150])
+        .range([1, 10, 30, 80])
+
+    //Basic color that is given to the nodes based on their type  
+    const color_SDG_scale = d3.scaleOrdinal()
+        .domain(['no-poverty', 'zero-hunger', 'good-health', 'quality-education', 'gender-equality', 'clean-water', 'affordable-energy', 'decent-work-growth', 'industry - innovation - and - infrastructure', 'reduced-inequalities', 'sustainable-cities', 'responsible-consumption', 'climate-action', 'life-below-water', 'life-on-land', 'peace-justice-and-strong-institutions', 'partnerships-for-the-goals'])
+        .range(['#EB1C2D', '#D3A029', '#279B48', '#C31F33', '#EF402B', '#00AED9', '#FDB713', '#8F1838', '#F36D25', '#E11484', '#F99D26', '#CF8D2A', '#48773E', '#007DBC', '#3EB049', '#02558B', '#183668'])
+        .unknown("#557693")    
+    //color scale for concept! was previously using "color_SDG_scale(d)"
+    const color_concept_scale= d3.scaleLinear() 
+        .range(["#1f4557","#3a81a2", "#4e9cc0"])
+            //define concept color scale
+            color_concept_scale.domain([1, 25,200]) //iterationMax would be better than 300
+
+        
+    let radius ;
+    if(w>h){
+        radius = d3.scaleSqrt().domain([1, 200]).range([2, w / 45]);
+    }else{
+        radius = d3.scaleSqrt().domain([1, 200]).range([2, w / 20]);
+    }
+
+    //Containers
+    let svg, g
+    let node_hover
+    let link_external_page;
+    let canvas, canvas_edges,  canvas_hover, canvas_hidden
+    let context, context_edges, context_hover, context_hidden
+
+
+    //Canvas for the edges  
+    canvas_edges = d3.select("#chart").append("canvas").attr("id", "canvas-edge")
+        .attr("width", 2 * w).attr("height", 2 * h)
+        .style("width", w + "px").style("height", h + "px");
+
+    context_edges = canvas_edges.node().getContext("2d")
+    context_edges.scale(2, 2);
+
+    //Canvas for the nodes 
+    canvas = d3.select("#chart").append("canvas")
+            .attr("id", "canvas")
+            .attr("width", 2*w).attr("height", 2*h)
+            .style("width",  w+"px").style("height", h + "px");
+
+
+    context = canvas.node().getContext("2d");
+    context.scale(2, 2);
+
+    //Canvas for the various effects - mostly for performance
+    canvas_hidden = d3.select("#chart").append("canvas").attr("id", "canvas-hidden")
+        .attr("width", 2 * w).attr("height", 2 * h)
+        .style("width", w + "px").style("height", h + "px");;
+
+    context_hidden = canvas_hidden.node().getContext("2d")
+    context_hidden.scale(2, 2);
+
+    //Canvas for the hover effects - mostly for performance
+    canvas_hover = d3.select("#chart").append("canvas").attr("id", "canvas-hover")
+            .attr("width", 2 * w).attr("height", 2 * h)
+            .style("width", w + "px").style("height", h + "px");
+    
+    context_hover = canvas_hover.node().getContext("2d")
+    context_hover.scale(2, 2);
+
+   
+
+    //Simulation
+    let simulation;
+    let voronoi, diagram
+
+
+     //SVG container for the things on top such as text
+    let mouse_zoom_rect =  d3.select("#chart").append("svg")
+            .style("pointer-events", "all")
+        .attr("width", w)
+        .attr("height", h);
+
+
+    //Group for the rotating dotted circle
+    node_hover_group = mouse_zoom_rect.append("g")
+        .attr("id", "node-hover-group")
+        .style("pointer-events", "none")
+
+    //Create circle to show hovered node outer moving dotted line
+    //Happens when another node is "fixed" after click
+    node_hover = node_hover_group.append("circle")
+        .attr("class", "node-hovered")
+        .style("fill", "none")
+        .style("stroke-linecap", "round")
+        .style("pointer-events", "none")
+        .style("display", "none")
+
+  
+
+    //Mouse events
+    let m = [0, 0] //mouse position
+    let current_hover = null, current_click = null, current_double_click = null
+    let click_active = false
+    let found, found_edge = null
+    let next_color = 1 //will give each edge a unique color for the edge hover capture
+    let click_double = false
+    let click_timeout //To check for a double click
+    let showTooltip = function (node) { }
+    let hideTooltip = function () { }
+    let timer_draw = null
+
+    //ZOOMING FEAT
+    let forced_load = true
+   
+
+
+    var sdgConfigs = {
+            'no-poverty': { label: '1: No poverty', color: '#EB1C2D' },
+            'zero-hunger': { label: '2: Zero hunger', color: '#D3A029' },
+            'good-health': { label: '3: Good health and well-being', color: '#279B48' },
+            'quality-education': { label: '4: Quality education', color: '#C31F33' },
+            'gender-equality': { label: '5: Gender equality', color: '#EF402B' },
+            'clean-water': { label: '6: Clean water and sanitation', color: '#00AED9' },
+            'affordable-energy': { label: '7: Affordable and clean energy', color: '#FDB713' },
+            'decent-work-growth': { label: '8: Decent work and economic growth', color: '#8F1838' },
+            'industry-innovation-and-infrastructure': { label: '9: Industry, innovation and infrastructure', color: '#F36D25' },
+            'reduced-inequalities': { label: '10: Reduced inequalities', color: '#E11484' },
+            'sustainable-cities': { label: '11: Sustainable cities and communities', color: '#F99D26' },
+            'responsible-consumption': { label: '12: Responsible consumption and production', color: '#CF8D2A' },
+            'climate-action': { label: '13: Climate action', color: '#48773E' },
+            'life-below-water': { label: '14: Life below water', color: '#007DBC' },
+            'life-on-land': { label: '15: Life on land', color: '#3EB049' },
+            'peace-justice-and-strong-institutions': { label: '16: Peace, justice and strong institutions', color: '#02558B' },
+            'partnerships-for-the-goals': { label: '17: Partnerships for the goals', color: '#183668' },
+        };
+
+ 
+
+    //////////////////////////////////////////////////////////////
+    ////////////////////// Page resize actions ///////////////////
+    //////////////////////////////////////////////////////////////
+
+    let current_width = window.innerWidth
+    d3.select(window).on("resize", function () {
+        //Only resize if the width is changed, not the height
+        //Otherwise you get odd behavior on mobile due to URL bar appearing and disappearing
+        if (window.innerWidth !== current_width) {
+            current_width = window.innerWidth
+            w = document.documentElement.clientWidth
+            h = document.documentElement.clientHeight
+            /**svgChart
+                .width(w)
+                .height(h)
+                .resize()**/
+        }//if
+    })//on resize
+
+
+
+
+    //////////////////////////////////////////////////////////////
+    //////////// Functions for simple mouseover tooltip //////////
+    //////////////////////////////////////////////////////////////
+
+    //Initialize the function for showing the tooltip on hover
+    //This tooltip function will be run when the user hovers over a node
+    //And when a click is active, it will also run when hovered over a visible edge
+    //You can distinguish between the two, because obj.type will be "edge" for the edge hover
+    function createTooltip(obj) {
+
+        let radius_, label, type, note
+
+            
+        radius_ = radius(obj.iteration)
+        label = obj.name
+        note = obj.cat
+        d3.select("#chart-tooltip")
+            .style("border", null)
+            .style("box-shadow", null)
+    
+
+        //Change titles
+        d3.select("#chart-tooltip .tooltip-type").html(note)
+        d3.select("#chart-tooltip .tooltip-title").html(label)
+        d3.select("#chart-tooltip .tooltip-explanation").html("click to freeze view")
+        
+        let box_size = document.getElementById("chart-tooltip").getBoundingClientRect()
+
+        //Place & show the tooltip
+        d3.select("#chart-tooltip")
+            .style("top", (obj.y  - radius_ - Math.max(radius_ * 0.5, 30)) + "px")
+            .style("left", (obj.x + Math.max(radius_ * 1.25, 30)) + "px")
+            .style("opacity", 1)
+        
+        //hide nodes and edges
+        if (!click_active) {
+            d3.select("#canvas").style("opacity",0.2)
+            d3.select("#canvas-edge").style("opacity", 0)
+        }
+
+    }//function createTooltip
+
+    function removeTooltip() {
+        if (!click_active) {
+        context_hover.clearRect(0, 0, width, height);
+        }
+        //Hide the tooltip
+        d3.select("#chart-tooltip").style("opacity", 0)
+
+        //make nodes and edges appear again
+        if(!click_active){
+            d3.select("#canvas").style("opacity", 1)
+            d3.select("#canvas-edge").style("opacity", 1)
+        }
+
+    }//function removeTooltip
+
+//////////////////////////////////////////////////////////////
+////////// Functions to prepare the node & edge data /////////
+//////////////////////////////////////////////////////////////
+    d3.select("#helplink")
+    .on("mouseover",function(){
+        d3.select(this).style("opacity",0.8)
+        d3.select("#helpIndic").style("visibility","visible")
+    })
+    .on("mouseout", function () {
+            d3.select(this).style("opacity", 1)
+        d3.select("#helpIndic").style("visibility", "hidden")
+    })
+        
+</script>
+
+
+</body>
