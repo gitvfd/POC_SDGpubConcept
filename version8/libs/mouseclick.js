@@ -42,7 +42,7 @@ function mouseClickChart() {
 function setMouseClick(node) {
     console.log(node)
     //update link to 
-    document.getElementById("conceptLinkName").innerHTML = node.name;
+    document.getElementById("conceptLinkName").innerHTML = node.name.replace("-"," ");;
     if (click_active == false) {
         d3.select("#conceptInfo").style("visibility", "visible")
 
