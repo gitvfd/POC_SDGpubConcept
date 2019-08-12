@@ -1,4 +1,6 @@
 function loadData(data) {
+console.log(data)
+alldata = data;
 
     ////////////////////////////////////////////////////////////
     /////////////// NODE CREATION 
@@ -166,11 +168,14 @@ var counter=0;
 
                 pubList.push(toPushMod)
                 
+                
             }
     
             
         })
     })
-    console.log(pubList)
+
+
+
 
 }

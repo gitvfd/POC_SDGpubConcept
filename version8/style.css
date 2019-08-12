@@ -79,21 +79,152 @@ canvas {
   top: 50%;
   left: 5%;
   visibility: hidden;
-  background:rgba(255,255,255,0.8);
+  background:rgba(255,255,255,0.9);
   box-shadow: 0 3px 5px rgba(97, 97, 97, 0.3); 
   max-width:500px;
+  margin-bottom:30px;
 }
 
 #conceptLinkName{
   display: inline-block;
   clear: both;
   top:10px;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 24px;
+  font-weight: 100;
   font-family: 'Helvetica', sans-serif;
   font-variant-caps: all-petite-caps;
-  text-decoration: underline;
   padding-left: 10px;
+}
+
+.chartblock{
+  margin-top:10px;
+  margin-bottom:5px;
+}
+
+#chartExplanation{
+  display:inline-block;
+  clear:both;
+  width:100%;
+  font-size: 18px;
+  font-weight: 200;
+  font-family: 'Helvetica', sans-serif;
+
+  padding: 0px 10px 0px 10px;
+}
+#magicFig{
+  font-size: 24px;
+  font-weight: 900;
+  font-family: 'Helvetica', sans-serif;
+  font-style:italic;
+  color: #0bb89c;
+  padding: 0px 5px 0px 00px;
+}
+.magicFigDisp{
+  font-size: 22px;
+  font-weight: 900;
+  font-family: 'Helvetica', sans-serif;
+  fill: #0bb89c;
+  vertical-align: text-top;
+}
+
+.contextFig{
+  font-size: 18px;
+  font-weight: 200;
+  font-family: 'Helvetica', sans-serif;
+  fill: #0bb89c;
+
+}
+
+#docSentence{
+  font-size: 18px;
+  font-weight: 300;
+  font-family: 'Helvetica', sans-serif;
+  color: #333;
+
+}
+
+#conceptName{
+  font-size: 22px;
+  font-weight: 300;
+  font-family: 'Helvetica', sans-serif;
+  color: #0bb89c;
+}
+
+#chartStat{
+  display:inline-block;
+  clear:both;
+  height:150px;
+
+}
+
+.hidden>div {
+	display:none;
+}
+
+.visible>div {
+	display:block;
+}
+
+
+.chartblockSDG{
+  margin-top:10px;
+  margin-bottom:5px;
+}
+
+#chartExplanationSDG{
+  display:inline-block;
+  clear:both;
+  width:100%;
+  font-size: 18px;
+  font-weight: 200;
+  font-family: 'Helvetica', sans-serif;
+
+  padding: 0px 10px 0px 10px;
+}
+#magicFigSDG{
+  font-size: 24px;
+  font-weight: 900;
+  font-family: 'Helvetica', sans-serif;
+  font-style:italic;
+  color: #d70b8c;
+  padding: 0px 5px 0px 00px;
+}
+.magicFigDispSDG{
+  font-size: 22px;
+  font-weight: 900;
+  font-family: 'Helvetica', sans-serif;
+  fill: #d70b8c;
+  vertical-align: text-top;
+}
+
+.contextFigSDG{
+  font-size: 18px;
+  font-weight: 200;
+  font-family: 'Helvetica', sans-serif;
+  fill: #d70b8c;
+
+}
+
+#docSentenceSDG{
+  font-size: 18px;
+  font-weight: 300;
+  font-family: 'Helvetica', sans-serif;
+  color: #333;
+
+}
+
+#conceptNameSDG{
+  font-size: 22px;
+  font-weight: 300;
+  font-family: 'Helvetica', sans-serif;
+  color: #d70b8c;
+}
+
+#chartStatSDG{
+  display:inline-block;
+  clear:both;
+  height:150px;
+
 }
 
 
@@ -111,24 +242,21 @@ canvas {
   border-color:rgba(85,118,147,0.9);
   margin: 0px 10px 3px 10px;
 }
-.tableclass0{
-  /**background:rgba(85,118,147,0.5);**/
+
+.tableclass0,.tableclass1{
   font-weight: 200;
   font-family: 'Helvetica', sans-serif;
-  font-size:11px;
-  margin: 0px;
-  padding:2px;
-}
-.tableclass1{
-  background:rgba(85,118,147,0.5);
-  font-weight: 200;
-  font-family: 'Helvetica', sans-serif;
-  font-size:11px;
+  font-size:12px;
   margin: 0px;
   padding:2px;
 }
 
+.tableclass1{
+  background:rgba(85,118,147,0.5);
+}
+
 .tableclass1:hover ,.tableclass2:hover { opacity:0.6; }
+
 #biblioLink{
   clear: both;
   display: inline-block;
@@ -144,8 +272,8 @@ canvas {
 
 
 #conceptLinkinfo{
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 200;
   font-family: 'Helvetica', sans-serif;
   font-style: italic;
   padding-left: 10px;

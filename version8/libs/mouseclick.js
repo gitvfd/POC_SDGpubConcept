@@ -40,9 +40,9 @@ function mouseClickChart() {
 
 //////////// Perform visual steps after "good" click /////////
 function setMouseClick(node) {
-    console.log(node)
+
     //update link to 
-    document.getElementById("conceptLinkName").innerHTML = node.name.replace("-"," ");;
+    document.getElementById("conceptLinkName").innerHTML = node.name.replace(/-/g," ");
     if (click_active == false) {
         d3.select("#conceptInfo").style("visibility", "visible")
 
