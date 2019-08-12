@@ -18,11 +18,20 @@
 <div id="conceptInfo">
     <div id="conceptLinkName">concept or SDG</div>
     <br />
-    <div id="chartStat"></div>
-        <br/>
-    <div id="chartStat2"></div>
+    <div class="chartblock">
+        <div id="chartExplanation" class="charttemp"><span id="magicFig">230</span><span id="docSentence">doc relates to</span><span id="conceptName">this concept</span> </div>
+        <div id="chartStat" class="charttemp"></div>
+    </div>
+    <br/>
+    <div id="chartblockSDG">
+        <div id="chartExplanationSDG" class="charttemp"><span id="magicFigSDG">230</span><span id="docSentenceSDG">doc relates
+                to</span><span id="conceptNameSDG">this concept</span> </div>
+        <div id="chartStatSDG" class="charttempSDG"></div>
+    </div>
+
     <br />
-    <div id="tableTitle">Most recent publications</div>
+
+    <div id="tableTitle">Most recent documents</div>
     <div id="publicationsList"></div>
         <br/>
     <div id="biblioLink">
@@ -54,6 +63,7 @@
     let types = ["SDG", "Concept", "Publication"]
 
     //data arrays
+    var alldata=[];
     var nodes_raw = [];
     var links_raw = [];
     let nodes_selected = [], edges_selected = []
@@ -262,8 +272,47 @@
             'partnerships-for-the-goals': { label: '17: Partnerships for the goals', color: '#183668' },
         };
 
- 
 
+
+
+    //////////////////////////////////////////////////////////////
+    //////////// SETTING UP SVG CHART IN CONCEPT BOX /////////////
+    //////////////////////////////////////////////////////////////
+
+    var widthDonut = 500,
+            heightDonut = 150,
+            radiusDonut = Math.min(widthDonut, heightDonut) / 2;
+
+    var color = d3.scaleOrdinal()
+                .range(["#0bb89c","#9de2d7"]);
+
+    var pie = d3.pie()
+        .value(function (d) { return d; })
+        .sort(null);
+
+        var arcDonut = d3.arc()
+            .innerRadius(radiusDonut - 40)
+            .outerRadius(radiusDonut - 10);
+
+        var svgDonut = d3.select("#chartStat").append("svg")
+            .attr("width", widthDonut)
+            .attr("height", heightDonut)
+            ;
+
+
+    //////////////////////////////////////////////////////////////
+    //////////// SETTING UP SVG CHART IN SDG BOX /////////////
+    //////////////////////////////////////////////////////////////
+
+
+    var colorSDG = d3.scaleOrdinal()
+        .range(["#d70b8c", "#e76cba"]);
+
+
+    var svgDonutSDG = d3.select("#chartStatSDG").append("svg")
+        .attr("width", widthDonut)
+        .attr("height", heightDonut)
+        ;
     //////////////////////////////////////////////////////////////
     ////////////////////// Page resize actions ///////////////////
     //////////////////////////////////////////////////////////////
@@ -297,10 +346,9 @@
     function createTooltip(obj) {
 
         let radius_, label, type, note
-
             
         radius_ = radius(obj.iteration)
-        label = obj.name
+        label = obj.name.replace(/-/g, " ");
         note = obj.cat
         d3.select("#chart-tooltip")
             .style("border", null)

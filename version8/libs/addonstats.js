@@ -2,9 +2,19 @@
 ///////// Place modal open icon next to clicked node /////////
 function renderClickIcon(node) {
 
-    console.log(node)
     document.getElementById("publicationsList").innerHTML="";
+
     if (node.cat == "Concept") {
+        document.getElementById("chartblockSDG").style.display = "none";
+        
+        document.getElementById("magicFig").innerHTML=node.iteration;
+        if (node.iteration==1)
+            document.getElementById("docSentence").innerHTML = " document relates to "
+        else
+            document.getElementById("docSentence").innerHTML = " documents relate to "       
+        document.getElementById("conceptName").innerHTML = node.name.replace(/-/g, " ");;
+        createDonut([node.iteration, pubList.length - node.iteration],node.cat)
+
         conceptList.forEach(function (d) {
             if (node.name == d.name){
 
@@ -31,10 +41,33 @@ function renderClickIcon(node) {
         })
     }
     if (node.cat == "SDG") {
+
+        document.getElementById("magicFig").innerHTML = node.iteration;
+        if (node.iteration == 1)
+            document.getElementById("docSentence").innerHTML = " concept relates to "
+        else
+            document.getElementById("docSentence").innerHTML = " concepts relate to "
+        document.getElementById("conceptName").innerHTML = node.name.replace(/-/g, " ");;
+
+        createDonut([node.iteration, conceptList.length - node.iteration], node.cat)
+
+
+
+        document.getElementById("chartblockSDG").style.display = "block";
+
+
+
+        document.getElementById("magicFigSDG").innerHTML = alldata[1][node.name]["publications"].length;
+        if (alldata[1][node.name]["publications"].length == 1)
+            document.getElementById("docSentenceSDG").innerHTML = " document relates to "
+        else
+            document.getElementById("docSentenceSDG").innerHTML = " documents relate to "
+        document.getElementById("conceptNameSDG").innerHTML = node.name.replace(/-/g, " ");;
+
+        createDonutSDG([alldata[1][node.name]["publications"].length, pubList.length - alldata[1][node.name]["publications"].length])
+       
         conceptList.forEach(function (d) {
             if (node.name == d.name) {
-                var listtot = [];
-
                 for (var i = 0; i < 20; i++) {
                     var x = document.createElement("P");
                     var temp_link = document.createElement("a");
@@ -54,6 +87,67 @@ function renderClickIcon(node) {
     //how much it weighs in each concept
 }//function renderClickIcon
 
+function createDonut(data,cat){
+    svgDonut.selectAll("*").remove();
+    
+    var gDonut=svgDonut.append("g")
+        .attr("transform", "translate(" + widthDonut / 2 + "," + heightDonut / 2 + ")");
+
+    var path = gDonut.datum(data).selectAll("path")
+        .data(pie)
+        .enter().append("path")
+        .attr("fill", function (d, i) { return color(i); })
+        .attr("d", arcDonut);
+      
+    svgDonut.append("text")
+        .attr("x", widthDonut / 2)
+        .attr("y", heightDonut / 2)
+        .attr("class", "magicFigDisp")
+        .attr("text-anchor", "middle")  
+        .text(d3.format(".1%")(data[0]/data[1]))
+
+    svgDonut.append("text")
+        .attr("x", 2*widthDonut / 3)
+        .attr("y", heightDonut / 2)
+        .attr("class", "contextFig")
+        .attr("text-anchor", "start")
+        .text(function(){
+            if(cat=="Concept")
+                return "of all documents";
+            else
+                return "of all concepts";
+
+        })
+    
+}
+
+function createDonutSDG(data) {
+    svgDonutSDG.selectAll("*").remove();
+
+    var gDonutSDG = svgDonutSDG.append("g")
+        .attr("transform", "translate(" + widthDonut / 2 + "," + heightDonut / 2 + ")");
+
+    var path = gDonutSDG.datum(data).selectAll("path")
+        .data(pie)
+        .enter().append("path")
+        .attr("fill", function (d, i) { return colorSDG(i); })
+        .attr("d", arcDonut);
+
+    svgDonutSDG.append("text")
+        .attr("x", widthDonut / 2)
+        .attr("y", heightDonut / 2)
+        .attr("class", "magicFigDispSDG")
+        .attr("text-anchor", "middle")
+        .text(d3.format(".1%")(data[0] / data[1]))
+
+    svgDonutSDG.append("text")
+        .attr("x", 2 * widthDonut / 3)
+        .attr("y", heightDonut / 2)
+        .attr("class", "contextFigSDG")
+        .attr("text-anchor", "start")
+        .text( "of all documents")
+
+}
 
 function sortJSON(data, key, way) {
     return data.sort(function (a, b) {
