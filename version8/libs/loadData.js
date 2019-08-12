@@ -9,6 +9,7 @@ function loadData(data) {
         nodes_raw.push({ cat: "SDG", iteration: Object.keys(data[1][o]["doisByConcept"]).length, name: o, list: [o], color: color_SDG_scale(o) })
 
     })
+    
 
 var counter=0;
     //import SDG pics
@@ -19,8 +20,8 @@ var counter=0;
         d.img.onload = function () {
             d.img_loaded = true
             counter++;
-            if(counter==17)
-            render();
+            if (counter == Object.keys(data[1]).length)
+            render();//launch render once all images are loaded to prevent chrome bug
         }//onload
     })
 
@@ -104,8 +105,8 @@ var counter=0;
     })
     nodes_raw.forEach(d => { node_by_id[d.id] = d })
     iteration_max = d3.max(nodes_raw, function (d) { return d.iteration; });
-  //  render();
-console.log(data)
+  //  render(); // render now launched once all images are loaded.
+  
 
 
     ////////////////////////////////////////////////////////////
