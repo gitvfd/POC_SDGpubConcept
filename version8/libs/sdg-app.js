@@ -14,10 +14,10 @@ const CLOUD_VIZ_BOOKMARK_PUBLICATION = 'CLOUD_VIZ_BOOKMARK_PUBLICATION';
 function sdgAppGetData(indicDataUrl, onReceiveDataCallback) {
   const handleReceiveData = function handleReceiveData(e) {
     if (e.data.type === SDG_APP_RECEIVE_DATA) {
-      d3.tsv(indicDataUrl, function(error, indicData) {
-        if (error) throw error;
-        onReceiveDataCallback(null, e.data.concept, e.data.data, indicData);
-      });
+      d3.tsv(indicDataUrl)
+      .then(function(indicData) {
+        onReceiveDataCallback([e.data.concept, e.data.data, indicData]);
+      })
     }
     window.removeEventListener('message', handleReceiveData);
   };
