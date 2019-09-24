@@ -63,7 +63,34 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
 <script src="libs/addonstats.js"></script>
 <script src="libs/render.js"></script>
 <script>
-    
+        
+        function getUnique(array) {
+            var uniqueArray = [];
+
+            // Loop through array values
+            for (i = 0; i < array.length; i++) {
+                if (uniqueArray.indexOf(array[i]) === -1) {
+                    uniqueArray.push(array[i]);
+                }
+            }
+            return uniqueArray;
+        }
+
+       const getUniqueJson = (values) => {
+            let concatArray = values.map(eachValue => {
+                return Object.values(eachValue).join('')
+            })
+            let filterValues = values.filter((value, index) => {
+                return concatArray.indexOf(concatArray[index]) === index
+
+            })
+            return filterValues
+        }
+
+        var names = [{ title: "Jon", parentTitle:"pit"}, { title: "Jon", parentTitle:"pit"}, { title: "Jpn", parentTitle: "pit" }, { title: "BVN", parentTitle: "pit" }, { title: "Jpn", parentTitle: "pit" }, { title: "BVN", parentTitle: "pit" } ];
+        var names = getUniqueJson(names);
+        console.log(names);
+
     var files = ["data/class_concept.tsv", "data/search-data.json", "data/indic_data.tsv"];
     var promises = [];
 
