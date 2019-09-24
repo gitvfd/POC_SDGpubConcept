@@ -30,7 +30,6 @@ function renderClickIcon(node) {
                             listtot.push(k)
                     })
                 })
-                console.log(listtot)
 
                 listtot = getUniqueJson(listtot);
                 for(var i=0;i<20;i++){
