@@ -110,10 +110,10 @@ function render(param) {
         context.restore();
         context_edges.restore();
     }
-
-
+    console.log(window.location.pathname.split('/'))
+    //var pathArray = window.location.pathname.split('/');
     //////////////////////////////////////////////////////////////
-    ///////////////// SET MOUSE OVER A?D CLICK ACTIONS ///////////
+    ///////////////// SET MOUSE OVER AND CLICK ACTIONS ///////////
     //////////////////////////////////////////////////////////////
 
 
