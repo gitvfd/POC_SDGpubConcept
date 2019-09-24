@@ -8,12 +8,11 @@ alldata = data;
     //load SDGs
 
     Object.keys(data[1]).forEach(function (o) {
-        nodes_raw.push({ cat: "SDG", iteration: Object.keys(data[1][o]["doisByConcept"]).length, name: o, list: [o], color: color_SDG_scale(o) })
-
+        nodes_raw.push({ cat: "SDG", iteration: Object.keys(data[1][o]["doisByConcept"]).length, name: o, list: [o], color: color_SDG_scale(o), totPubList: Object.keys(data[1][o]["publications"]) })
     })
     
 
-var counter=0;
+    var counter=0;
     //import SDG pics
     nodes_raw.forEach(function (d) {
         d.img = new Image
@@ -23,7 +22,7 @@ var counter=0;
             d.img_loaded = true
             counter++;
             if (counter == Object.keys(data[1]).length)
-            render();//launch render once all images are loaded to prevent chrome bug
+            render(); //launch render once all images are loaded to prevent chrome bug
         }//onload
     })
 
@@ -33,15 +32,35 @@ var counter=0;
             var toPush = "TRUE";
             nodes_raw.forEach(function (v) {
                 if (v.name == d) {
-                    v.iteration = v.iteration + (data[1][o]["doisByConcept"][d]).length
+
+
+                    
+                   (data[1][o]["doisByConcept"][d]).forEach(function (k) {
+
+                        /**var pushPub = "TRUE";
+                        (v.totPubList).forEach(function (l){
+                            if(l==k){
+
+                                pushPub = "FALSE";
+
+                                //console.log(l)
+                            }
+                        })
+                        if (pushPub == "TRUE") {**/
+                            (v.totPubList).push(k)
+                        //}
+                    })
+                    v.totPubList = getUnique(v.totPubList);
+                    v.iteration = (v.totPubList).length
                     v.list.push(o)
                     v.color = color_concept_scale(v.iteration)
+
                     toPush = "FALSE";
                 }
             })
-            if (toPush == "TRUE")
-                nodes_raw.push({ cat: "Concept", name: d, iteration: (data[1][o]["doisByConcept"][d]).length, list: [o], color: color_concept_scale((data[1][o]["doisByConcept"][d]).length) })
-
+            if (toPush == "TRUE"){
+                nodes_raw.push({ cat: "Concept", name: d, iteration: (data[1][o]["doisByConcept"][d]).length, list: [o], color: color_concept_scale((data[1][o]["doisByConcept"][d]).length),totPubList: data[1][o]["doisByConcept"][d] })
+            }
         })
     })
 
@@ -110,7 +129,7 @@ var counter=0;
   //  render(); // render now launched once all images are loaded.
   
 
-
+console.log(nodes_raw)
     ////////////////////////////////////////////////////////////
     /////////////// CONCEPT REFERENCEMENT
     ////////////////////////////////////////////////////////////
@@ -129,16 +148,17 @@ var counter=0;
         Object.keys(data[1][o]["doisByConcept"]).forEach(function (d) {
             var toPushConcept = "TRUE";
             conceptList.forEach(function (v) {
-                if (v.name == d) {
+                if (v.name === d) {
                     data[1][o]["doisByConcept"][d].forEach(function (k) {
                         var toPushPub = "TRUE";
                         v.list.forEach(function (l) {
-                            if (k == l)
+                            if (k === l)
                                 toPushPub = "FALSE"
                         })
                         if (toPushPub == "TRUE")
                             v.list.push(k)
                     })
+                    v.list = getUnique(v.list);
                     toPushConcept = "FALSE";
                 }
             })

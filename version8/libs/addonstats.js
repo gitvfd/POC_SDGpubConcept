@@ -5,14 +5,18 @@ function renderClickIcon(node) {
     document.getElementById("publicationsList").innerHTML="";
 
     if (node.cat == "Concept") {
+
         document.getElementById("chartblockSDG").style.display = "none";
         
         document.getElementById("magicFig").innerHTML=node.iteration;
+
         if (node.iteration==1)
             document.getElementById("docSentence").innerHTML = " document relates to "
         else
             document.getElementById("docSentence").innerHTML = " documents relate to "       
+        
         document.getElementById("conceptName").innerHTML = node.name.replace(/-/g, " ");;
+        
         createDonut([node.iteration, pubList.length - node.iteration],node.cat)
 
         conceptList.forEach(function (d) {
@@ -26,6 +30,9 @@ function renderClickIcon(node) {
                             listtot.push(k)
                     })
                 })
+                console.log(listtot)
+
+                listtot = getUniqueJson(listtot);
                 for(var i=0;i<20;i++){
                     var x = document.createElement("P");        
                     var temp_link = document.createElement("a");
