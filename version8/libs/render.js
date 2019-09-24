@@ -133,7 +133,7 @@ function render(param) {
         return parentUrl;
     }
 
-    if(isInIframe){
+    if (isEmbeddedInIFrame){
         embeddedView(getParentUrl().split('/')[getParentUrl().split('/').length - 1]);
     }
 }//end of render
