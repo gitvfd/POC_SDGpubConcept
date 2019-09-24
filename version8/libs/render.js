@@ -112,6 +112,7 @@ function render(param) {
     }
 
 
+    console.log(getParentUrl())
     console.log(getParentUrl().split('/')[getParentUrl().split('/').length-1])
     //var pathArray = window.location.pathname.split('/');
     //////////////////////////////////////////////////////////////
@@ -124,7 +125,7 @@ function render(param) {
 
     function getParentUrl() {
         var isInIframe = (parent !== window),
-            parentUrl = window.location.pathname;
+            parentUrl = window.location.href;
 
         if (isInIframe) {
             parentUrl = document.referrer;
