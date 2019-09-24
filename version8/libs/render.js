@@ -125,10 +125,10 @@ function render(param) {
 
     function getParentUrl() {
         var isInIframe = (parent !== window),
-            parentUrl = window.location.href;
+            parentUrl = document.URL;
 
         if (isInIframe) {
-            parentUrl = document.referrer;
+            parentUrl = document.URL;
         }
 
         return parentUrl;
