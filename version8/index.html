@@ -148,7 +148,10 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
     }
     let w,h;
 
-    if(document.documentElement.clientWidth>= document.documentElement.clientHeight){
+    if (isEmbeddedInIFrame) {
+            w = document.documentElement.clientWidth
+            h = document.documentElement.clientHeight
+    } else if(document.documentElement.clientWidth>= document.documentElement.clientHeight){
         if(document.documentElement.clientWidth>=1250){
             w = document.documentElement.clientWidth
             h = 0.65 * document.documentElement.clientWidth
