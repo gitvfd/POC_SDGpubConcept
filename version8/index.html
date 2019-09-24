@@ -55,6 +55,7 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
 <script src="libs/d3.min.js"></script>
 <script src="libs/d3.layout.cloud.js"></script>
 <script src="libs/sdg-app.js"></script>
+<script src="libs/sdgSelection.js"></script>
 <script src="libs/loadData.js"></script>
 <script src="libs/drawarcs.js"></script>
 <script src="libs/mousehover.js"></script>
@@ -63,6 +64,7 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
 <script src="libs/addonstats.js"></script>
 <script src="libs/render.js"></script>
 <script>
+        const SDGCode=['no-poverty', 'zero-hunger', 'good-health', 'quality-education', 'gender-equality', 'clean-water', 'affordable-energy', 'decent-work-growth', 'industry - innovation - and - infrastructure', 'reduced-inequalities', 'sustainable-cities', 'responsible-consumption', 'climate-action', 'life-below-water', 'life-on-land', 'peace-justice-and-strong-institutions', 'partnerships-for-the-goals']
         
         function getUnique(array) {
             var uniqueArray = [];
@@ -179,7 +181,7 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
 
     //Basic color that is given to the nodes based on their type  
     const color_SDG_scale = d3.scaleOrdinal()
-        .domain(['no-poverty', 'zero-hunger', 'good-health', 'quality-education', 'gender-equality', 'clean-water', 'affordable-energy', 'decent-work-growth', 'industry - innovation - and - infrastructure', 'reduced-inequalities', 'sustainable-cities', 'responsible-consumption', 'climate-action', 'life-below-water', 'life-on-land', 'peace-justice-and-strong-institutions', 'partnerships-for-the-goals'])
+        .domain(SDGCode)
         .range(['#EB1C2D', '#D3A029', '#279B48', '#C31F33', '#EF402B', '#00AED9', '#FDB713', '#8F1838', '#F36D25', '#E11484', '#F99D26', '#CF8D2A', '#48773E', '#007DBC', '#3EB049', '#02558B', '#183668'])
         .unknown("#557693")    
     //color scale for concept! was previously using "color_SDG_scale(d)"
