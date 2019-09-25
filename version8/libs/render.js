@@ -112,9 +112,6 @@ function render(param) {
     }
 
 
-    console.log(getParentUrl())
-    console.log(getParentUrl().split('/')[getParentUrl().split('/').length-1])
-    //var pathArray = window.location.pathname.split('/');
     //////////////////////////////////////////////////////////////
     ///////////////// SET MOUSE OVER AND CLICK ACTIONS ///////////
     //////////////////////////////////////////////////////////////
@@ -123,20 +120,17 @@ function render(param) {
     mouse_zoom_rect.on("mousemove", mouseMoveChart)
                     .on("click", mouseClickChart)
 
-    function getParentUrl() {
-        var isInIframe = (parent !== window),
-            parentUrl = window.location.href;
 
-        if (isInIframe) {
-            parentUrl = document.referrer;
-        }
 
-        return parentUrl;
-    }
 
+
+    //////////////////////////////////////////////////////////////
+    ///////////////// Launch SDG and CONCEPT VIEWS ///////////
+    //////////////////////////////////////////////////////////////
+/**
     if (isEmbeddedInIFrame){
-        embeddedView(getParentUrl().split('/')[getParentUrl().split('/').length - 1]);
-    }
+        embeddedView(XXX);
+    } */
 }//end of render
 
 
