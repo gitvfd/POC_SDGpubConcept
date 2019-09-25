@@ -5,7 +5,33 @@
 ////////////////////// Identify subnetwork ///////////////////
 //////////////////////////////////////////////////////////////
 
+function setSelectionEmbedView(node) {
+    console.log(node)
+    if (!node) return
+
+    //For all non regions, just draw all connected edges & do this for all when a click is active
+    //  if (click_active) {
+    //Only keep edges that are connected to the current node
+    //    edges_selected = links_raw.filter(d => d.source === node || d.target === node)
+
+    //Save only those that are neighbors
+    //  nodes_selected = nodes_raw.filter(d => neighboring(node, d) || node.id === d.id)
+    //   } else { //For regions look all the way down to the countries and elements
+    edges_selected = []
+    nodes_selected = [node]
+    //Go into a recursive function that searches the regions, countries and
+    //then to the elements connected to the countries
+    connectedNodes(node)
+    //  }//else
+}//function setSelection
+
+
+//////////////////////////////////////////////////////////////
+////////////////////// Identify subnetwork ///////////////////
+//////////////////////////////////////////////////////////////
+
 function setSelection(node) {
+    console.log(node)
     if (!node) return
 
     //For all non regions, just draw all connected edges & do this for all when a click is active
