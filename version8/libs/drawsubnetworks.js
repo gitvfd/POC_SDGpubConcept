@@ -6,7 +6,7 @@
 //////////////////////////////////////////////////////////////
 
 function setSelectionEmbedView(node) {
-    console.log(node)
+    
     if (!node) return
 
     //For all non regions, just draw all connected edges & do this for all when a click is active
@@ -31,7 +31,7 @@ function setSelectionEmbedView(node) {
 //////////////////////////////////////////////////////////////
 
 function setSelection(node) {
-    console.log(node)
+    
     if (!node) return
 
     //For all non regions, just draw all connected edges & do this for all when a click is active
