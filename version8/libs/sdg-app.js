@@ -11,6 +11,7 @@ const SDG_APP_RECEIVE_DATA = 'SDG_APP_RECEIVE_DATA';
 const SDG_APP_RECEIVE_SELECTED_ITEMS = 'SDG_APP_RECEIVE_SELECTED_ITEMS';
 const CLOUD_VIZ_DISPLAY_PUBLICATION = 'CLOUD_VIZ_DISPLAY_PUBLICATION';
 const CLOUD_VIZ_BOOKMARK_PUBLICATION = 'CLOUD_VIZ_BOOKMARK_PUBLICATION';
+const CLOUD_VIZ_ANIM_DONE = 'CLOUD_VIZ_ANIM_DONE';
 
 function sdgAppGetData(indicDataUrl, onReceiveDataCallback) {
   const handleReceiveData = function handleReceiveData(e) {
@@ -44,4 +45,10 @@ if (isEmbeddedInIFrame) {
       selectItems(e.data.mainItem, e.data.otherItems);
     }
   });
+}
+
+function sdgAppSignalAnimDone() {
+  if (isEmbeddedInIFrame) {
+    window.parent.postMessage({ type: CLOUD_VIZ_ANIM_DONE }, '*');
+  }
 }

@@ -1,7 +1,5 @@
 //WARNINGTOSOLVE keyword to identify remaing issues
 function render(param) {
-
-
     var simulation ;
     
     if(w>=h){
@@ -14,6 +12,7 @@ function render(param) {
         .force("collide", d3.forceCollide(function (d) { return 1.35 * radius(d.iteration) }).iterations(1))
         //.alphaTarget(0)
         .alphaDecay(0.25)
+        .on('end', sdgAppSignalAnimDone)
     }
     else{
         simulation = d3.forceSimulation()
@@ -25,7 +24,8 @@ function render(param) {
             .force("collide", d3.forceCollide(function (d) { return 1.05 * radius(d.iteration) }).iterations(1))
             //.alphaTarget(0)
             .alphaDecay(0.25)
-    }
+            .on('end', sdgAppSignalAnimDone)
+        }
     simulation
         .nodes(nodes_raw)
         .on("tick", ticked);
