@@ -11,12 +11,7 @@ function render(param) {
             .force("link", d3.forceLink().strength(1).id(function (d) { return d.name; }).distance(1))
             .force("collide", d3.forceCollide(function (d) { return 1.35 * radius(d.iteration) }).iterations(1))
             //.alphaTarget(0)
-            .alphaDecay(0.25)
-            .on('end', function() {
-                console.log('anim ended!');
-                console.log(sdgAppSignalAnimDone);
-                sdgAppSignalAnimDone();
-            });
+            .alphaDecay(0.25);
     }
     else{
         simulation = d3.forceSimulation()
@@ -27,12 +22,7 @@ function render(param) {
             .force("link", d3.forceLink().strength(1).id(function (d) { return d.name; }).distance(1))
             .force("collide", d3.forceCollide(function (d) { return 1.05 * radius(d.iteration) }).iterations(1))
             //.alphaTarget(0)
-            .alphaDecay(0.25)
-            .on('end', function() {
-                console.log('anim ended!');
-                console.log(sdgAppSignalAnimDone);
-                sdgAppSignalAnimDone();
-            });
+            .alphaDecay(0.25);
     }
     simulation
         .nodes(nodes_raw)
@@ -41,6 +31,7 @@ function render(param) {
     simulation.force("link")
         .links(links_raw);
 
+    simulation.on('end', sdgAppSignalAnimDone);
 
     //////////////////////////////////////////////////////////////
     ////////////////////// Set-up the voronoi ////////////////////

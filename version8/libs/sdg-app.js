@@ -49,7 +49,6 @@ if (isEmbeddedInIFrame) {
 
 function sdgAppSignalAnimDone() {
   if (isEmbeddedInIFrame) {
-    console.log('from sdgAppSignalAnimDone');
     window.parent.postMessage({ type: CLOUD_VIZ_ANIM_DONE }, '*');
   }
 }
