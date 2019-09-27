@@ -8,6 +8,7 @@ const isEmbeddedInIFrame = document.location.href !== parentLocation;
 
 const CLOUD_VIZ_REQUEST_DATA = 'CLOUD_VIZ_REQUEST_DATA';
 const SDG_APP_RECEIVE_DATA = 'SDG_APP_RECEIVE_DATA';
+const SDG_APP_RECEIVE_SELECTED_ITEMS = 'SDG_APP_RECEIVE_SELECTED_ITEMS';
 const CLOUD_VIZ_DISPLAY_PUBLICATION = 'CLOUD_VIZ_DISPLAY_PUBLICATION';
 const CLOUD_VIZ_BOOKMARK_PUBLICATION = 'CLOUD_VIZ_BOOKMARK_PUBLICATION';
 
@@ -35,4 +36,12 @@ function sdgAppBookmarkPublication(doi) {
   if (isEmbeddedInIFrame) {
     window.parent.postMessage({ type: CLOUD_VIZ_BOOKMARK_PUBLICATION, doi: doi }, '*');
   }
+}
+
+if (isEmbeddedInIFrame) {
+  window.addEventListener('message', function(e) {
+    if (e.data.type === SDG_APP_RECEIVE_SELECTED_ITEMS) {
+      selectItems(e.data.mainItem, e.data.otherItems);
+    }
+  });
 }
