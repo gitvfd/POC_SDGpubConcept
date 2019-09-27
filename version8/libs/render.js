@@ -3,16 +3,20 @@ function render(param) {
     var simulation ;
     
     if(w>=h){
-    simulation= d3.forceSimulation()
-        .force("center", d3.forceCenter(w / 2, h / 2))
-        .force("x", d3.forceX(w / 2).strength(500/w))
-        .force("y", d3.forceY(h / 2).strength(950/w))
-        .force("charge", d3.forceManyBody())
-        .force("link", d3.forceLink().strength(1).id(function (d) { return d.name; }).distance(1))
-        .force("collide", d3.forceCollide(function (d) { return 1.35 * radius(d.iteration) }).iterations(1))
-        //.alphaTarget(0)
-        .alphaDecay(0.25)
-        .on('end', sdgAppSignalAnimDone)
+        simulation= d3.forceSimulation()
+            .force("center", d3.forceCenter(w / 2, h / 2))
+            .force("x", d3.forceX(w / 2).strength(500/w))
+            .force("y", d3.forceY(h / 2).strength(950/w))
+            .force("charge", d3.forceManyBody())
+            .force("link", d3.forceLink().strength(1).id(function (d) { return d.name; }).distance(1))
+            .force("collide", d3.forceCollide(function (d) { return 1.35 * radius(d.iteration) }).iterations(1))
+            //.alphaTarget(0)
+            .alphaDecay(0.25)
+            .on('end', function() {
+                console.log('anim ended!');
+                console.log(sdgAppSignalAnimDone);
+                sdgAppSignalAnimDone();
+            });
     }
     else{
         simulation = d3.forceSimulation()
@@ -24,8 +28,12 @@ function render(param) {
             .force("collide", d3.forceCollide(function (d) { return 1.05 * radius(d.iteration) }).iterations(1))
             //.alphaTarget(0)
             .alphaDecay(0.25)
-            .on('end', sdgAppSignalAnimDone)
-        }
+            .on('end', function() {
+                console.log('anim ended!');
+                console.log(sdgAppSignalAnimDone);
+                sdgAppSignalAnimDone();
+            });
+    }
     simulation
         .nodes(nodes_raw)
         .on("tick", ticked);
