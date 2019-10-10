@@ -5,10 +5,11 @@ https://ich.unesco.org/dive/constellation/?language=en&hide=about,more,language
 https://whydocatsanddogs.com/cats
 https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
 
---><!DOCTYPE html>
-<meta charset="utf-8">
-
+-->
+<!DOCTYPE html>
+<html>
 <head>
+    <meta charset="utf-8">
     <link href="style.css" rel="stylesheet">
     <!--<link rel="stylesheet" href="css/rSlider.min.css">-->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
@@ -63,8 +64,10 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
 <script src="libs/drawsubnetworks.js"></script>
 <script src="libs/addonstats.js"></script>
 <script src="libs/render.js"></script>
+<script src="libs/promise-polyfill.js"></script>
+<script src="libs/fetch.umd.js"></script>
 <script>
-        const SDGCode=['no-poverty', 'zero-hunger', 'good-health', 'quality-education', 'gender-equality', 'clean-water', 'affordable-energy', 'decent-work-growth', 'industry - innovation - and - infrastructure', 'reduced-inequalities', 'sustainable-cities', 'responsible-consumption', 'climate-action', 'life-below-water', 'life-on-land', 'peace-justice-and-strong-institutions', 'partnerships-for-the-goals']
+        const SDGCode=['no-poverty', 'zero-hunger', 'good-health', 'quality-education', 'gender-equality', 'clean-water', 'affordable-energy', 'decent-work-growth', 'industry-innovation-and-infrastructure', 'reduced-inequalities', 'sustainable-cities', 'responsible-consumption', 'climate-action', 'life-below-water', 'life-on-land', 'peace-justice-and-strong-institutions', 'partnerships-for-the-goals']
         
         function getUnique(array) {
             var uniqueArray = [];
@@ -78,16 +81,15 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
             return uniqueArray;
         }
 
-       const getUniqueJson = (values) => {
-            let concatArray = values.map(eachValue => {
-                return Object.values(eachValue).join('')
-            })
-            let filterValues = values.filter((value, index) => {
-                return concatArray.indexOf(concatArray[index]) === index
-
-            })
-            return filterValues
-        }
+       const getUniqueJson = function(values) {
+            let concatArray = values.map(function(eachValue) {
+                return Object.values(eachValue).join('');
+            });
+            let filterValues = values.filter(function(value, index) {
+                return concatArray.indexOf(concatArray[index]) === index;
+            });
+            return filterValues;
+        };
 
     var files = ["data/class_concept.tsv", "data/search-data.json", "data/indic_data.tsv"];
     var promises = [];
@@ -113,11 +115,8 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
     let transform=1;
 
     function loadImage(url) {
-        return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
-    }
-
-
-    
+        return new Promise(function(r) { let i = new Image(); i.onload = (function() { return r(i); }); i.src = url; });
+    }    
 
     if (isEmbeddedInIFrame) {
         sdgAppGetData(files[2], loadData);
@@ -447,5 +446,5 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
         
 </script>
 
-
 </body>
+</html>

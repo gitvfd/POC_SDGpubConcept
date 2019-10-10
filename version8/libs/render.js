@@ -37,8 +37,8 @@ function render(param) {
     ////////////////////// Set-up the voronoi ////////////////////
     //////////////////////////////////////////////////////////////
     voronoi = d3.voronoi()
-        .x(d => d.x)
-        .y(d => d.y)
+        .x(function(d) { return d.x; })
+        .y(function(d) { return d.y; });
 
     //initialize the voronoi    
     diagram = voronoi(nodes_raw)

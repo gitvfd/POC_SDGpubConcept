@@ -16,7 +16,7 @@ function mouseClickChart() {
     d3.event.preventDefault()
     //Set a timeout to check for a double click
     clearTimeout(click_timeout)
-    click_timeout = setTimeout(() => { click_double = false }, 500)
+    click_timeout = setTimeout(function() { click_double = false; }, 500);
 
     //If no node is found, check if an edge is clicked (only needed during an active click)
     if (click_active && !found) removeMouseClick
@@ -78,7 +78,7 @@ function removeMouseClick() {
     current_click = null
     nodes_selected = nodes_raw
     //Re-instate the mouse events
-    mouse_zoom_rect.on("mouseout", d => { if (current_hover !== null) mouseOutNode() })
+    mouse_zoom_rect.on("mouseout", function(d) { if (current_hover !== null) { mouseOutNode(); } });
     //Release click
     mouseOutNode()
     hideTooltip()

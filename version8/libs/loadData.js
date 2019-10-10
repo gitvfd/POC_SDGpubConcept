@@ -120,10 +120,10 @@ alldata = data;
     })
 
     // Create reference for search
-    links_raw.forEach(d => {
-        edge_by_id[d.source + "," + d.target] = true
-    })
-    nodes_raw.forEach(d => { node_by_id[d.id] = d })
+    links_raw.forEach(function(d) {
+        edge_by_id[d.source + "," + d.target] = true;
+    });
+    nodes_raw.forEach(function(d) { node_by_id[d.id] = d; });
     iteration_max = d3.max(nodes_raw, function (d) { return d.iteration; });
   //  render(); // render now launched once all images are loaded.
   

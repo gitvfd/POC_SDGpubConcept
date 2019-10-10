@@ -59,7 +59,7 @@ function neighboring(a, b) {
 //////////// Recursive node drawing for the regions //////////
 function connectedNodes(n) {
     //Save the edges for which n is a target and the source is a region, country or element
-    let connected_edges = links_raw.filter(d => (d.target === n || d.source === n))
+    let connected_edges = links_raw.filter(function(d) { return (d.target === n || d.source === n); });
     //https://stackoverflow.com/questions/1374126
     //Save in array for drawing
     edges_selected.push.apply(edges_selected, connected_edges)
@@ -68,10 +68,10 @@ function connectedNodes(n) {
     //Find the nodes connected to this node for which n is a target and the source is a region, country or element
 
     if (n.cat === "Concept") {
-        connected_nodes = nodes_raw.filter(d => n.list.includes(d.name))
+        connected_nodes = nodes_raw.filter(function(d) { return n.list.indexOf(d.name) >= 0; });
     }
     else {
-        connected_nodes = nodes_raw.filter(d => d.list.includes(n.name))
+        connected_nodes = nodes_raw.filter(function(d) { return d.list.indexOf(n.name) >= 0; });
     }
 
     //Save in array for drawing
@@ -91,18 +91,18 @@ function drawSelected() {
     //WARNINGTOSOLVE// context.clearRect(0, 0, width, height);
     context_hover.clearRect(0, 0, width, height);
     //Draw the edges
-    edges_selected.forEach(d => {
+    edges_selected.forEach(function(d) {
         //Make the selected edges more visually apparent
-        drawEdges(context_hover, d, d.gradient_hover, 0.5)
-    })
+        drawEdges(context_hover, d, d.gradient_hover, 0.5);
+    });
 
     if (nodes_raw !== nodes_selected) {
         //First make all the nodes lightly drawn
         // context.globalAlpha = node_fade_opacity
-        nodes_selected.forEach(d => {
+        nodes_selected.forEach(function(d) {
             // d.opacity = node_fade_opacity
-            drawNodes(context_hover, d, radius(d.iteration))
-        })
+            drawNodes(context_hover, d, radius(d.iteration));
+        });
         //And do the same for the labels inside
         //renderNodeLabels(context, nodes)
     }//if
