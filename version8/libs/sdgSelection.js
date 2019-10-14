@@ -1,4 +1,4 @@
-function selectItems(mainItem, otherItems){
+function selectItems(mainItem, otherItems) {
     d3.select("#helpIcon").remove();
 
     node_hover_selected_item.selectAll("circle").remove();
@@ -26,7 +26,7 @@ function selectItems(mainItem, otherItems){
 
     mouse_zoom_rect.on("click", null);
 
-    if(otherItems!=null) {
+    if (otherItems!=null) {
         otherItems.forEach(function (k) {
             var node = nodes_raw.filter(function (d) { return d.name == k; })[0];
             node_hover_selected_item.append("circle")

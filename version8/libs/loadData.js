@@ -1,5 +1,5 @@
 function loadData(data) {
-alldata = data;
+    alldata = data;
 
     ////////////////////////////////////////////////////////////
     /////////////// NODE CREATION 
@@ -7,35 +7,31 @@ alldata = data;
     //load SDGs
 
     Object.keys(data[1]).forEach(function (o) {
-        nodes_raw.push({ cat: "SDG", iteration: Object.keys(data[1][o]["doisByConcept"]).length, name: o, list: [o], color: color_SDG_scale(o), totPubList: Object.keys(data[1][o]["publications"]) })
-    })
-    
+        nodes_raw.push({ cat: "SDG", iteration: Object.keys(data[1][o]["doisByConcept"]).length, name: o, list: [o], color: color_SDG_scale(o), totPubList: Object.keys(data[1][o]["publications"]) });
+    });
 
-    var counter=0;
+    var counter = 0;
     //import SDG pics
     nodes_raw.forEach(function (d) {
-        d.img = new Image
-        d.img.src = "icons/" + d.name + ".png"
-        d.img_loaded = false
+        d.img = new Image();
+        d.img.src = "icons/" + d.name + ".png";
+        d.img_loaded = false;
         d.img.onload = function () {
-            d.img_loaded = true
+            d.img_loaded = true;
             counter++;
-            if (counter == Object.keys(data[1]).length)
-            render(); //launch render once all images are loaded to prevent chrome bug
+            if (counter == Object.keys(data[1]).length) {
+                render(); //launch render once all images are loaded to prevent chrome bug
+            }            
         }//onload
-    })
-
+    });
 
     Object.keys(data[1]).forEach(function (o) {
         Object.keys(data[1][o]["doisByConcept"]).forEach(function (d) {
             var toPush = "TRUE";
             nodes_raw.forEach(function (v) {
                 if (v.name == d) {
-
-
                     
                    (data[1][o]["doisByConcept"][d]).forEach(function (k) {
-
                         /**var pushPub = "TRUE";
                         (v.totPubList).forEach(function (l){
                             if(l==k){
@@ -46,23 +42,22 @@ alldata = data;
                             }
                         })
                         if (pushPub == "TRUE") {**/
-                            (v.totPubList).push(k)
+                            (v.totPubList).push(k);
                         //}
-                    })
+                    });
                     v.totPubList = getUnique(v.totPubList);
-                    v.iteration = (v.totPubList).length
-                    v.list.push(o)
-                    v.color = color_concept_scale(v.iteration)
+                    v.iteration = (v.totPubList).length;
+                    v.list.push(o);
+                    v.color = color_concept_scale(v.iteration);
 
                     toPush = "FALSE";
                 }
             })
             if (toPush == "TRUE"){
-                nodes_raw.push({ cat: "Concept", name: d, iteration: (data[1][o]["doisByConcept"][d]).length, list: [o], color: color_concept_scale((data[1][o]["doisByConcept"][d]).length),totPubList: data[1][o]["doisByConcept"][d] })
+                nodes_raw.push({ cat: "Concept", name: d, iteration: (data[1][o]["doisByConcept"][d]).length, list: [o], color: color_concept_scale((data[1][o]["doisByConcept"][d]).length),totPubList: data[1][o]["doisByConcept"][d] });
             }
-        })
-    })
-
+        });
+    });
 
     ////////////////////////////////////////////////////////////
     /////////////// LINKS CREATION CREATION 
@@ -134,13 +129,12 @@ alldata = data;
   
 
     Object.keys(data[1]).forEach(function (o) {
-        var listPub=[]
+        var listPub=[];
         Object.keys(data[1][o]["publications"]).forEach(function (d) {
-            listPub.push( data[1][o]["publications"][d] )
-        })
-        conceptList.push({ name: o, list: listPub })
-    })
-
+            listPub.push(data[1][o]["publications"][d]);
+        });
+        conceptList.push({ name: o, list: listPub });
+    });
 
     Object.keys(data[1]).forEach(function (o) {
         Object.keys(data[1][o]["doisByConcept"]).forEach(function (d) {
@@ -151,49 +145,38 @@ alldata = data;
                         var toPushPub = "TRUE";
                         v.list.forEach(function (l) {
                             if (k === l)
-                                toPushPub = "FALSE"
-                        })
+                                toPushPub = "FALSE";
+                        });
                         if (toPushPub == "TRUE")
-                            v.list.push(k)
-                    })
+                            v.list.push(k);
+                    });
                     v.list = getUnique(v.list);
                     toPushConcept = "FALSE";
                 }
             })
-            if (toPushConcept == "TRUE")
-                conceptList.push({ name: d, list: data[1][o]["doisByConcept"][d] })
-        })       
-    })
-
+            if (toPushConcept == "TRUE");
+                conceptList.push({ name: d, list: data[1][o]["doisByConcept"][d] });
+        });
+    });
 
     ////////////////////////////////////////////////////////////
     /////////////// PUB REFERENCEMENT
     ////////////////////////////////////////////////////////////
-
 
     Object.keys(data[1]).forEach(function (o) {
         data[1][o]["publications"].forEach(function (d) {
             var toPushPub = "TRUE";
             pubList.forEach(function (v) {
                 if (v == d) {
-                    toPushPub = "FALSE"
+                    toPushPub = "FALSE";
                     v.SDGOccurence = v.SDGOccurence+1;
                 }
-            })
-            if (toPushPub == "TRUE"){
+            });
+            if (toPushPub == "TRUE") {
                 var toPushMod=d;
                 toPushMod.SDGOccurence=1;
-
-                pubList.push(toPushMod)
-                
-                
+                pubList.push(toPushMod);
             }
-    
-            
-        })
-    })
-
-
-
-
+        });
+    });
 }
