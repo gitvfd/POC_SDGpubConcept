@@ -1,10 +1,10 @@
-let parentLocation;
+var parentLocation;
 try {
   parentLocation = window.parent.location.href;
 } catch (e) {
   parentLocation = 'cannot-get-parent-location-because-of-CORS';
 }
-const isEmbeddedInIFrame = document.location.href !== parentLocation;
+var isEmbeddedInIFrame = document.location.href !== parentLocation;
 
 const CLOUD_VIZ_REQUEST_DATA = 'CLOUD_VIZ_REQUEST_DATA';
 const SDG_APP_RECEIVE_DATA = 'SDG_APP_RECEIVE_DATA';
@@ -17,9 +17,9 @@ function sdgAppGetData(indicDataUrl, onReceiveDataCallback) {
   const handleReceiveData = function handleReceiveData(e) {
     if (e.data.type === SDG_APP_RECEIVE_DATA) {
       d3.tsv(indicDataUrl)
-      .then(function(indicData) {
-        onReceiveDataCallback([e.data.concept, e.data.data, indicData]);
-      })
+        .then(function(indicData) {
+          onReceiveDataCallback([e.data.concept, e.data.data, indicData]);
+        });
     }
     window.removeEventListener('message', handleReceiveData);
   };
