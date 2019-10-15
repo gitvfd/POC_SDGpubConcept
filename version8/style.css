@@ -34,13 +34,14 @@ canvas {
     font-size: 12px;
     color: #696969;
     font-weight: 300;
-    margin-top: 0px;
+    margin: 0px;
 }
 
 #chart-tooltip .tooltip-title {
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
+    margin-top: 8px;
     margin-bottom: 0px;
 }
 
