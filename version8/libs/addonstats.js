@@ -26,7 +26,7 @@ function renderClickIcon(node) {
                 });
 
                 listtot = sortJSON(getUniqueJson(listtot), "publicationDate", "321");
-                for (var i = 0; i < 20; i++) {
+                for (var i = 0; i < 20 && i < listtot.length; i++) {
                     var x = document.createElement("P");        
                     var temp_link = document.createElement("a");
                     temp_link.href = "http://dx.doi.org/" + listtot[i].doi;
@@ -62,7 +62,7 @@ function renderClickIcon(node) {
         conceptList.forEach(function (d) {
             if (node.name == d.name) {
                 var orderedList = sortJSON(d.list, "publicationDate", "321");
-                for (var i = 0; i < 20; i++) {
+                for (var i = 0; i < 20 && i < orderedList.length; i++) {
                     var x = document.createElement("P");
                     var temp_link = document.createElement("a");
                     temp_link.href = "http://dx.doi.org/" + orderedList[i].doi;

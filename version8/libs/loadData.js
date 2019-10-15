@@ -154,7 +154,7 @@ function loadData(data) {
                     toPushConcept = "FALSE";
                 }
             })
-            if (toPushConcept == "TRUE");
+            if (toPushConcept == "TRUE")
                 conceptList.push({ name: d, list: data[1][o]["doisByConcept"][d] });
         });
     });
