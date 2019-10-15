@@ -43,9 +43,9 @@ function renderClickIcon(node) {
     if (node.cat == "SDG") {
         document.getElementById("magicFig").innerHTML = node.iteration;
         if (node.iteration == 1)
-            document.getElementById("docSentence").innerHTML = " concept relates to ";
+            document.getElementById("docSentence").innerHTML = " topic relates to ";
         else
-            document.getElementById("docSentence").innerHTML = " concepts relate to ";
+            document.getElementById("docSentence").innerHTML = " topics relate to ";
         
         document.getElementById("conceptName").innerHTML = node.name.replace(/-/g, " ");
         createDonut([node.iteration, conceptList.length - node.iteration], node.cat);
@@ -108,7 +108,7 @@ function createDonut(data,cat) {
             if(cat=="Concept")
                 return "of all documents";
             else
-                return "of all concepts";
+                return "of all topics";
         });    
 }
 

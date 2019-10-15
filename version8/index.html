@@ -20,20 +20,19 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
     <div id="chart-tooltip">
         <p class="tooltip-type"></p>
         <p class="tooltip-title"></p>
-        <p class="tooltip-explanation"></p>
     </div>
 </div>
 <div id="conceptInfo">
-    <div id="conceptLinkName">concept or SDG</div>
+    <div id="conceptLinkName">Topic or SDG</div>
     <br />
     <div class="chartblock">
-        <div id="chartExplanation" class="charttemp"><span id="magicFig">230</span><span id="docSentence">doc relates to</span><span id="conceptName">this concept</span> </div>
+        <div id="chartExplanation" class="charttemp"><span id="magicFig">230</span><span id="docSentence">doc relates to</span><span id="conceptName">this topic</span> </div>
         <div id="chartStat" class="charttemp"></div>
     </div>
     <br/>
     <div id="chartblockSDG">
         <div id="chartExplanationSDG" class="charttemp"><span id="magicFigSDG">230</span><span id="docSentenceSDG">doc relates
-                to</span><span id="conceptNameSDG">this concept</span> </div>
+                to</span><span id="conceptNameSDG">this topic</span> </div>
         <div id="chartStatSDG" class="charttempSDG"></div>
     </div>
 
@@ -371,16 +370,25 @@ function createTooltip(obj) {
         .style("box-shadow", null);
 
     //Change titles
-    d3.select("#chart-tooltip .tooltip-type").html(note);
+    d3.select("#chart-tooltip .tooltip-type").html(note === 'Concept' ? 'Topic' : note);
     d3.select("#chart-tooltip .tooltip-title").html(label);
-    d3.select("#chart-tooltip .tooltip-explanation").html("click to freeze view");
     
     var box_size = document.getElementById("chart-tooltip").getBoundingClientRect();
 
     //Place & show the tooltip
     d3.select("#chart-tooltip")
-        .style("top", (obj.y  - radius_ - Math.max(radius_ * 0.5, 30)) + "px")
-        .style("left", (obj.x + Math.max(radius_ * 1.25, 30)) + "px")
+        .style(
+            "top",
+            obj.y > (window.innerHeight / 2)
+                ? (obj.y - box_size.height) + "px"
+                : (obj.y) + "px"
+        )
+        .style(
+            "left",
+            obj.x > (window.innerWidth / 2)
+                ? (obj.x - radius_ - box_size.width - 20) + "px"
+                : (obj.x + radius_ + 20) + "px"
+        )
         .style("opacity", 1);
     
     //hide nodes and edges
