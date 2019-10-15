@@ -25,7 +25,7 @@ canvas {
     top: 0;
     left: 0;
     box-shadow: 0px 0px 5px #c1c1c1;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     max-width: 600px;
 }
 
@@ -90,7 +90,7 @@ canvas {
   top:10px;
   font-size: 24px;
   font-weight: 100;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-variant-caps: all-petite-caps;
   padding-left: 10px;
 }
@@ -106,14 +106,14 @@ canvas {
   width:100%;
   font-size: 18px;
   font-weight: 200;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
 
   padding: 0px 10px 0px 10px;
 }
 #magicFig{
   font-size: 24px;
   font-weight: 900;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-style:italic;
   color: #0bb89c;
   padding: 0px 5px 0px 00px;
@@ -121,7 +121,7 @@ canvas {
 .magicFigDisp{
   font-size: 22px;
   font-weight: 900;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   fill: #0bb89c;
   vertical-align: text-top;
 }
@@ -129,7 +129,7 @@ canvas {
 .contextFig{
   font-size: 18px;
   font-weight: 200;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   fill: #0bb89c;
 
 }
@@ -137,7 +137,7 @@ canvas {
 #docSentence{
   font-size: 18px;
   font-weight: 300;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   color: #333;
 
 }
@@ -145,7 +145,7 @@ canvas {
 #conceptName{
   font-size: 22px;
   font-weight: 300;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   color: #0bb89c;
 }
 
@@ -176,14 +176,14 @@ canvas {
   width:100%;
   font-size: 18px;
   font-weight: 200;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
 
   padding: 0px 10px 0px 10px;
 }
 #magicFigSDG{
   font-size: 24px;
   font-weight: 900;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-style:italic;
   color: #d70b8c;
   padding: 0px 5px 0px 00px;
@@ -191,7 +191,7 @@ canvas {
 .magicFigDispSDG{
   font-size: 22px;
   font-weight: 900;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   fill: #d70b8c;
   vertical-align: text-top;
 }
@@ -199,7 +199,7 @@ canvas {
 .contextFigSDG{
   font-size: 18px;
   font-weight: 200;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   fill: #d70b8c;
 
 }
@@ -207,7 +207,7 @@ canvas {
 #docSentenceSDG{
   font-size: 18px;
   font-weight: 300;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   color: #333;
 
 }
@@ -215,7 +215,7 @@ canvas {
 #conceptNameSDG{
   font-size: 22px;
   font-weight: 300;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   color: #d70b8c;
 }
 
@@ -229,7 +229,7 @@ canvas {
 
 #tableTitle{
   font-weight: 600;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-size:12px;
   font-style: italic;
 
@@ -244,7 +244,7 @@ canvas {
 
 .tableclass0,.tableclass1{
   font-weight: 200;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-size:12px;
   margin: 0px;
   padding:2px;
@@ -273,7 +273,7 @@ canvas {
 #conceptLinkinfo{
   font-size: 14px;
   font-weight: 200;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-style: italic;
   padding-left: 10px;
 }
@@ -328,7 +328,7 @@ h2{
   position: absolute; 
   top: 45px; 
   left: 0; 
-  font-family:Arial;
+  font-family: 'Work Sans', sans-serif;
   font-size: 1.15em;
   color:#fff;
   display: inline;
@@ -387,7 +387,7 @@ table {
   max-height: 30%;
   overflow-y: scroll;
   opacity:1;  
-  font-family: sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-size:13px;
   border-collapse: collapse;
 }
@@ -464,7 +464,7 @@ mark {
       pointer-events: none;
       word-wrap: break-word;
       width: 7em; 
-      font-family: sans-serif;
+      font-family: 'Work Sans', sans-serif;
       font-size: 10px;
       line-height: 10px;
     }
@@ -545,7 +545,7 @@ max-height:500px;
 
 
       margin: 0;
-      font-family: sans-serif;
+      font-family: 'Work Sans', sans-serif;
       font-size: 13px;
       line-height: 13px;
     }
