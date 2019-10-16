@@ -29,20 +29,14 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
         <div id="chartExplanation" class="charttemp"><span id="magicFig">230</span><span id="docSentence">doc relates to</span><span id="conceptName">this topic</span> </div>
         <div id="chartStat" class="charttemp"></div>
     </div>
-    <br/>
     <div id="chartblockSDG">
         <div id="chartExplanationSDG" class="charttemp"><span id="magicFigSDG">230</span><span id="docSentenceSDG">doc relates
                 to</span><span id="conceptNameSDG">this topic</span> </div>
         <div id="chartStatSDG" class="charttempSDG"></div>
     </div>
-
     <br />
-
-    <div id="tableTitle">Most recent documents</div>
-    <div id="publicationsList"></div>
-        <br/>
     <div id="biblioLink">
-        <a  id="conceptLinkhtml" href="https://www.wikipedia.org" target="_blank"><img src="icons/plus.png" id="conceptLinkimage" alt="link icons"><span id="conceptLinkinfo">Access all related publications</span></a>
+        <a id="conceptLinkhtml"><img src="icons/plus.png" id="conceptLinkimage" alt="link icons"><span id="conceptLinkinfo">Access all related publications</span></a>
     </div>
     <br/>
     <div id="conceptChart"></div>
@@ -80,18 +74,6 @@ function getUnique(array) {
     }
     return uniqueArray;
 }
-
-function getUniqueJson(values) {
-    var concatArray = values.map(function (v) {
-        return Object.keys(v)
-            .map(function (k) { return v[k] })
-            .join('');
-    });
-    var filterValues = values.filter(function(value, index) {
-        return concatArray.indexOf(concatArray[index]) === index;
-    });
-    return filterValues;
-};
 
 var files = ["data/class_concept.tsv", "data/search-data.json", "data/indic_data.tsv"];
 var promises = [];
