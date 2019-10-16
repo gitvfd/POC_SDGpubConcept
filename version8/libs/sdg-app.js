@@ -9,8 +9,7 @@ var isEmbeddedInIFrame = document.location.href !== parentLocation;
 const CLOUD_VIZ_REQUEST_DATA = 'CLOUD_VIZ_REQUEST_DATA';
 const SDG_APP_RECEIVE_DATA = 'SDG_APP_RECEIVE_DATA';
 const SDG_APP_RECEIVE_SELECTED_ITEMS = 'SDG_APP_RECEIVE_SELECTED_ITEMS';
-const CLOUD_VIZ_DISPLAY_PUBLICATION = 'CLOUD_VIZ_DISPLAY_PUBLICATION';
-const CLOUD_VIZ_BOOKMARK_PUBLICATION = 'CLOUD_VIZ_BOOKMARK_PUBLICATION';
+const CLOUD_VIZ_REDIRECT = 'CLOUD_VIZ_REDIRECT';
 const CLOUD_VIZ_ANIM_DONE = 'CLOUD_VIZ_ANIM_DONE';
 
 function sdgAppGetData(indicDataUrl, onReceiveDataCallback) {
@@ -27,15 +26,9 @@ function sdgAppGetData(indicDataUrl, onReceiveDataCallback) {
   window.parent.postMessage({ type: CLOUD_VIZ_REQUEST_DATA }, '*');
 }
 
-function sdgAppDisplayPublication(doi) {
+function sdgAppRedirect(pageType, sdgOrConcept) {
   if (isEmbeddedInIFrame) {
-    window.parent.postMessage({ type: CLOUD_VIZ_DISPLAY_PUBLICATION, doi: doi }, '*');
-  }
-}
-
-function sdgAppBookmarkPublication(doi) {
-  if (isEmbeddedInIFrame) {
-    window.parent.postMessage({ type: CLOUD_VIZ_BOOKMARK_PUBLICATION, doi: doi }, '*');
+    window.parent.postMessage({ type: CLOUD_VIZ_REDIRECT, pageType, sdgOrConcept  }, '*');
   }
 }
 
