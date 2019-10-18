@@ -24,7 +24,6 @@ function mouseClickChart() {
     if (click_active && found_edge) {
         //Move to the other side of the edge
         var node = (current_click.id === found_edge.source.id ? found_edge.target : found_edge.source);
-        performManualZoom(node, transform.k);
         found = node;
         current_click = node;
     } else if ((current_click === found || !found) && click_active) {

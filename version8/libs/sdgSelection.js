@@ -9,21 +9,22 @@ function selectItems(mainItem, otherItems) {
     click_active = true;
     //Disable mouseover events
     mouse_zoom_rect.on("mouseout", null);
+
+    //Set for reference
+    current_click = nodes_raw.filter(function (d) { return d.name == mainItem; })[0];
+
     //Send out for pop-up
-    showTooltip(nodes_raw.filter(function (d) { return d.name == mainItem; })[0]);
+    showTooltip(current_click);
     //Find all edges and nodes connected to the "found" node
-    setSelection(nodes_raw.filter(function (d) { return d.name == mainItem; })[0]);
+    setSelection(current_click);
     //Draw the connected edges and nodes
     drawSelected();
     //Draw the edges on the hidden canvas for edge hover
     // drawHiddenEdges(node)
     //Add the extra click icon in the bottom right
-    renderClickIcon(nodes_raw.filter(function (d) { return d.name == mainItem; })[0]);
+    renderClickIcon(current_click);
     //Draw rotating circle around the hovered node
-    drawDottedHoverCircle(nodes_raw.filter(function (d) { return d.name == mainItem; })[0]);
-    //Set for reference
-    current_click = nodes_raw.filter(function (d) { return d.name == mainItem; })[0];
-
+    drawDottedHoverCircle(current_click);
     mouse_zoom_rect.on("click", null);
 
     if (otherItems!=null) {
@@ -32,7 +33,7 @@ function selectItems(mainItem, otherItems) {
             node_hover_selected_item.append("circle")
                 .attr("cx", node.x)
                 .attr("cy", node.y)
-                .attr("r", radius(node.iteration) + Math.min(10, Math.max(5, radius(node.iteration) * 0.1)))
+                .attr("r", node.r + Math.min(10, Math.max(5, node.r * 0.1)))
                 .style("stroke", "#0bb89c")
                 .style("fill", "none")
                 .style("stroke-linecap", "round")

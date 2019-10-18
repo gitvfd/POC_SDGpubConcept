@@ -58,6 +58,7 @@ https://www.visualcinnamon.com/2019/04/designing-google-cats-and-dogs
 <script src="libs/render.js"></script>
 <script src="libs/promise-polyfill.js"></script>
 <script src="libs/fetch.umd.js"></script>
+<script src="libs/zooming.js"></script>
 <script>
 
 
@@ -96,8 +97,14 @@ var iteration_max;
 
 //geo
 var pi2 = 2 * Math.PI;
+
 //zoom level
-var transform=1;
+var min_zoom = 0.8;
+var max_zoom = 4;
+var start_zoom = 1;
+var selected_main_item_zoom = 1.8;
+var initial_transform;
+var transform;
 
 function loadImage(url) {
     return new Promise(function(r) { var i = new Image(); i.onload = (function() { return r(i); }); i.src = url; });
@@ -166,19 +173,23 @@ var color_SDG_scale = d3.scaleOrdinal()
     .domain(SDGCode)
     .range(['#EB1C2D', '#D3A029', '#279B48', '#C31F33', '#EF402B', '#00AED9', '#FDB713', '#8F1838', '#F36D25', '#E11484', '#F99D26', '#CF8D2A', '#48773E', '#007DBC', '#3EB049', '#02558B', '#183668'])
     .unknown("#557693")    
-//color scale for concept! was previously using "color_SDG_scale(d)"
-var color_concept_scale= d3.scaleLinear() 
-    .range(["#1f4557","#3a81a2", "#4e9cc0"])
-        //define concept color scale
-        color_concept_scale.domain([1, 25,200]) //iterationMax would be better than 300
 
-    
-var radius;
-if (document.documentElement.clientWidth > document.documentElement.clientHeight) {
-    radius = d3.scaleSqrt().domain([1, 200]).range([2, w / 45]);
-} else {
-    radius = d3.scaleSqrt().domain([1, 200]).range([2, w / 20]);
-}
+var color_concept_scale = d3.scaleLinear() 
+    .domain([1, 2, 3])
+    .range(["#4e9cc0", "#3a81a2", "#1f4557"])
+    .clamp(true);
+
+//var radiusConcept = d3.scaleSqrt().domain([1, 200]).range([2, 12]).clamp(true);
+var radiusConcept = d3.scaleQuantile()
+    .domain([1, 10, 100, 300])
+    .range([2, 4, 10, 17]);
+//var radiusSdg = d3.scaleLinear().domain([100, 1000]).range([15, 30]);
+
+function radius(d) {
+    return d.cat === 'SDG'
+        ? 22
+        : radiusConcept(d.iteration);
+};
 
 //Containers
 var svg, g;
@@ -227,7 +238,7 @@ var simulation, voronoi, diagram;
 
 //SVG container for the things on top such as text
 var mouse_zoom_rect = d3.select("#chart").append("svg")
-        .style("pointer-events", "all")
+    .style("pointer-events", "all")
     .attr("width", w)
     .attr("height", h);
 
@@ -342,9 +353,8 @@ d3.select(window).on("resize", function () {
 //And when a click is active, it will also run when hovered over a visible edge
 //You can distinguish between the two, because obj.type will be "edge" for the edge hover
 function createTooltip(obj) {
-    var radius_, label, type, note;
-        
-    radius_ = radius(obj.iteration);
+    var label, type, note;
+
     label = obj.name.replace(/-/g, " ");
     note = obj.cat;
     d3.select("#chart-tooltip")
@@ -368,8 +378,8 @@ function createTooltip(obj) {
         .style(
             "left",
             obj.x > (window.innerWidth / 2)
-                ? (obj.x - radius_ - box_size.width - 20) + "px"
-                : (obj.x + radius_ + 20) + "px"
+                ? (obj.x - obj.r - box_size.width - 20) + "px"
+                : (obj.x + obj.r + 20) + "px"
         )
         .style("opacity", 1);
     

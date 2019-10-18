@@ -32,13 +32,13 @@ function mouseNodeFind(m) {
     //First do hit-test of largest nodes
     var hit_test = false;
     var found = null;
-    var max_size = click_active ? 8 : 16;
+    var max_size = click_active ? 1 : 2;
 
     for (var i = 0; i < nodes_raw.length; i++) {
         if (nodes_raw[i].r < max_size) continue;
         var dx = nodes_raw[i].x - m[0];
         var dy = nodes_raw[i].y - m[1];
-        if (sq(dx) + sq(dy) < sq(radius(nodes_raw[i].iteration))) {
+        if (sq(dx) + sq(dy) < sq(nodes_raw[i].r)) {
             //The mouse is within the radius of a bigger node
             hit_test = true;
             found = nodes_raw[i];
@@ -47,7 +47,7 @@ function mouseNodeFind(m) {
     }//for i
 
     //If no bigger node is found, do the voronoi finding algorithm
-    if (!hit_test) {
+    if (!hit_test && transform) {
         //Take any zoom+pan into account
         var x_find = (m[0] - transform.x) / transform.k;
         var y_find = (m[1] - transform.y) / transform.k;
