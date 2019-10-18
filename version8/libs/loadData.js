@@ -30,7 +30,6 @@ function loadData(data) {
             var toPush = "TRUE";
             nodes_raw.forEach(function (v) {
                 if (v.name == d) {
-                    
                    (data[1][o]["doisByConcept"][d]).forEach(function (k) {
                         /**var pushPub = "TRUE";
                         (v.totPubList).forEach(function (l){
@@ -48,15 +47,20 @@ function loadData(data) {
                     v.totPubList = getUnique(v.totPubList);
                     v.iteration = (v.totPubList).length;
                     v.list.push(o);
-                    v.color = color_concept_scale(v.iteration);
+                    v.color = color_concept_scale(v.list.length);
 
                     toPush = "FALSE";
                 }
             })
-            if (toPush == "TRUE"){
-                nodes_raw.push({ cat: "Concept", name: d, iteration: (data[1][o]["doisByConcept"][d]).length, list: [o], color: color_concept_scale((data[1][o]["doisByConcept"][d]).length),totPubList: data[1][o]["doisByConcept"][d] });
+            if (toPush == "TRUE") {
+                nodes_raw.push({ cat: "Concept", name: d, iteration: (data[1][o]["doisByConcept"][d]).length, list: [o], color: color_concept_scale(1), totPubList: data[1][o]["doisByConcept"][d] });
             }
         });
+    });
+
+    nodes_raw.forEach(function(d) {
+        d.r = radius(d);
+        d.r_fixed = d.r;
     });
 
     ////////////////////////////////////////////////////////////

@@ -73,7 +73,7 @@ function drawSelected() {
         // context.globalAlpha = node_fade_opacity
         nodes_selected.forEach(function(d) {
             // d.opacity = node_fade_opacity
-            drawNodes(context_hover, d, radius(d.iteration));
+            drawNodes(context_hover, d, d.r);
         });
         //And do the same for the labels inside
         //renderNodeLabels(context, nodes)
@@ -92,7 +92,7 @@ function drawNodes(ctx, d, r, opacity) {
     // nodes_raw.forEach(function (d, i) {
     ctx.beginPath();
     ctx.moveTo(d.x + 3, d.y);
-    ctx.arc(d.x, d.y, radius(d.iteration), 0, 2 * Math.PI);
+    ctx.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fillStyle = d.color;
     ctx.fill();
@@ -104,35 +104,30 @@ function drawNodes(ctx, d, r, opacity) {
         var img_w = d.img.width;
         var img_h = d.img.height;
         var min_size = Math.min(img_w, img_h);
-        //When saving, making the stroke width smaller
-        //let radius = show_photos ? r - (d.stroke_width * 0.2) / 2 : r - d.stroke_width / 2
-        var r = radius(d.iteration);
-
         if (img_w > img_h) {
-            img_h = 1.25 * r * img_h / img_w;
-            img_w = 1.25 * r;
+            img_h = 1.25 * d.r * img_h / img_w;
+            img_w = 1.25 * d.r;
         } else {
-            img_w = 1.25 * r * img_w / img_h;
-            img_h = 1.25 * r;
+            img_w = 1.25 * d.r * img_w / img_h;
+            img_h = 1.25 * d.r;
         }
 
         //Clip the image to the circle
         ctx.save();
         ctx.beginPath();
-        ctx.arc(d.x, d.y, r, 0, pi2);
+        ctx.arc(d.x, d.y, d.r, 0, pi2);
         ctx.clip();
         ctx.drawImage(d.img,
             //img_w, img_h, img_w, img_h, //sx, sy, swidth, sheight
-            d.x - 0.6 * r, d.y - 0.6 * r, img_w, img_h); //x, y, width, height
+            d.x - 0.6 * d.r, d.y - 0.6 * r, img_w, img_h); //x, y, width, height
         ctx.restore();
-
     }//if
     //  })
 }//function drawNodes
 
 //////// Draw the hovered node element on the ctx_hover //////
 function drawHoveredNode(node) {
-    drawNodes(context_hover, node_by_id[node.id], radius(node.iteration), 1);
+    drawNodes(context_hover, node_by_id[node.id], node.r, 1);
 }//function drawHoveredNode
 
 /////// Draw the dotted circle around the hovered node ///////
@@ -141,7 +136,7 @@ function drawDottedHoverCircle(node) {
     node_hover
         .attr("cx", node.x)
         .attr("cy", node.y)
-        .attr("r", radius(node.iteration) + Math.min(10, Math.max(5, radius(node.iteration) * 0.1)))
+        .attr("r", node.r + 3)
         .style("stroke", node.color)
         .style("display", null);
 }//function drawDottedHoverCircle
