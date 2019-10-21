@@ -39,8 +39,13 @@ function mouseClickChart() {
 
 //////////// Perform visual steps after "good" click /////////
 function setMouseClick(node) {
-    //update link to 
-    document.getElementById("conceptLinkName").innerHTML = node.name.replace(/-/g," ");
+    //update link to
+    if (node.cat === 'SDG') {
+        document.getElementById("conceptLinkName").innerHTML = sdgConfigs[node.name].label;
+    } else {
+        document.getElementById("conceptLinkName").innerHTML = node.name;
+    }
+    
     if (click_active == false) {
         d3.select("#conceptInfo").style("visibility", "visible");
     }
@@ -49,8 +54,6 @@ function setMouseClick(node) {
     //Disable mouseover events
     // mouse_zoom_rect.on("mousemove", null)
     mouse_zoom_rect.on("mouseout", null);
-    //Send out for pop-up
-    showTooltip(node);
     //Find all edges and nodes connected to the "found" node
     setSelection(node);
     //Draw the connected edges and nodes
@@ -76,7 +79,6 @@ function removeMouseClick() {
     mouse_zoom_rect.on("mouseout", function(d) { if (current_hover !== null) { mouseOutNode(); } });
     //Release click
     mouseOutNode();
-    hideTooltip();
     //Hide the rotating circle
     node_hover.style("display", "none");
 

@@ -19,8 +19,6 @@ function drawSelectedItems() {
     //Disable mouseover events
     mouse_zoom_rect.on("mouseout", null);
 
-    //Send out for pop-up
-    showTooltip(current_click);
     //Find all edges and nodes connected to the "found" node
     setSelection(current_click);
     //Draw the connected edges and nodes
