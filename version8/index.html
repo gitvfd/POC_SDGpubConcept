@@ -262,37 +262,35 @@ node_hover_selected_item = node_hover_group.append("g")
     
 //Mouse events
 var m = [0, 0]; //mouse position
-var current_hover = null, current_click = null, current_double_click = null;
+var current_hover = null, current_click = null, selectedOtherItems = null, current_double_click = null;
 var click_active = false;
 var found, found_edge = null;
 var next_color = 1; //will give each edge a unique color for the edge hover capture
 var click_double = false;
 var click_timeout; //To check for a double click
-var showTooltip = function (node) { };
-var hideTooltip = function () { };
 var timer_draw = null;
 
 //ZOOMING FEAT
 var forced_load = true;
 
 var sdgConfigs = {
-    'no-poverty': { label: '1: No poverty', color: '#EB1C2D' },
-    'zero-hunger': { label: '2: Zero hunger', color: '#D3A029' },
-    'good-health': { label: '3: Good health and well-being', color: '#279B48' },
-    'quality-education': { label: '4: Quality education', color: '#C31F33' },
-    'gender-equality': { label: '5: Gender equality', color: '#EF402B' },
-    'clean-water': { label: '6: Clean water and sanitation', color: '#00AED9' },
-    'affordable-energy': { label: '7: Affordable and clean energy', color: '#FDB713' },
-    'decent-work-growth': { label: '8: Decent work and economic growth', color: '#8F1838' },
-    'industry-innovation-and-infrastructure': { label: '9: Industry, innovation and infrastructure', color: '#F36D25' },
-    'reduced-inequalities': { label: '10: Reduced inequalities', color: '#E11484' },
-    'sustainable-cities': { label: '11: Sustainable cities and communities', color: '#F99D26' },
-    'responsible-consumption': { label: '12: Responsible consumption and production', color: '#CF8D2A' },
-    'climate-action': { label: '13: Climate action', color: '#48773E' },
-    'life-below-water': { label: '14: Life below water', color: '#007DBC' },
-    'life-on-land': { label: '15: Life on land', color: '#3EB049' },
-    'peace-justice-and-strong-institutions': { label: '16: Peace, justice and strong institutions', color: '#02558B' },
-    'partnerships-for-the-goals': { label: '17: Partnerships for the goals', color: '#183668' },
+    'no-poverty': { label: 'No poverty', color: '#EB1C2D' },
+    'zero-hunger': { label: 'Zero hunger', color: '#D3A029' },
+    'good-health': { label: 'Good health and well-being', color: '#279B48' },
+    'quality-education': { label: 'Quality education', color: '#C31F33' },
+    'gender-equality': { label: 'Gender equality', color: '#EF402B' },
+    'clean-water': { label: 'Clean water and sanitation', color: '#00AED9' },
+    'affordable-energy': { label: 'Affordable and clean energy', color: '#FDB713' },
+    'decent-work-growth': { label: 'Decent work and economic growth', color: '#8F1838' },
+    'industry-innovation-and-infrastructure': { label: 'Industry, innovation and infrastructure', color: '#F36D25' },
+    'reduced-inequalities': { label: 'Reduced inequalities', color: '#E11484' },
+    'sustainable-cities': { label: 'Sustainable cities and communities', color: '#F99D26' },
+    'responsible-consumption': { label: 'Responsible consumption and production', color: '#CF8D2A' },
+    'climate-action': { label: 'Climate action', color: '#48773E' },
+    'life-below-water': { label: 'Life below water', color: '#007DBC' },
+    'life-on-land': { label: 'Life on land', color: '#3EB049' },
+    'peace-justice-and-strong-institutions': { label: 'Peace, justice and strong institutions', color: '#02558B' },
+    'partnerships-for-the-goals': { label: 'Partnerships for the goals', color: '#183668' },
 };
 
 //////////////////////////////////////////////////////////////
@@ -355,7 +353,7 @@ d3.select(window).on("resize", function () {
 function createTooltip(obj) {
     var label, type, note;
 
-    label = obj.name.replace(/-/g, " ");
+    label = obj.cat === 'SDG' ? sdgConfigs[obj.name].label : obj.name;
     note = obj.cat;
     d3.select("#chart-tooltip")
         .style("border", null)

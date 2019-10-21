@@ -1,4 +1,13 @@
 function selectItems(mainItem, otherItems) {
+    //Set for reference
+    current_click = nodes_raw.filter(function (d) { return d.name == mainItem; })[0];
+    if (otherItems !== null) {
+        selectedOtherItems = nodes_raw.filter(function(d) { return otherItems.indexOf(d.name) >= 0; });
+    }
+    drawSelectedItems();
+}
+
+function drawSelectedItems() {
     d3.select("#helpIcon").remove();
 
     node_hover_selected_item.selectAll("circle").remove();
@@ -10,11 +19,6 @@ function selectItems(mainItem, otherItems) {
     //Disable mouseover events
     mouse_zoom_rect.on("mouseout", null);
 
-    //Set for reference
-    current_click = nodes_raw.filter(function (d) { return d.name == mainItem; })[0];
-
-    //Send out for pop-up
-    showTooltip(current_click);
     //Find all edges and nodes connected to the "found" node
     setSelection(current_click);
     //Draw the connected edges and nodes
@@ -27,17 +31,16 @@ function selectItems(mainItem, otherItems) {
     drawDottedHoverCircle(current_click);
     mouse_zoom_rect.on("click", null);
 
-    if (otherItems!=null) {
-        otherItems.forEach(function (k) {
-            var node = nodes_raw.filter(function (d) { return d.name == k; })[0];
+    if (selectedOtherItems !== null) {
+        selectedOtherItems.forEach(function (node) {
             node_hover_selected_item.append("circle")
                 .attr("cx", node.x)
                 .attr("cy", node.y)
-                .attr("r", node.r + Math.min(10, Math.max(5, node.r * 0.1)))
+                .attr("r", node.r + 3)
                 .style("stroke", "#0bb89c")
                 .style("fill", "none")
                 .style("stroke-linecap", "round")
-                .style("stroke-width", "3px")
+                .style("stroke-width", "2px")
                 .style("pointer-events", "none")
                 .style("display", null);
         });
