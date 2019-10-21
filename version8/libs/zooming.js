@@ -34,6 +34,9 @@ function zoomChart() {
   drawSelected();
   if (current_click) {
       drawDottedHoverCircle(current_click);
+      if (selectedOtherItems !== null) {
+        drawSelectedItems();
+      }      
   }    
 }
 
