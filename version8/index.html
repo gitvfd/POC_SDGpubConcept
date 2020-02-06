@@ -137,8 +137,8 @@ var margin = {
 var w,h;
 
 if (isEmbeddedInIFrame) {
-    w = document.documentElement.clientWidth;
-    h = document.documentElement.clientHeight;
+    w = window.innerWidth;
+    h = window.innerHeight;
 } else if (document.documentElement.clientWidth >= document.documentElement.clientHeight) {
     if (document.documentElement.clientWidth>=1250) {
         w = document.documentElement.clientWidth;
